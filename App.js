@@ -7,7 +7,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app lalalalla!
+        <Text>Open up App.js to start working on your app lalalalla!nfjklfklvnfklvfklmvlkc
 
         </Text>
         <StatusBar style="auto" />
