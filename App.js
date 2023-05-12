@@ -11,6 +11,7 @@ import { MealPlanScreen } from './screens/MealPlanScreen';
 import { RecipeScreen } from './screens/RecipeScreen';
 import { BarCodeScreen } from './screens/BarCodeScreen';
 import { SettingScreen } from './screens/SettingScreen';
+import { WelcomeScreen } from './screens/WelcomeScreen';
 
 
 
@@ -22,13 +23,14 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+      <Stack.Screen name="Welcome" component={WelcomeScreen}/>
         <Stack.Screen name="Home" component={HomeScreen}/>
-        <Stack.Screen name="Signup" component={SignUpScreen}/>
+        {/* <Stack.Screen name="Signup" component={SignUpScreen}/>
         <Stack.Screen name="Signin" component={SignInScreen}/>
         <Stack.Screen name="Mealplan" component={MealPlanScreen}/>
         <Stack.Screen name="Recipe" component={RecipeScreen}/>
         <Stack.Screen name="Barcode" component={BarCodeScreen}/>
-        <Stack.Screen name="Setting" component={SettingScreen}/>
+        <Stack.Screen name="Setting" component={SettingScreen}/> */}
 
 
 
