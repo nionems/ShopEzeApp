@@ -67,7 +67,7 @@ export function WelcomeScreen(props) {
 }
 const styles = StyleSheet.create({
 
-   
+
     page: {
         justifyContent: "top",
         alignItems: "center",
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#26ACA7",
         height: 70,
         minWidth: 400,
+        marginTop: 50,
     },
     modalHeader: {
         backgroundColor: "#26ACA7",
