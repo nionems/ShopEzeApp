@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image, Modal } from "react-native";
 import { useState } from 'react'
 import { useNavigation } from "@react-navigation/native";
+import colors from "../component/Colors";
 
 export function WelcomeScreen(props) {
 
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
         marginTop: 50,
     },
     modalHeader: {
-        backgroundColor: "#26ACA7",
+        backgroundColor: colors.green,
         height: 70,
         minWidth: 400,
         marginTop: 45,
