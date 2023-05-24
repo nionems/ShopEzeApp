@@ -5,45 +5,75 @@ export default tempData = [
 
 
     {
-       name: "plan a trip ",
+       name: "birthday lunch ",
        color: "#26ACA7",
        tobuy:[
            {
-           title:"Book flight",
+           title:"Cake",
            completed:false
            },
            {
-           title:"Passeport check",
+           title:"Champagne",
            completed:true
            },
            {
-           title:"Reserve hotel room ",
+           title:"Coke ",
            completed:true
            },
            {
-           title:"pack luggage",
+           title:"present",
            completed:true
            }
        ]
     },
     {
+        name: "christmas shopping ",
+        color: "#26ACA7",
+        tobuy:[
+            {
+            title:"Chesse",
+            completed:true
+            },
+            {
+            title:"Apple",
+            completed:false
+            },
+            {
+            title:"fruit",
+            completed:false
+            },
+            {
+            title:"turkey",
+            completed:true
+            },
+            {
+            title:"Wine ",
+            completed:true
+            },
+            {
+            title:"Water",
+            completed:true
+            }
+        ]
+     },
+    {
        name: "errands",
        color:"#26ACA7",
        tobuy:[
            {
-           title:"Book flight",
+           title:"pharmacy",
            completed:false
            },
            {
-           title:"Passeport check",
+           title:"post office",
            completed:true
            },
            {
-           title:"Reserve hotel room ",
+           title:"laundry ",
            completed:true
            },
            {
-           title:"pack luggage",
+           title:"bank",
            completed:false
            }
        ]

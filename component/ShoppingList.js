@@ -1,5 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View ,Modal,TouchableOpacity } from "react-native";
+import colors from "./Colors";
+import AddListModal from "./AddListModal";
+import ListModal from "./ListModal";
 
 export default class ShoppingList extends React.Component {
 
@@ -26,7 +29,7 @@ export default class ShoppingList extends React.Component {
             visible={this.state.showListVisible}
             onRequestClose={() => this.toggleListModal()}
         >
-            {/* <ListModal list={list} closeModal={() => this.toggleListModal()} /> */}
+            <ListModal list={list} closeModal={() => this.toggleListModal()} />
         </Modal>
 
         <TouchableOpacity
@@ -69,13 +72,13 @@ const styles = StyleSheet.create({
     listTitle: {
         fontSize: 24,
         fontWeight: "700",
-        color: "white",
+        color: colors.white,
         marginBottom: 18
     },
     count: {
         fontSize: 20,
         fontWeight: "200",
-        color: "white",
+        color: colors.white,
 
     },
     subtitle: {
