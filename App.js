@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState } from 'react';
 
+
 // contexts
 import { AuthContext } from './contexts/AuthContext';
 import { FBAuthContext } from './contexts/FBAuthContext';
@@ -13,7 +14,6 @@ import { SignUpScreen } from './screens/SignUpScreen';
 import { SignInScreen } from './screens/SignInScreen';
 import { TabScreen } from './screens/TabScreen';
 import { WelcomeScreen } from './screens/WelcomeScreen';
-
 
 // firebase modules
 import { firebaseConfig } from './config/Config';
@@ -59,6 +59,18 @@ export default function App() {
       .then((userCredential) => console.log(userCredential))
       .catch((error) => console.log(error))
   }
+  // const SignUp = async (email, password) => {
+  //   try {
+  //     const userCredential = await auth().createUserWithEmailAndPassword(
+  //       email,
+  //       password
+  //     );
+  //     await userCredential.user.sendEmailVerification();
+  //     console.log('Verification email sent');
+  //   } catch (error) {
+  //     console.log('Error registering user:', error.message);
+  //   }
+  // };
 
   const SignIn = (email, password) => {
     signInWithEmailAndPassword(FBauth, email, password)

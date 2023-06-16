@@ -50,10 +50,12 @@ export function SignUpScreen(props) {
             setValidForm(false)
         }
     })
+    
 
     // if a user is authentificate the user will be redirected to home
     useEffect(() => {
         if (authStatus) {
+
             // navigate adds a back arrow to the header
             // navigation.navigate("Home")
             // reset will make "Home" the root page of the navigation

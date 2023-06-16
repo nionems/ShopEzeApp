@@ -7,6 +7,7 @@ import { RecipeScreen } from "./RecipeScreen"
 import { MealPlanScreen } from './MealPlanScreen';
 import { BarCodeScreen } from "./BarCodeScreen";
 import { SettingScreen } from "./SettingScreen";
+//import tempData from "../component/tempData";
 
 
 

@@ -11,6 +11,7 @@ export default class ListModal extends React.Component {
        color: this.props.list.color,
        tobuy: this.props.list.tobuy
    };
+   
 
    renderTobuy = tobuy => {
 
@@ -37,6 +38,7 @@ export default class ListModal extends React.Component {
 
    render() {
 
+       const list =[]
        const tobuyCount = this.state.tobuy.length
        const completedCount = this.state.tobuy.filter(tobuy => tobuy.completed).length
 
