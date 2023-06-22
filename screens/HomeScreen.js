@@ -10,7 +10,9 @@ import ShoppingList from "../component/ShoppingList";
 import AddListModal from "../component/AddListModal";
 import 'firebase/database';
 import { tempData } from "../component/tempData"
+import { ScrollView } from "react-native-gesture-handler";
 //import Fire from "../screens/Fire";
+//import Swiper from 'react-native-swiper';
 
 
 
@@ -40,41 +42,28 @@ export function HomeScreen(props) {
             prevLists.map((item) => (item.id === list.id ? list : item))
         );
     };
-    //   const renderList = (list) => {
-    //     return <TobuyList list={list} updateList={updateList} />;
-    //   };
+   
 
-    //   const renderList = ({ item }) => {
-    //     return (
-    //       <ShoppingList list={item} updateList={updateList} />
-    //     );
-    //   };
+    // const renderList = ({ item }) => {
+    //     return <ShoppingList list={item} updateList={updateList} />;
+    // };
 
-    const renderList = ({ item }) => {
-        return <ShoppingList list={item} updateList={updateList} />;
-    };
-
-
-    // const renderList = (list) => {
-    //     return <TobuyList list={list} updateList={updateList} />;
-    //   };
-
+    const renderList = ({ item }) => (
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <ShoppingList list={item} updateList={updateList} />
+        </ScrollView>
+      );
 
     // state = {
     //     addTobuyVisible: false,
     //     lists: tempData
-    //};
-
-    // const renderList = (list) => {
-    //     return <TobuyList list={list} updateList={updateList} />;
-    //   };
+    // };
 
     {
         lists.map((list) => (
             <Text key={list.id}>{list.name}</Text>
         ))
     }
-
     //if SignOut the user will be redirected to welcome screen
     useEffect(() => {
         if (!authStatus) {
@@ -111,7 +100,7 @@ export function HomeScreen(props) {
             </View>
 
             <View style={{ height: 275, paddingLeft: 32, marginTop: 200 }}>
-
+                
                 <FlatList
                     data={lists}
                     keyExtractor={(item) => item.id.toString()} // Use a unique key for each item
@@ -119,7 +108,9 @@ export function HomeScreen(props) {
                     showsHorizontalScrollIndicator={false}
                     renderItem={({ item }) => (<ShoppingList list={item} updateList={updateList} />)}
                     keyboardShouldPersistTaps="always"
+                   
                 />
+                
 
             </View>
         </View>
