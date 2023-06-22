@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard } from "react-native";
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import colors from "./Colors";
 
@@ -7,17 +7,29 @@ import colors from "./Colors";
 export default class ListModal extends React.Component {
 
    state = {
-       name: this.props.list.name,
-       color: this.props.list.color,
-       tobuy: this.props.list.tobuy
+       newTobuy :""
    };
+   toggleTobuyCompleted = index =>{
+       let list = this.props.list
+       list.tobuy[index].completed = !list.tobuy[index].completed
+       this.props.updateList(list);
+   };
+
+   addTobuy = () => {
+       let list = this.props.list;
+       list.tobuy.push({title:this.state.newTobuy, completed:false});
+
+       this.props.updateList(list);
+       this.setState({newTobuy:""})
+
+       Keyboard.dismiss();
+   }
    
 
-   renderTobuy = tobuy => {
-
+   renderTobuy = (tobuy , index) => {
        return (
            <View style={styles.tobuyContainer}>
-               <TouchableOpacity>
+               <TouchableOpacity onPress={()=>this.toggleTobuyCompleted(index)}>
                    <Ionicons
                    name={tobuy.completed ?"ios-square": "ios-square-outline" }
                    size={24}
@@ -38,36 +50,44 @@ export default class ListModal extends React.Component {
 
    render() {
 
-       const list =[]
-       const tobuyCount = this.state.tobuy.length
-       const completedCount = this.state.tobuy.filter(tobuy => tobuy.completed).length
+       const list = this.props.list
+       const tobuyCount = list.tobuy.length
+       const completedCount = list.tobuy.filter(tobuy => tobuy.completed).length;
 
        return (
            <SafeAreaView style={styles.container}>
                <TouchableOpacity style={{ position: 'absolute', top: 64, right: 32, zIndex: 10 }}
                    onPress={this.props.closeModal}>
+                   
                    <AntDesign name="close" size={24} color={colors.black} />
                </TouchableOpacity>
-               <View style={[styles.section, styles.header, { borderBottomColor: this.state.color }]}>
+               <View style={[styles.section, styles.header, { borderBottomColor: list.color }]}>
                    <View>
-                       <Text style={styles.title}>{this.state.name}</Text>
+                       <Text style={styles.title}>{list.name}</Text>
                        <Text style={styles.tobuyCount}>
                            {completedCount} of {tobuyCount} items
                        </Text>
                    </View>
                </View>
                <View style={[styles.section, { flex: 3 }]}>
-                   <FlatList data={this.state.tobuy}
-                       renderItem={({ item }) => this.renderTobuy(item)}
+                   <FlatList 
+                       data={list.tobuy}
+                       renderItem={({ item, index }) => this.renderTobuy(item, index)}
                        keyExtractor={item => item.title}
                        contentContainerStyle={{ paddingHorizontal: 32, paddingVertical: 64 }}
                        showsVerticalScrollIndicator={false}
                    />
                </View>
                <KeyboardAvoidingView style={[styles.section, styles.footer]} behavior="padding">
-                   <TextInput style={[styles.input, { borderColor: this.state.color }]} />
-                   <TouchableOpacity style={[styles.addTobuy, { backgroundColor: this.state.color }]}>
-                       <AntDesign name="plus" size={16} color={colors.white} />
+                   <TextInput 
+                   style={[styles.input, { borderColor: list.color }]} 
+                   onChangeText={text => this.setState({newTobuy:text})}
+                   value={this.state.newTobuy}/>
+                   
+                   <TouchableOpacity 
+                        style={[styles.addTobuy,{backgroundColor: list.color}]}   
+                        onPress={() =>this.addTobuy}>
+                        <AntDesign name="plus" size={16} color={colors.white} />
                    </TouchableOpacity>
                </KeyboardAvoidingView>
            </SafeAreaView>

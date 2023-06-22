@@ -6,5 +6,8 @@
     messagingSenderId: "850776302642",
     appId: "1:850776302642:web:bcfff9f025bbd57223c82b",
     measurementId: "G-J8K7CBPPR0"
+    
   }
+
+
   

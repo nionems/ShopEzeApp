@@ -3,6 +3,11 @@ import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState } from 'react';
+import firebase from 'firebase/app';
+import { getDatabase, ref, push } from 'firebase/database';
+import 'firebase/database';
+import { HomeScreen } from './screens/HomeScreen';
+
 
 
 // contexts
@@ -14,6 +19,7 @@ import { SignUpScreen } from './screens/SignUpScreen';
 import { SignInScreen } from './screens/SignInScreen';
 import { TabScreen } from './screens/TabScreen';
 import { WelcomeScreen } from './screens/WelcomeScreen';
+//import { HomeScreen } from './screens/HomeScreen';
 
 // firebase modules
 import { firebaseConfig } from './config/Config';
@@ -53,12 +59,28 @@ export default function App() {
       setAuth(null)
     }
   })
+  const addList = (list) => {
+    setLists((prevLists) => [
+      ...prevLists,
+      { ...list, id: prevLists.length + 1, tobuy: [] },
+    ]);
+  };
+  const updateList = (list) => {
+    setLists((prevLists) =>
+      prevLists.map((item) => (item.id === list.id ? list : item))
+    );
+  };
+  const renderList = (list) => {
+    return <TobuyList list={list} updateList={this.updateList} />;
+  };
 
   const SignUp = (email, password) => {
     createUserWithEmailAndPassword(FBauth, email, password)
       .then((userCredential) => console.log(userCredential))
       .catch((error) => console.log(error))
   }
+
+  
   // const SignUp = async (email, password) => {
   //   try {
   //     const userCredential = await auth().createUserWithEmailAndPassword(
@@ -103,9 +125,11 @@ export default function App() {
 
         <Stack.Screen name="Home" options={{ headerShown: false }}>
           {(props) =>
+          
             <FBAuthContext.Provider value={FBauth} >
               <AuthContext.Provider value={auth}>
-                <TabScreen {...props} />
+                <TabScreen {...props} {...props} handler={addList} {...props} handler={updateList} 
+                                                                    {...props} handler={renderList} />
               </AuthContext.Provider>
             </FBAuthContext.Provider>
           }

@@ -6,24 +6,74 @@ import { SignOutButton } from "../component/SignOutButton";
 import colors from "../component/Colors";
 import { AntDesign } from '@expo/vector-icons';
 import { AuthContext } from "../contexts/AuthContext";
-//import tempData from "../component/tempData";
 import ShoppingList from "../component/ShoppingList";
 import AddListModal from "../component/AddListModal";
+import 'firebase/database';
+import { tempData } from "../component/tempData"
+//import Fire from "../screens/Fire";
+
+
 
 
 
 export function HomeScreen(props) {
 
+
+
+    const [lists, setLists] = useState([]);
+
+    const addList = (list) => {
+        setLists((prevLists) => [
+            ...prevLists,
+            { ...list, id: prevLists.length + 1, tobuy: [] },
+        ]);
+    };
+
     const navigation = useNavigation()
     const [showModal, setShowModal] = useState(false)
     const authStatus = useContext(AuthContext)
-   
     const [addTobuyVisible, setAddTobuyVisible] = useState(false);
 
-    const [mylist, setMylist] = useState([]); // Define mylist as a state variable
 
-    
-    
+    const updateList = (list) => {
+        setLists((prevLists) =>
+          prevLists.map((item) => (item.id === list.id ? list : item))
+        );
+      };
+    //   const renderList = (list) => {
+    //     return <TobuyList list={list} updateList={updateList} />;
+    //   };
+
+    //   const renderList = ({ item }) => {
+    //     return (
+    //       <ShoppingList list={item} updateList={updateList} />
+    //     );
+    //   };
+
+    const renderList = ({ item }) => {
+        return <ShoppingList list={item} updateList={updateList} />;
+      };
+      
+
+    // const renderList = (list) => {
+    //     return <TobuyList list={list} updateList={updateList} />;
+    //   };
+      
+
+    // state = {
+    //     addTobuyVisible: false,
+    //     lists: tempData
+    //};
+
+    // const renderList = (list) => {
+    //     return <TobuyList list={list} updateList={updateList} />;
+    //   };
+
+    {
+        lists.map((list) => (
+            <Text key={list.id}>{list.name}</Text>
+        ))
+    }
 
     //if SignOut the user will be redirected to welcome screen
     useEffect(() => {
@@ -34,36 +84,8 @@ export function HomeScreen(props) {
 
     const toggleAddTodoModal = () => {
         setAddTobuyVisible(!addTobuyVisible);
-      };
+    };
 
-    // state = {
-    //     addTobuyVisible: true,
-    //     lists: tempData
-    // };
-    
-    
-    // renderList = list => {
-    //     return <ShoppingList list={list}  />;
-    // };
-    
-    // addList = list =>{
-    //     this.setState({ lists:[...this.state.lists,{ ...list, id: this.state.lists.length +1, tobuy:[] }] });
-    // };
-
-    const ListsScreen = () => {
-        const [lists, setLists] = useState([]);
-      
-        useEffect(() => {
-          // Read the lists from Firebase
-          firebase
-            .database()
-            .ref('lists')
-            .on('value', snapshot => {
-              const data = snapshot.val();
-              const listArray = Object.values(data);
-              setLists(listArray);
-            });
-        }, []);
     return (
 
         <View style={styles.page}>
@@ -76,8 +98,8 @@ export function HomeScreen(props) {
                     animationType="slide"
                     visible={showModal}
                     onRequestClose={() => setShowModal(false)}>
-                    <AddListModal closeModal={() => setShowModal(false)}/> 
-                    {/* <AddListModal closeModal={() => setShowModal(false)} addList={this.addList} /> */}
+                    <AddListModal closeModal={() => setShowModal(false)} addList={addList} />
+
                 </Modal>
 
                 <View style={styles.divider} />
@@ -89,13 +111,15 @@ export function HomeScreen(props) {
             </View>
 
             <View style={{ height: 275, paddingLeft: 32, marginTop: 200 }}>
-            <FlatList
-      data={lists}
-      keyExtractor={(item, index) => index.toString()}
-      renderItem={({ item }) => (
-        <Text>{item.name}</Text>
-      )}
-    />
+                <FlatList
+                    data={lists} 
+                    keyExtractor={(item) => item.id.toString()} // Use a unique key for each item
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={({ item }) => renderList(item)}
+                    
+                    keyboardShouldPersistTaps="always"
+                />
             </View>
         </View>
     );
@@ -155,4 +179,3 @@ const styles = StyleSheet.create({
 
     }
 })
-}
