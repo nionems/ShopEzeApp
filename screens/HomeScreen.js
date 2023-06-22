@@ -11,6 +11,7 @@ import AddListModal from "../component/AddListModal";
 import 'firebase/database';
 import { tempData } from "../component/tempData"
 import { ScrollView } from "react-native-gesture-handler";
+//import ListModal from "../component/ListModal";
 //import Fire from "../screens/Fire";
 //import Swiper from 'react-native-swiper';
 

@@ -4,16 +4,16 @@ import colors from "./Colors";
 import ListModal from "./ListModal";
 
 const TobuyList = ({ list }) => {
-  return (
-    <View>
-      <Text>{list.name}</Text>
-      {/* Render the items within the list */}
-      {list.tobuy.map((item) => (
-        <Text key={item.id}>{item.name}</Text>
-      ))}
-    </View>
-  );
-};
+    return (
+      <View>
+        <Text>{list.name}</Text>
+        {/* Render the items within the list */}
+        {list.tobuy.map((item) => (
+          <Text key={item.id}>{item.name}</Text>
+        ))}
+      </View>
+    );
+  };
 
 export default class ShoppingList extends React.Component {
   state = {
@@ -63,9 +63,6 @@ export default class ShoppingList extends React.Component {
               <Text style={styles.subtitle}>Completed</Text>
             </View>
           </View>
-
-          {/* Render the items within the list */}
-          <TobuyList list={list} />
         </TouchableOpacity>
       </View>
     );
