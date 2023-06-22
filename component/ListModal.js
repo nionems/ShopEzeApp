@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard } from "react-native";
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import colors from "./Colors";
+import { Swipeable } from "react-native-gesture-handler";
+import { Animated } from "react-native";
 
 
 export default class ListModal extends React.Component {
@@ -27,42 +29,87 @@ export default class ListModal extends React.Component {
         Keyboard.dismiss();
     };
 
+    deleteTobuy = index => {
+        const list = this.props.list;
+        const updatedTobuy = [...list.tobuy];
+        updatedTobuy.splice(index, 1);
+      
+        const updatedList = { ...list, tobuy: updatedTobuy };
+        this.props.updateList(updatedList);
+      };
+      
 
-    renderTobuy = (tobuy, index) => {
+
+      renderTobuy = (tobuy, index) => {
         return (
+          <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)} onSwipeableRightOpen={() => this.deleteTobuy(index)}>
             <View style={styles.tobuyContainer}>
-                <TouchableOpacity onPress={() => this.toggleTobuyCompleted(index)}>
-                    <Ionicons
-                        name={tobuy.completed ? "ios-square" : "ios-square-outline"}
-                        size={24}
-                        color={colors.green}
-                        style={{ width: 32 }} />
-                </TouchableOpacity>
-                <Text style={[
-                    styles.tobuy,
-                    {
-                        textDecorationLine: tobuy.completed ? "line-through" : "none",
-                        color: tobuy.completed ? colors.grey : colors.black
-                    }
+              <TouchableOpacity onPress={() => this.toggleTobuyCompleted(index)}>
+                <Ionicons
+                  name={tobuy.completed ? "ios-square" : "ios-square-outline"}
+                  size={24}
+                  color={colors.gray}
+                  style={{ width: 32 }}
+                />
+              </TouchableOpacity>
+      
+              <Text
+                style={[
+                  styles.tobuy,
+                  {
+                    textDecorationLine: tobuy.completed ? "line-through" : "none",
+                    color: tobuy.completed ? colors.gray : colors.black
+                  }
                 ]}
-                >
-                    {tobuy.title}
-                </Text>
+              >
+                {tobuy.title}
+              </Text>
             </View>
-        )
-    }
+          </Swipeable>
+        );
+      };
+    rightActions = (dragX, index) => {
+        const scale = dragX.interpolate({
+            inputRange: [-100, 0],
+            outputRange: [1, 0.9],
+            extrapolate: "clamp"
+        });
+
+        const opacity = dragX.interpolate({
+            inputRange: [-100, -20, 0],
+            outputRange: [1, 0.9, 0],
+            extrapolate: "clamp"
+        });
+
+        return (
+            <TouchableOpacity onPress={() => this.deleteTobuy(index)}>
+                <Animated.View style={[styles.deleteButton, { opacity: opacity }]}>
+                    <Animated.Text style={{ color: colors.white, fontWeight: "800", transform: [{ scale }] }}>
+                        Delete
+                    </Animated.Text>
+                </Animated.View>
+            </TouchableOpacity>
+        );
+    };
+
+
+
+
 
     render() {
 
         const list = this.props.list
+
         const tobuyCount = list.tobuy.length
         const completedCount = list.tobuy.filter(tobuy => tobuy.completed).length;
 
         return (
+            <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
             <SafeAreaView style={styles.container}>
-                <TouchableOpacity style={{ position: 'absolute', top: 64, right: 32, zIndex: 10 }}
-                    onPress={this.props.closeModal}>
-
+                <TouchableOpacity 
+                    style={{ position: 'absolute', top: 64, right: 32, zIndex: 10 }}
+                    onPress={this.props.closeModal}
+                >
                     <AntDesign name="close" size={24} color={colors.black} />
                 </TouchableOpacity>
                 <View style={[styles.section, styles.header, { borderBottomColor: list.color }]}>
@@ -73,11 +120,11 @@ export default class ListModal extends React.Component {
                         </Text>
                     </View>
                 </View>
-                <View style={[styles.section, { flex: 3 }]}>
+                <View style={[styles.section, { flex: 3, marginVertical:16 }]}>
                     <FlatList
                         data={list.tobuy}
                         renderItem={({ item, index }) => this.renderTobuy(item, index)}
-                        keyExtractor={item => item.title}
+                        keyExtractor={(item, index) => index.toString()}
                         contentContainerStyle={{ paddingHorizontal: 32, paddingVertical: 64 }}
                         showsVerticalScrollIndicator={false}
                     />
@@ -90,12 +137,12 @@ export default class ListModal extends React.Component {
 
                     <TouchableOpacity
                         style={[styles.addTobuy, { backgroundColor: list.color }]}
-                        onPress={() => this.addTobuy()} // Invoke the function with parentheses
-                    >
+                        onPress={() => this.addTobuy()}>
                         <AntDesign name="plus" size={16} color={colors.white} />
                     </TouchableOpacity>
                 </KeyboardAvoidingView>
             </SafeAreaView>
+            </KeyboardAvoidingView>
         )
     }
 }
