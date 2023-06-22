@@ -37,9 +37,9 @@ export function HomeScreen(props) {
 
     const updateList = (list) => {
         setLists((prevLists) =>
-          prevLists.map((item) => (item.id === list.id ? list : item))
+            prevLists.map((item) => (item.id === list.id ? list : item))
         );
-      };
+    };
     //   const renderList = (list) => {
     //     return <TobuyList list={list} updateList={updateList} />;
     //   };
@@ -52,13 +52,13 @@ export function HomeScreen(props) {
 
     const renderList = ({ item }) => {
         return <ShoppingList list={item} updateList={updateList} />;
-      };
-      
+    };
+
 
     // const renderList = (list) => {
     //     return <TobuyList list={list} updateList={updateList} />;
     //   };
-      
+
 
     // state = {
     //     addTobuyVisible: false,
@@ -111,15 +111,16 @@ export function HomeScreen(props) {
             </View>
 
             <View style={{ height: 275, paddingLeft: 32, marginTop: 200 }}>
+
                 <FlatList
-                    data={lists} 
+                    data={lists}
                     keyExtractor={(item) => item.id.toString()} // Use a unique key for each item
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
-                    renderItem={({ item }) => renderList(item)}
-                    
+                    renderItem={({ item }) => (<ShoppingList list={item} updateList={updateList} />)}
                     keyboardShouldPersistTaps="always"
                 />
+
             </View>
         </View>
     );
