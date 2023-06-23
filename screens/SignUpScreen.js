@@ -1,8 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
 import { useEffect, useState, useContext } from 'react'
 import { useNavigation } from "@react-navigation/native";
-
-// //context
+//context
 import { AuthContext } from "../contexts/AuthContext";
 import { FBAuthContext } from "../contexts/FBAuthContext";
 
@@ -14,14 +13,15 @@ export function SignUpScreen(props) {
     const [password, setPassword] = useState("")
     const [validPassword, setValidPassword] = useState(false)
     const [validForm, setValidForm] = useState(false)
+    const [error, setError] = useState("");
 
     const navigation = useNavigation()
 
-    //   //declare context
+    //declare context
     const authStatus = useContext(AuthContext)
     const FBauth = useContext(FBAuthContext)
 
-    // validation for email
+    //validation for email
     useEffect(() => {
         if (email.indexOf('@') > 0) {
             setValidEmail(true)
@@ -41,28 +41,25 @@ export function SignUpScreen(props) {
         }
     }, [password])
 
+
     // if both email and password meet requirement then the button to sign up will be enabled
     useEffect(() => {
         if (validEmail && validPassword) {
-            setValidForm(true)
+            setValidForm(true);
+        } else {
+            setValidForm(false);
         }
-        else {
-            setValidForm(false)
-        }
-    })
-    
+    }, [validEmail, validPassword]);
 
     // if a user is authentificate the user will be redirected to home
     useEffect(() => {
         if (authStatus) {
-
             // navigate adds a back arrow to the header
             // navigation.navigate("Home")
             // reset will make "Home" the root page of the navigation
             navigation.reset({ index: 0, routes: [{ name: "Home" }] })
         }
     }, [authStatus])
-
 
     return (
         <ScrollView>
@@ -73,6 +70,7 @@ export function SignUpScreen(props) {
                 <Image style={styles.logostyle} source={require('../assets/logo.png')} alt="logo" />
 
                 <Text style={styles.sloganText}> Shop Together, Faster, Cheaper  </Text>
+                {error !== "" && (<Text style={styles.errorText}>{error}</Text> )}
                 <Text style={styles.sloganText}> Try Us For FREE !!  </Text>
 
 
@@ -96,16 +94,21 @@ export function SignUpScreen(props) {
                 </View>
                 <TouchableOpacity
                     style={(validForm) ? styles.button : styles.buttonDisabled}
-                    disabled={(validForm) ? false : true}
+                    disabled={!validForm}
                     onPress={() => props.handler(email, password)}
                 >
                     <Text style={styles.buttonText}>Sign up</Text>
+
+
                 </TouchableOpacity>
+
+
                 <TouchableOpacity
                     style={styles.signInLink}
                     onPress={() => navigation.navigate("Signin")}
                 >
                     <Text style={styles.signInLinkText}>Already have an account? Sign in</Text>
+
                 </TouchableOpacity>
             </View>
         </ScrollView>
@@ -148,8 +151,8 @@ const styles = StyleSheet.create({
         borderRadius: 70,
         maxHeight: 200,
         maxWidth: 200,
-        minHeight: 20,
-        minWidth: 20,
+        minHeight: 200,
+        minWidth: 200,
         borderColor: "#26ACA7",
         marginBottom: 10,
 
@@ -213,6 +216,11 @@ const styles = StyleSheet.create({
     signInLinkText: {
         textAlign: "center",
         color: "white",
+    },
+    errorText: {
+        color: "red",
+        textAlign: "center",
+        //marginBottom: 100,
     },
 
 })
