@@ -27,6 +27,7 @@ import { initializeApp } from 'firebase/app'
 import {
   getAuth,
   createUserWithEmailAndPassword,
+  fetchSignInMethodsForEmail,
   onAuthStateChanged,
   signOut,
   signInWithEmailAndPassword
@@ -49,7 +50,7 @@ const FBdb = getFirestore(FBapp)
 
 export default function App() {
   const [auth, setAuth] = useState()
-  const [errorMsg, setErrorMsg] = useState()
+  const [error, setError] = useState("");
 
   onAuthStateChanged(FBauth, (user) => {
     if (user) {
@@ -73,32 +74,66 @@ export default function App() {
   const renderList = (list) => {
     return <TobuyList list={list} updateList={this.updateList} />;
   };
-
-  const SignUp = (email, password) => {
-    createUserWithEmailAndPassword(FBauth, email, password)
-      .then((userCredential) => console.log(userCredential))
-      .catch((error) => console.log(error))
-  }
-
   
-  // const SignUp = async (email, password) => {
-  //   try {
-  //     const userCredential = await auth().createUserWithEmailAndPassword(
-  //       email,
-  //       password
-  //     );
-  //     await userCredential.user.sendEmailVerification();
-  //     console.log('Verification email sent');
-  //   } catch (error) {
-  //     console.log('Error registering user:', error.message);
-  //   }
+  
+  const handleSignUp = (email, password) => {
+    const auth = FBauth // Replace with your Firebase auth instance
+    
+    // Check if the email is already in use
+    fetchSignInMethodsForEmail(auth, email)
+      .then((signInMethods) => {
+        if (signInMethods.length === 0) {
+          // The email is not in use, proceed with sign up
+          createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+              // Sign up successful
+              console.log('User signed up:', userCredential.user.email);
+            <Text>sign up</Text>
+            })
+            .catch((error) => {
+              console.log('Error creating user:', error);
+            });
+        } else {
+          // The email is already in use
+          console.log('Email is already in use');
+          setError("email already in use sorry");
+        
+        }
+      })
+      .catch((error) => {
+        console.log('Error checking email:', errorMsg);
+        setErrorMsg("error checking email");
+      });
+  };
+  // const handleSignUp = () => {
+  //   createUserWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       // Send email verification
+  //       sendEmailVerification(userCredential.user)
+  //         .then(() => {
+  //           console.log('Email verification sent');
+  //           // You can display a message to the user to check their email for verification
+  //         })
+  //         .catch((error) => {
+  //           console.log('Error sending email verification:', error);
+  //         });
+  //     })
+  //     .catch((error) => {
+  //       console.log('Error creating user:', error);
+  //     });
   // };
-
-  const SignIn = (email, password) => {
+  
+  const handleSignIn = (email, password) => {
     signInWithEmailAndPassword(FBauth, email, password)
-      .then((userCredential) => console.log(userCredential))
-      .catch((error) => console.log(error))
-  }
+      .then((userCredential) => {
+        // Handle successful sign in
+        console.log('User signed in:', userCredential.user);
+      })
+      .catch((error) => {
+        // Handle sign in error
+        console.log('Error signing in:', error);
+      });
+  };
   return (
     <NavigationContainer>
 
@@ -110,7 +145,7 @@ export default function App() {
         <Stack.Screen name="Signup" options={{ headerShown: false }}>
           {(props) =>
             <AuthContext.Provider value={auth}>
-              <SignUpScreen {...props} handler={SignUp} />
+              <SignUpScreen {...props} handler={handleSignUp} />
             </AuthContext.Provider>
           }
         </Stack.Screen>
@@ -118,7 +153,7 @@ export default function App() {
         <Stack.Screen name="Signin" options={{ headerShown: false }}>
           {(props) =>
             <AuthContext.Provider value={auth}>
-              <SignInScreen {...props} handler={SignIn} />
+              <SignInScreen {...props} handler={handleSignIn} />
             </AuthContext.Provider>
           }
         </Stack.Screen>
