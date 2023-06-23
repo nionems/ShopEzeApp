@@ -202,6 +202,14 @@ const styles = StyleSheet.create({
         color: colors.black,
         fontWeight: "700",
         fontSize: 16
+    },
+    deleteButton: {
+        flex: 1,
+        backgroundColor: "tomato",
+        justifyContent: "center",
+        alignItems: "center",
+        width: 80,
+        borderRadius:10
     }
 
 

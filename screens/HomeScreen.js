@@ -95,7 +95,7 @@ export function HomeScreen(props) {
                 <View style={styles.divider} />
                 <Text style={styles.title}>tobuy</Text>
                 <TouchableOpacity style={styles.addList} onPress={() => setShowModal(true)}>
-                    <AntDesign name="plus" size={16} />
+                    <AntDesign name="plus" color={"white"} size={24} />
                     <Text style={styles.add}>add list</Text>
                 </TouchableOpacity>
             </View>
@@ -154,19 +154,25 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 30,
     },
-    addList: {
-        borderWidth: 2,
-        borderColor: colors.lightBlue,
-        borderRadius: 4,
-        padding: 16,
-        alignItems: "center",
-        justifyContent: "center"
+   
+        addList: {
+            marginTop: 24,
+            height: 50,
+            borderRadius: 6,
+            marginLeft:30,
+            marginRight:30,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#26ACA7",
+        
 
 
     },
     add: {
-        color: colors.blue,
+        color: "white",
         textAlign: "center",
+        fontSize:20,
+        
 
 
 
