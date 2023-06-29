@@ -2,46 +2,24 @@
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useState } from 'react';
-import firebase from 'firebase/app';
-import { getDatabase, ref, push } from 'firebase/database';
-import 'firebase/database';
-import { HomeScreen } from './screens/HomeScreen';
-
-
+import { useState, useEffect } from 'react';
 
 // contexts
 import { AuthContext } from './contexts/AuthContext';
 import { FBAuthContext } from './contexts/FBAuthContext';
+import { FSContext } from './contexts/FSContext';
 
 // screens
 import { SignUpScreen } from './screens/SignUpScreen';
 import { SignInScreen } from './screens/SignInScreen';
 import { TabScreen } from './screens/TabScreen';
 import { WelcomeScreen } from './screens/WelcomeScreen';
-//import { HomeScreen } from './screens/HomeScreen';
 
 // firebase modules
 import { firebaseConfig } from './config/Config';
 import { initializeApp } from 'firebase/app'
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  fetchSignInMethodsForEmail,
-  onAuthStateChanged,
-  signOut,
-  signInWithEmailAndPassword
-} from "firebase/auth"
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  addDoc,
-  collection,
-  query,
-  where,
-  onSnapshot
-} from 'firebase/firestore'
+import {getAuth,createUserWithEmailAndPassword,fetchSignInMethodsForEmail,onAuthStateChanged,signOut,signInWithEmailAndPassword} from "firebase/auth"
+import {getFirestore,doc,setDoc,addDoc,collection,query,where,onSnapshot} from 'firebase/firestore'
 
 const Stack = createNativeStackNavigator();
 const FBapp = initializeApp(firebaseConfig)
@@ -49,6 +27,7 @@ const FBauth = getAuth(FBapp)
 const FBdb = getFirestore(FBapp)
 
 export default function App() {
+
   const [auth, setAuth] = useState()
   const [error, setError] = useState("");
 
@@ -60,21 +39,23 @@ export default function App() {
       setAuth(null)
     }
   })
+
   const addList = (list) => {
     setLists((prevLists) => [
       ...prevLists,
       { ...list, id: prevLists.length + 1, tobuy: [] },
     ]);
   };
+
   const updateList = (list) => {
     setLists((prevLists) =>
       prevLists.map((item) => (item.id === list.id ? list : item))
     );
   };
+
   const renderList = (list) => {
     return <TobuyList list={list} updateList={this.updateList} />;
   };
-  
   
   const handleSignUp = (email, password) => {
     const auth = FBauth // Replace with your Firebase auth instance
@@ -105,24 +86,7 @@ export default function App() {
         setErrorMsg("error checking email");
       });
   };
-  // const handleSignUp = () => {
-  //   createUserWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-  //       // Send email verification
-  //       sendEmailVerification(userCredential.user)
-  //         .then(() => {
-  //           console.log('Email verification sent');
-  //           // You can display a message to the user to check their email for verification
-  //         })
-  //         .catch((error) => {
-  //           console.log('Error sending email verification:', error);
-  //         });
-  //     })
-  //     .catch((error) => {
-  //       console.log('Error creating user:', error);
-  //     });
-  // };
-  
+ 
   const handleSignIn = (email, password) => {
     signInWithEmailAndPassword(FBauth, email, password)
       .then((userCredential) => {
@@ -163,8 +127,9 @@ export default function App() {
           
             <FBAuthContext.Provider value={FBauth} >
               <AuthContext.Provider value={auth}>
-                <TabScreen {...props} {...props} handler={addList} {...props} handler={updateList} 
-                                                                    {...props} handler={renderList} />
+                <FSContext.Provider value={FBdb}>
+                <TabScreen {...props} {...props} handler={addList} {...props} handler={updateList} {...props} handler={renderList} />
+                </FSContext.Provider>
               </AuthContext.Provider>
             </FBAuthContext.Provider>
           }

@@ -5,7 +5,6 @@ import colors from "./Colors";
 import { Swipeable } from "react-native-gesture-handler";
 import { Animated } from "react-native";
 
-
 export default class ListModal extends React.Component {
 
     state = {

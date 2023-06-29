@@ -1,29 +1,34 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native"
-import { useEffect, useContext, useState, state } from 'react'
+import { useEffect, useContext, useState } from 'react'
+import { AntDesign } from '@expo/vector-icons';
+import { ScrollView } from "react-native-gesture-handler";
+
+//component
 import { SignOutButton } from "../component/SignOutButton";
 import colors from "../component/Colors";
-import { AntDesign } from '@expo/vector-icons';
-import { AuthContext } from "../contexts/AuthContext";
 import ShoppingList from "../component/ShoppingList";
 import AddListModal from "../component/AddListModal";
-import 'firebase/database';
-import { tempData } from "../component/tempData"
-import { ScrollView } from "react-native-gesture-handler";
 //import ListModal from "../component/ListModal";
-//import Fire from "../screens/Fire";
-//import Swiper from 'react-native-swiper';
 
-
-
-
+//context
+import { AuthContext } from "../contexts/AuthContext";
+import { FSContext } from "../contexts/FSContext";
+//import { FBAuthContext } from "../contexts/FBAuthContext";
 
 export function HomeScreen(props) {
 
+    const navigation = useNavigation()
 
+    const authStatus = useContext(AuthContext);
+    const db = useContext(FSContext);
 
     const [lists, setLists] = useState([]);
+    const [showModal, setShowModal] = useState(false)
+    const [addTobuyVisible, setAddTobuyVisible] = useState(false);
+    const [user, setUser] = useState({});
+    const [loading, setLoading] = useState(true);
 
     const addList = (list) => {
         setLists((prevLists) => [
@@ -31,29 +36,33 @@ export function HomeScreen(props) {
             { ...list, id: prevLists.length + 1, tobuy: [] },
         ]);
     };
-
-    const navigation = useNavigation()
-    const [showModal, setShowModal] = useState(false)
-    const authStatus = useContext(AuthContext)
-    const [addTobuyVisible, setAddTobuyVisible] = useState(false);
-
+    // const addList = (list) => {
+    //     firebase.addList({
+    //         name: list.name,
+    //         color: list.color,
+    //         tobuy: []
+    //     });
+    // };
 
     const updateList = (list) => {
         setLists((prevLists) =>
             prevLists.map((item) => (item.id === list.id ? list : item))
         );
     };
-   
 
-    // const renderList = ({ item }) => {
-    //     return <ShoppingList list={item} updateList={updateList} />;
-    // };
+    // const updateList = (list) => {
+    //     firebase.updateList(list);
+    //   };
 
     const renderList = ({ item }) => (
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <ShoppingList list={item} updateList={updateList} />
         </ScrollView>
       );
+
+    // const renderList = (list) => {
+    //     return <ShoppingList list={list} updateList={updateList} />;
+    //   };
 
     // state = {
     //     addTobuyVisible: false,
@@ -108,17 +117,15 @@ export function HomeScreen(props) {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     renderItem={({ item }) => (<ShoppingList list={item} updateList={updateList} />)}
-                    keyboardShouldPersistTaps="always"
-                   
+                    keyboardShouldPersistTaps="always"  
                 />
-                
-
             </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+
     page: {
         justifyContent: "center",
         alignItems: "center",
@@ -164,17 +171,10 @@ const styles = StyleSheet.create({
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: "#26ACA7",
-        
-
-
     },
-    add: {
-        color: "white",
-        textAlign: "center",
-        fontSize:20,
-        
-
-
-
+        add: {
+            color: "white",
+            textAlign: "center",
+            fontSize:20,
     }
 })
