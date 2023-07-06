@@ -15,14 +15,23 @@
       "**/*"
     ],
     "ios": {
-      
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow access to the camera roll",
+        "NSPhotoLibraryUsageDescription": "Allow access to the photo library"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ],
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
