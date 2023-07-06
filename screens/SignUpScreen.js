@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     },
     header: {
         backgroundColor: "#26ACA7",
+        marginTop:50,
         height: 70,
         minWidth: 400,
     },
