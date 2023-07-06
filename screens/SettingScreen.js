@@ -61,9 +61,9 @@ export function SettingScreen() {
             <View style={styles.container}>
             <TouchableOpacity onPress={handleLogoPress}>
         {selectedImage ? (
-          <Image source={{ uri: selectedImage.uri }} style={styles.logo} />
+          <Image source={{ uri: selectedImage.uri }} style={styles.avatar} />
         ) : (
-          <Image source={require('../assets/logo.png')} style={styles.logo} />
+          <Image source={require('../assets/logo.png')} style={styles.avatar} />
         )}
       </TouchableOpacity>
                 <TextInput
