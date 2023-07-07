@@ -9,9 +9,10 @@ export function WelcomeScreen(props) {
     const navigation = useNavigation()
     const [showModal, setShowModal] = useState(false)
     const linkedinLogo = require('../assets/linkedin.png');
+    const profilePicture = require('../assets/lioProfile.JPG');
 
     const linkedinProfileUrl = 'https://www.linkedin.com/in/lionel-coevoet-961b64275/?originalSubdomain=au';
-
+    const myPortfolioUrl ='https://www.lionelportfolio.com/';
    
     const handleLinkedInPress = async () => {
         const supported = await Linking.canOpenURL(linkedinProfileUrl);
@@ -19,6 +20,14 @@ export function WelcomeScreen(props) {
           await Linking.openURL(linkedinProfileUrl);
         }
       };
+
+      const handlePicturePress = async () => {
+        const supported = await Linking.canOpenURL(myPortfolioUrl);
+        if (supported) {
+          await Linking.openURL(myPortfolioUrl);
+        }
+      };
+
 
 
 
@@ -63,15 +72,22 @@ export function WelcomeScreen(props) {
                             <Text style={styles.headerTitle}>About The App</Text>
                         </View>
                         <Text style={styles.modalText} >Lionel here ! {'\n'}  The application allow you to create a shopping list shared between friends and family. {'\n'}
-                            (When organising events such as pick-nick, birthday, camping with friends, Instead of creating list via what's app, google sheet etc... {'\n'} This App will make your life easier.
+                            (When organising events such as pick-nik, birthday, camping with friends, Instead of creating list via what's app, google sheet etc... {'\n'} This App will make your life easier.
                             Everyone can be connected to the same shopping list and add, delete, add comments or update them in a real-time ) {'\n'}
                             Have a try !!  {'\n'} So far the application is FREE  {'\n'}  Thank You
+                            Click on my face if you want to know more about me !!
                         </Text>
-                        <Image style={styles.myPictureStyle} source={require('../assets/lioProfile.JPG')} />
+                        {/* <Image style={styles.myPictureStyle} source={require('../assets/lioProfile.JPG')} /> */}
                         
+                        <TouchableOpacity onPress={handlePicturePress}>
+                            <Image source={profilePicture} style={styles.myPictureStyle} />
+                        </TouchableOpacity>
+                    
+                       
                         <TouchableOpacity onPress={handleLinkedInPress}>
                             <Image source={linkedinLogo} style={styles.linkedinLogo} />
                         </TouchableOpacity>
+
                         <View style={styles.buttonsRow}>
                            
                            
