@@ -77,7 +77,7 @@ export function WelcomeScreen(props) {
                             Have a try !!  {'\n'} So far the application is FREE  {'\n'}  Thank You
                             Click on my face if you want to know more about me !!
                         </Text>
-                        {/* <Image style={styles.myPictureStyle} source={require('../assets/lioProfile.JPG')} /> */}
+
                         
                         <TouchableOpacity onPress={handlePicturePress}>
                             <Image source={profilePicture} style={styles.myPictureStyle} />

@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 40,
-    marginTop: 25,
+    marginTop: 10,
     textAlign: 'center',
     color: "#FD8749",
     fontStyle: "italic",

@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet,Modal } from "react-native";
-import { useEffect, useContext, useState } from 'react'
+//import { useEffect, useContext, useState } from 'react'
 
 
 
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: 40,
-        marginTop: 25,
+        marginTop: 10,
         textAlign: 'center',
         color: "#FD8749",
         fontStyle: "italic",

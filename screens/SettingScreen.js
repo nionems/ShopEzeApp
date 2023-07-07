@@ -13,6 +13,8 @@ export function SettingScreen() {
   const authStatus = useContext(AuthContext);
   const fs = useContext(FSContext);
 
+  const avatar = require('../assets/avatarProfile.png');
+
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
   const [profilePicture, setProfilePicture] = useState('');
@@ -73,7 +75,7 @@ export function SettingScreen() {
     }
   };
 
-  
+
   const handleUpdateProfile = () => {
     // Get the current user
     const user = firebase.auth().currentUser;
@@ -99,7 +101,7 @@ export function SettingScreen() {
     if (profilePicture) {
       return <Image source={{ uri: profilePicture }} style={styles.profilePicture} />;
     } else {
-      return <Image source={require('../assets/logo.png')} style={styles.avatar} />;
+      return <Image source={require('../assets/avatarProfile.png')} style={styles.avatar} />;
     }
   };
 
@@ -129,14 +131,17 @@ export function SettingScreen() {
 
   return (
     <View style={styles.page}>
+
       <View style={styles.header}>
-        <SignOutButton text="Sign out" />
-        <Text style={styles.headerTitle}>Setting</Text>
+        <View style={styles.headerLeft}>
+          <SignOutButton text="Sign out" />
+        </View>
+        <Text style={styles.headerTitle}>Settings</Text>
       </View>
       <View style={styles.container}>
         <TouchableOpacity onPress={handleLogoPress}>
           {selectedImage ? (
-            <Image source={{ uri: selectedImage }} style={styles.avatar} />
+            <Image source={{ avatar }} style={styles.avatar} />
           ) : (
             renderProfilePicture()
           )}
@@ -205,18 +210,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  
   header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     backgroundColor: "#26ACA7",
     marginTop: 50,
     height: 70,
     minWidth: 400,
+    paddingHorizontal: 16,
+  },
+  headerLeft: {
+    flex: 1,
   },
   headerTitle: {
     fontSize: 40,
-    textAlign: 'center',
+    textAlign: "center",
     color: "#FD8749",
     fontStyle: "italic",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    flex: 2,
+    marginRight: 100,
   },
   buttonText: {
     color: "#ffffff",
@@ -225,7 +240,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#26ACA7",
-    marginTop: 10,
+    marginTop: 5,
     marginVertical: 15,
     marginRight: 10,
     marginLeft: 10,
@@ -234,7 +249,7 @@ const styles = StyleSheet.create({
   },
   buttonDelete: {
     backgroundColor: "#FD8749",
-    marginTop: 10,
+    marginTop: 5,
     marginVertical: 15,
     marginRight: 10,
     marginLeft: 10,
@@ -248,8 +263,8 @@ const styles = StyleSheet.create({
     height: 40,
     borderWidth: 1,
     borderColor: '#26ACA7',
-    marginBottom: 10,
-    marginTop: 5,
+    marginBottom: 2,
+    marginTop: 2,
     marginLeft: 30,
     paddingHorizontal: 10,
     borderRadius: 10,
@@ -263,13 +278,13 @@ const styles = StyleSheet.create({
   avatar: {
     alignItems: "center",
     alignContent: "center",
-    borderRadius: 70,
-    maxHeight: 200,
-    maxWidth: 200,
-    minHeight: 20,
-    minWidth: 20,
-    marginBottom: 20,
-    marginTop: 20,
+    borderRadius: 10,
+    maxHeight: 300,
+    maxWidth: 300,
+    minHeight: 200,
+    minWidth: 200,
+    marginBottom: 10,
+    marginTop: 1,
     borderColor: "#26ACA7",
 
   },

@@ -23,12 +23,8 @@ export function SignOutButton( props ) {
   )
 }
 const styles = StyleSheet.create({
-  buttonText: {
-    color: "#ffffff",
-    textAlign: "center",
-  },
   button:{
-    marginLeft:10,
-
+    marginLeft:5,
+    
   }
 })

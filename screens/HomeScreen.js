@@ -56,9 +56,9 @@ export function HomeScreen(props) {
 
     const renderList = ({ item }) => (
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <ShoppingList list={item} updateList={updateList} />
+            <ShoppingList list={item} updateList={updateList} />
         </ScrollView>
-      );
+    );
 
     // const renderList = (list) => {
     //     return <ShoppingList list={list} updateList={updateList} />;
@@ -88,10 +88,16 @@ export function HomeScreen(props) {
     return (
 
         <View style={styles.page}>
+            <View>
             <View style={styles.header}>
-                <SignOutButton text="Sign out" />
+                <View style={styles.headerLeft}>
+                    <SignOutButton text="Sign out" />
+                </View>
                 <Text style={styles.headerTitle}>My Lists</Text>
-                <View style={styles.container} />
+                </View>
+                {/* <SignOutButton text="Sign out" />
+                <Text style={styles.headerTitle}>My Lists</Text>
+                <View style={styles.container} /> */}
                 <Modal
                     transparent={false}
                     animationType="slide"
@@ -110,14 +116,14 @@ export function HomeScreen(props) {
             </View>
 
             <View style={{ height: 275, paddingLeft: 32, marginTop: 200 }}>
-                
+
                 <FlatList
                     data={lists}
                     keyExtractor={(item) => item.id.toString()} // Use a unique key for each item
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     renderItem={({ item }) => (<ShoppingList list={item} updateList={updateList} />)}
-                    keyboardShouldPersistTaps="always"  
+                    keyboardShouldPersistTaps="always"
                 />
             </View>
         </View>
@@ -130,19 +136,41 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    // header: {
+    //     backgroundColor: "#26ACA7",
+    //     marginTop: 50,
+    //     height: 70,
+    //     minWidth: 400,
+    // },
+    // headerTitle: {
+    //     fontSize: 40,
+    //     textAlign: 'center',
+    //     color: "#FD8749",
+    //     fontStyle: "italic",
+    //     fontWeight: "bold"
+    // },
     header: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
         backgroundColor: "#26ACA7",
         marginTop: 50,
         height: 70,
         minWidth: 400,
-    },
-    headerTitle: {
+        paddingHorizontal: 16,
+      },
+      headerLeft: {
+        flex: 1,
+      },
+      headerTitle: {
         fontSize: 40,
-        textAlign: 'center',
+        textAlign: "center",
         color: "#FD8749",
         fontStyle: "italic",
-        fontWeight: "bold"
-    },
+        fontWeight: "bold",
+        flex: 2,
+        marginRight:100,
+      },
     container: {
         flex: 1,
         backgroundColor: "#ffff",
@@ -160,21 +188,22 @@ const styles = StyleSheet.create({
         alignContent: "center",
         textAlign: 'center',
         fontSize: 30,
+        color: "#26ACA7",
     },
-   
-        addList: {
-            marginTop: 24,
-            height: 50,
-            borderRadius: 6,
-            marginLeft:30,
-            marginRight:30,
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#26ACA7",
+
+    addList: {
+        marginTop: 24,
+        height: 50,
+        borderRadius: 6,
+        marginLeft: 30,
+        marginRight: 30,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#26ACA7",
     },
-        add: {
-            color: "white",
-            textAlign: "center",
-            fontSize:20,
+    add: {
+        color: "white",
+        textAlign: "center",
+        fontSize: 20,
     }
 })
