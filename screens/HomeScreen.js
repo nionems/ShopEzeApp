@@ -103,7 +103,7 @@ export function HomeScreen(props) {
                     animationType="slide"
                     visible={showModal}
                     onRequestClose={() => setShowModal(false)}>
-                    <AddListModal closeModal={() => setShowModal(false)} addList={addList} />
+                    <AddListModal closeModal={() => setShowModal(false)} addList={addList}  />
 
                 </Modal>
 
