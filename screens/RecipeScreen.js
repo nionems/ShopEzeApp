@@ -1,6 +1,20 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet,Modal } from "react-native";
+import { useEffect, useContext, useState } from 'react'
+
+
+
+
+
+
+
 
 export function RecipeScreen(props) {
+
+
+
+   
+
+    
     return (
         <View style={styles.page}>
             <View style={styles.header}>

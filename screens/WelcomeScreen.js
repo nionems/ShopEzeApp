@@ -1,12 +1,27 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image, Modal } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, Modal,Linking } from "react-native";
 import { useState } from 'react'
 import { useNavigation } from "@react-navigation/native";
 import colors from "../component/Colors";
+
 
 export function WelcomeScreen(props) {
 
     const navigation = useNavigation()
     const [showModal, setShowModal] = useState(false)
+    const linkedinLogo = require('../assets/linkedin.png');
+
+    const linkedinProfileUrl = 'https://www.linkedin.com/in/lionel-coevoet-961b64275/?originalSubdomain=au';
+
+   
+    const handleLinkedInPress = async () => {
+        const supported = await Linking.canOpenURL(linkedinProfileUrl);
+        if (supported) {
+          await Linking.openURL(linkedinProfileUrl);
+        }
+      };
+
+
+
 
     return (
         <View>
@@ -32,7 +47,7 @@ export function WelcomeScreen(props) {
                     <Text style={styles.buttonText}>SIGN UP</Text>
 
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.Aboutbutton} onPress={() => setShowModal(true)} >
+                <TouchableOpacity style={styles.aboutButton} onPress={() => setShowModal(true)} >
                     <Text style={styles.buttonText}>ABOUT THE APP</Text>
                 </TouchableOpacity>
             </View>
@@ -47,13 +62,19 @@ export function WelcomeScreen(props) {
                         <View style={styles.modalHeader}>
                             <Text style={styles.headerTitle}>About The App</Text>
                         </View>
-                        <Image style={styles.logostyle} source={require('../assets/logo.png')} alt="logo" />
                         <Text style={styles.modalText} >Lionel here ! {'\n'}  The application allow you to create a shopping list shared between friends and family. {'\n'}
                             (When organising events such as pick-nick, birthday, camping with friends, Instead of creating list via what's app, google sheet etc... {'\n'} This App will make your life easier.
                             Everyone can be connected to the same shopping list and add, delete, add comments or update them in a real-time ) {'\n'}
                             Have a try !!  {'\n'} So far the application is FREE  {'\n'}  Thank You
                         </Text>
+                        <Image style={styles.myPictureStyle} source={require('../assets/lioProfile.JPG')} />
+                        
+                        <TouchableOpacity onPress={handleLinkedInPress}>
+                            <Image source={linkedinLogo} style={styles.linkedinLogo} />
+                        </TouchableOpacity>
                         <View style={styles.buttonsRow}>
+                           
+                           
                             <TouchableOpacity
                                 style={styles.modalBackButton}
                                 onPress={() => setShowModal(false)}>
@@ -97,32 +118,46 @@ const styles = StyleSheet.create({
     sloganText: {
         fontSize: 15,
         textAlign: 'center',
-        marginTop: 20,
+        marginTop: 30,
         color: "#FD8749",
         fontStyle: "italic",
         fontWeight: "bold",
         fontSize: 20,
     },
+
     logostyle: {
         alignItems: "center",
         alignContent: "center",
-        borderRadius: 70,
+        borderRadius: 55,
         maxHeight: 200,
         maxWidth: 200,
-        minHeight: 20,
-        minWidth: 20,
+        minHeight: 150,
+        minWidth: 150,
+        borderColor: "#26ACA7",
+        marginTop: 5,
+
+    },
+    myPictureStyle: {
+        alignItems: "center",
+        alignContent: "center",
+        borderRadius: 100,
+        maxHeight: 200,
+        maxWidth: 200,
+        minHeight: 150,
+        minWidth: 150,
         borderColor: "#26ACA7",
 
     },
-    Aboutbutton: {
-        marginTop: 20,
-        backgroundColor: "#26ACA7",
-        borderRadius: 10,
-        padding: 10,
+    aboutButton: {
+        backgroundColor: "#FD8749",
+        marginTop: 10,
+        marginVertical: 15,
         marginRight: 10,
         marginLeft: 10,
-        marginVertical: 15,
+        borderRadius: 10,
+        padding: 10,
     },
+
     button: {
         backgroundColor: "#26ACA7",
         marginTop: 10,
@@ -152,20 +187,26 @@ const styles = StyleSheet.create({
     modalText: {
         textAlign: "center",
         fontSize: 20,
-        marginTop: 30,
+        marginTop: 10,
         marginBottom: 10,
         color: "#26ACA7"
     },
+
     modalBackButton: {
-        backgroundColor: "#26ACA7",
-        marginTop: 5,
+        backgroundColor: "#FD8749",
+        marginTop: 10,
+        marginVertical: 15,
         marginRight: 10,
         marginLeft: 10,
-        borderRadius: 50,
+        borderRadius: 10,
         padding: 10,
     },
-    // buttonsRow: {
-    //     flexDirection: "row",
-    //     marginVertical: 10,
-    // },
+    linkedinLogo: {
+        marginTop:10,
+        marginBottom:10,
+        width: 50,
+        height: 50,
+        borderRadius:10,
+        alignContent:"center",
+      },
 })

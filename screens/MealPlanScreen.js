@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Text, View, TextInput, Button, StyleSheet, ScrollView, KeyboardAvoidingView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, TextInput, Button, StyleSheet, ScrollView, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 
 export function MealPlanScreen(props) {
@@ -7,6 +7,12 @@ export function MealPlanScreen(props) {
   const [ingredient, setIngredient] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const [ingredientsByDate, setIngredientsByDate] = useState({});
+
+  useEffect(() => {
+    setMeal('');
+    setIngredient('');
+  }, [selectedDate]);
+
 
   const handleAddIngredient = () => {
     const updatedIngredients = { ...ingredientsByDate };
@@ -28,8 +34,10 @@ export function MealPlanScreen(props) {
   };
 
   const handleUpdateEvent = (index) => {
-    // Implement logic to handle event update
-    console.log('Updating event:', ingredientsByDate[selectedDate][index]);
+    const selectedEvent = ingredientsByDate[selectedDate][index];
+    setMeal(selectedEvent.meal);
+    setIngredient(selectedEvent.ingredient);
+
   };
 
   const handleDeleteEvent = (index) => {
@@ -49,10 +57,24 @@ export function MealPlanScreen(props) {
       <View key={index} style={styles.ingredientContainer}>
         <Text style={styles.mealText}>Meal: {item.meal}</Text>
         <Text style={styles.ingredientText}>Ingredient: {item.ingredient}</Text>
-        <View style={styles.buttonContainer}>
-          <Button title="Update" onPress={() => handleUpdateEvent(index)} color="#26ACA7" />
-          <Button title="Delete" onPress={() => handleDeleteEvent(index)} color="#FD8749" />
-        </View>
+    
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleUpdateEvent}
+            >
+              <Text style={styles.buttonText}>Update</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.buttonDelete}
+              onPress={handleDeleteEvent}
+            >
+              <Text style={styles.buttonText}>Delete</Text>
+            </TouchableOpacity>
+          </View>
+
+   
       </View>
     ));
   };
@@ -66,6 +88,9 @@ export function MealPlanScreen(props) {
               <Text style={styles.headerTitle}>Meal Plan</Text>
             </View>
           </View>
+          <Text style={styles.selectedDate}>
+            {selectedDate ? new Date(selectedDate).toDateString() : ''}
+          </Text>
           <Calendar
             style={styles.calendar}
             onDayPress={handleDateSelect}
@@ -83,16 +108,16 @@ export function MealPlanScreen(props) {
             value={ingredient}
             onChangeText={setIngredient}
           />
-          <Button title="Add Event" onPress={handleAddIngredient} color="#26ACA7" />
-
-          <Text style={styles.selectedDate}>
-            {selectedDate ? new Date(selectedDate).toDateString() : ''}
-          </Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleAddIngredient}>
+            <Text style={styles.buttonText}>Add Event</Text>
+          </TouchableOpacity>
           <View style={styles.ingredientContainer}>{renderIngredientsForDate()}</View>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
- 
+
 
   );
 }
@@ -109,44 +134,46 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   selectedDate: {
-    marginTop: 10,
+    marginTop: 1,
     fontSize: 18,
-    color:"#26ACA7",
+    color: "#26ACA7",
     fontWeight: "bold",
-  }, 
+  },
   ingredientContainer: {
     marginBottom: 10,
   },
   ingredientText: {
     fontSize: 16,
-    marginBottom:0,
-    color:"#FD8749",
-},
-mealText: {
+    marginBottom: 0,
+    color: "#FD8749",
+    fontWeight: "bold",
+  },
+  mealText: {
     fontSize: 16,
-    marginBottom:0,
-    color:"#FD8749",
-},
-header: {
+    marginBottom: 0,
+    color: "#26ACA7",
+    fontWeight: "bold",
+  },
+  header: {
     backgroundColor: "#26ACA7",
     marginTop: 50,
     height: 70,
     minWidth: 400,
-},
-headerTitle: {
+  },
+  headerTitle: {
     fontSize: 40,
     marginTop: 25,
     textAlign: 'center',
     color: "#FD8749",
     fontStyle: "italic",
     fontWeight: "bold"
-},
-calendar: {
+  },
+  calendar: {
     marginBottom: 10,
-    backgroundColor:"#26ACA7",
-    marginTop:10,
-    minWidth:400,
-    
+    backgroundColor: "#26ACA7",
+    marginTop: 10,
+    minWidth: 400,
+
   },
   input: {
     width: '80%',
@@ -157,10 +184,38 @@ calendar: {
     paddingHorizontal: 10,
     borderRadius: 10,
   },
+  buttonText: {
+    color: "#ffffff",
+    textAlign: "center",
+    fontSize: 20,
+  },
+  button: {
+    backgroundColor: "#26ACA7",
+    marginTop: 5,
+    marginVertical: 15,
+    marginRight: 5,
+    marginLeft: 5,
+    borderRadius: 10,
+    padding: 10,
+  },
+  buttonDelete: {
+    backgroundColor: "#FD8749",
+    marginTop: 5,
+    marginVertical: 15,
+    marginRight: 5,
+    marginLeft: 5,
+    borderRadius: 10,
+    padding: 10,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 0,
+  },
 
 
 })
-    
-    
+
+
 
 
