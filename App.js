@@ -69,7 +69,7 @@ export default function App() {
             .then((userCredential) => {
               // Sign up successful
               console.log('User signed up:', userCredential.user.email);
-            <Text>sign up</Text>
+            // JM -- NOT SURE WHY THIS IS HERE, BREAKING SIGN UP <Text>sign up</Text>
             })
             .catch((error) => {
               console.log('Error creating user:', error);
@@ -108,9 +108,11 @@ export default function App() {
 
         <Stack.Screen name="Signup" options={{ headerShown: false }}>
           {(props) =>
+          <FBAuthContext.Provider value={FBauth}>
             <AuthContext.Provider value={auth}>
               <SignUpScreen {...props} handler={handleSignUp} />
             </AuthContext.Provider>
+            </FBAuthContext.Provider>
           }
         </Stack.Screen>
 

@@ -1,15 +1,16 @@
-import React from "react";
+import {useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native"
 import { useEffect, useContext, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from "react-native-gesture-handler";
+import { doc, addDoc, collection, setDoc } from "firebase/firestore"
 
 //component
 import { SignOutButton } from "../component/SignOutButton";
 import colors from "../component/Colors";
 import ShoppingList from "../component/ShoppingList";
-import AddListModal from "../component/AddListModal";
+import {AddListModal} from "../component/AddListModal";
 //import ListModal from "../component/ListModal";
 
 //context
@@ -22,7 +23,7 @@ export function HomeScreen(props) {
     const navigation = useNavigation()
 
     const authStatus = useContext(AuthContext);
-    const db = useContext(FSContext);
+    const FSdb = useContext(FSContext);
 
     const [lists, setLists] = useState([]);
     const [showModal, setShowModal] = useState(false)
@@ -30,19 +31,15 @@ export function HomeScreen(props) {
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
 
-    const addList = (list) => {
-        setLists((prevLists) => [
-            ...prevLists,
-            { ...list, id: prevLists.length + 1, tobuy: [] },
-        ]);
-    };
-    // const addList = (list) => {
-    //     firebase.addList({
-    //         name: list.name,
-    //         color: list.color,
-    //         tobuy: []
-    //     });
-    // };
+    const addList = async (list) => {
+        // https://firebase.google.com/docs/firestore/manage-data/add-data?hl=en&authuser=0
+        // write the list in Firestore
+       const ref = await addDoc( collection( FSdb, "lists"), list )
+    }
+    
+    const getLists = async () => {
+        
+    }
 
     const updateList = (list) => {
         setLists((prevLists) =>
@@ -50,9 +47,7 @@ export function HomeScreen(props) {
         );
     };
 
-    // const updateList = (list) => {
-    //     firebase.updateList(list);
-    //   };
+    
 
     const renderList = ({ item }) => (
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -60,20 +55,12 @@ export function HomeScreen(props) {
         </ScrollView>
       );
 
-    // const renderList = (list) => {
-    //     return <ShoppingList list={list} updateList={updateList} />;
-    //   };
-
-    // state = {
-    //     addTobuyVisible: false,
-    //     lists: tempData
-    // };
-
-    {
-        lists.map((list) => (
-            <Text key={list.id}>{list.name}</Text>
-        ))
-    }
+    
+    // {
+    //     lists.map((list) => (
+    //         <Text key={list.id}>{list.name}</Text>
+    //     ))
+    // }
     //if SignOut the user will be redirected to welcome screen
     useEffect(() => {
         if (!authStatus) {
@@ -86,7 +73,6 @@ export function HomeScreen(props) {
     };
 
     return (
-
         <View style={styles.page}>
             <View style={styles.header}>
                 <SignOutButton text="Sign out" />

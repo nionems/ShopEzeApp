@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image, Modal } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, Modal, ScrollView } from "react-native";
 import { useState } from 'react'
 import { useNavigation } from "@react-navigation/native";
 import colors from "../component/Colors";
@@ -7,9 +7,9 @@ export function WelcomeScreen(props) {
 
     const navigation = useNavigation()
     const [showModal, setShowModal] = useState(false)
-
+    // added ScrollView to enable access to lower buttons
     return (
-        <View>
+        <ScrollView>
             <View style={styles.page}>
                 <View style={styles.header}>
                     <Text style={styles.headerTitle}>Shop Eze</Text>
@@ -19,7 +19,6 @@ export function WelcomeScreen(props) {
                 <Text style={styles.sloganText}>Shop Together, Faster, Cheaper </Text>
             </View>
             <View>
-
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => navigation.navigate("Signin")}>
@@ -63,7 +62,7 @@ export function WelcomeScreen(props) {
                     </View>
                 </Modal>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({

@@ -1,6 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
 import { useEffect, useState, useContext } from 'react'
 import { useNavigation } from "@react-navigation/native";
+import {createUserWithEmailAndPassword} from 'firebase/auth'
 //context
 import { AuthContext } from "../contexts/AuthContext";
 import { FBAuthContext } from "../contexts/FBAuthContext";
@@ -61,6 +62,15 @@ export function SignUpScreen(props) {
         }
     }, [authStatus])
 
+    // MOVED SIGN UP HANDLER HERE
+    const signupHandler = (useremail, userpassword ) => {
+        console.log(FBauth)
+        // create user account
+        createUserWithEmailAndPassword( FBauth, email, password )
+        .then( (res) => console.log(res.user) )
+        .catch( (error) => setError(error.message) )
+    }
+
     return (
         <ScrollView>
             <View style={styles.page}>
@@ -95,7 +105,8 @@ export function SignUpScreen(props) {
                 <TouchableOpacity
                     style={(validForm) ? styles.button : styles.buttonDisabled}
                     disabled={!validForm}
-                    onPress={() => props.handler(email, password)}
+                    //onPress={() => props.handler(email, password)}
+                    onPress={ () => signupHandler(email,password) }
                 >
                     <Text style={styles.buttonText}>Sign up</Text>
 
