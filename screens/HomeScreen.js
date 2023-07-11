@@ -76,7 +76,7 @@ export function HomeScreen(props) {
              <View>
              <View style={styles.header}>
                  <View style={styles.headerLeft}>
-                     <SignOutButton/>
+                     <SignOutButton />
                  </View>
                  <Text style={styles.headerTitle}>My Lists</Text>
                  </View>
@@ -84,10 +84,10 @@ export function HomeScreen(props) {
                      transparent={false}
                      animationType="slide"
                      visible={showModal}
-                     onRequestClose={() => setShowModal(false)}>
+                     onRequestClose={() => setShowModal(false)}
+                     >
                      <AddListModal closeModal={() => setShowModal(false)} addList={addList}  />
-
-                </Modal>
+                 </Modal>
 
                 <View style={styles.divider} />
                 <Text style={styles.title}>tobuy</Text>
@@ -118,19 +118,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-        header: {
-        backgroundColor: "#26ACA7",
-        marginTop: 50,
-        height: 70,
-        minWidth: 400,
-    },
-    headerTitle: {
-        fontSize: 40,
-        textAlign: 'center',
-        color: "#FD8749",
-        fontStyle: "italic",
-        fontWeight: "bold"
-    },
     header: {
         flexDirection: "row",
         justifyContent: "space-between",
@@ -151,8 +138,9 @@ const styles = StyleSheet.create({
         fontStyle: "italic",
         fontWeight: "bold",
         flex: 2,
-        marginRight:100,
+        marginRight: 100,
       },
+    
     container: {
         flex: 1,
         backgroundColor: "#ffff",

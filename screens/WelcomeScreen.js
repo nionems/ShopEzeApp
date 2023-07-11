@@ -10,7 +10,7 @@ export function WelcomeScreen(props) {
     // added ScrollView to enable access to lower buttons
 
     const linkedinLogo = require('../assets/linkedin.png');
-    const profilePicture = require('../assets/lioProfile.JPG');
+    const profilePicture = require('../assets/lioProfile Small.png');
 
     const linkedinProfileUrl = 'https://www.linkedin.com/in/lionel-coevoet-961b64275/?originalSubdomain=au';
     const myPortfolioUrl ='https://www.lionelportfolio.com/';

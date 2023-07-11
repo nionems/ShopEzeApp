@@ -35,3 +35,4 @@ npm install firebase
 npm install react-native-linking
 npx expo install expo-constants@~14.2.1
 npm update @react-navigation/material-bottom-tabs react-native-paper
+npm install react-native-paper@latest
