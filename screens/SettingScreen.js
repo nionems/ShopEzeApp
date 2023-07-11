@@ -134,7 +134,7 @@ export function SettingScreen() {
 
       <View style={styles.header}>
         <View style={styles.headerLeft}>
-          <SignOutButton text="Sign out" />
+          <SignOutButton/>
         </View>
         <Text style={styles.headerTitle}>Settings</Text>
       </View>
@@ -200,9 +200,7 @@ export function SettingScreen() {
         onPress={handleDeleteProfile}>
         <Text style={styles.buttonText}>Delete Profile</Text>
       </TouchableOpacity>
-
     </View>
-
   )
 }
 const styles = StyleSheet.create({
@@ -216,7 +214,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#26ACA7",
-    marginTop: 50,
+    marginTop: 83,
     height: 70,
     minWidth: 400,
     paddingHorizontal: 16,

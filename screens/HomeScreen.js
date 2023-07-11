@@ -72,7 +72,7 @@ export function HomeScreen(props) {
     };
 
     return (
-        <View style={styles.page}>
+        <ScrollView>
              <View>
              <View style={styles.header}>
                  <View style={styles.headerLeft}>
@@ -108,16 +108,16 @@ export function HomeScreen(props) {
                     keyboardShouldPersistTaps="always"  
                 />
             </View>
-        </View>
+    </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
 
-    page: {
-        justifyContent: "center",
-        alignItems: "center",
-    },
+    // page: {
+    //     justifyContent: "center",
+    //     alignItems: "center",
+    // },
     header: {
         flexDirection: "row",
         justifyContent: "space-between",

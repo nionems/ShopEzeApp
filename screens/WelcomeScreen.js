@@ -29,11 +29,6 @@ export function WelcomeScreen(props) {
         }
       };
 
-
-
-
-
-
     return (
         <ScrollView>
             <View style={styles.page}>
@@ -72,14 +67,13 @@ export function WelcomeScreen(props) {
                         <View style={styles.modalHeader}>
                             <Text style={styles.headerTitle}>About The App</Text>
                         </View>
-                        <Image style={styles.logostyle} source={require('../assets/logo.png')} alt="logo" />
+                        {/* <Image style={styles.logostyle} source={require('../assets/logo.png')} alt="logo" /> */}
                         <Text style={styles.modalText} >Lionel here ! {'\n'}  The application allow you to create a shopping list shared between friends and family. {'\n'}
                              (When organising events such as pick-nik, birthday, camping with friends, Instead of creating list via what's app, google sheet etc... {'\n'} This App will make your life easier.
                              Everyone can be connected to the same shopping list and add, delete, add comments or update them in a real-time ) {'\n'}
                              Have a try !!  {'\n'} So far the application is FREE  {'\n'}  Thank You
                              Click on my face if you want to know more about me !!
                         </Text>
-
                         <TouchableOpacity onPress={handlePicturePress}>
                              <Image source={profilePicture} style={styles.myPictureStyle} />
                          </TouchableOpacity>
@@ -88,12 +82,6 @@ export function WelcomeScreen(props) {
                          <TouchableOpacity onPress={handleLinkedInPress}>
                              <Image source={linkedinLogo} style={styles.linkedinLogo} />
                          </TouchableOpacity>
-
-
-
-
-
-
                         <View style={styles.buttonsRow}>
                             <TouchableOpacity
                                 style={styles.modalBackButton}

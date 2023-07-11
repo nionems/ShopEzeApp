@@ -18,7 +18,10 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSCameraUsageDescription": "Allow access to the camera roll",
-        "NSPhotoLibraryUsageDescription": "Allow access to the photo library"
+        "NSPhotoLibraryUsageDescription": "Allow access to the photo library",
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
       }
     },
     "android": {
