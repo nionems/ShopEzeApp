@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native"
 import { useEffect, useContext, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from "react-native-gesture-handler";
-import { doc, addDoc, collection, setDoc } from "firebase/firestore"
+import { doc, addDoc, collection, setDoc,getDocs } from "firebase/firestore"
 
 //component
 import { SignOutButton } from "../component/SignOutButton";
@@ -36,9 +36,27 @@ export function HomeScreen(props) {
        const ref = await addDoc( collection( FSdb, "lists"), list )
     }
     
-    const getLists = async () => {
+    // const getLists = async () => {
         
-    }
+    // }
+    const getLists = async () => {
+        try {
+          const querySnapshot = await getDocs(collection(FSdb, 'lists'));
+          const fetchedLists = [];
+          querySnapshot.forEach((doc) => {
+            const list = { id: doc.id, ...doc.data() };
+            fetchedLists.push(list);
+          });
+          setLists(fetchedLists);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching lists: ', error);
+        }
+      };
+      useEffect(() => {
+        getLists();
+    }, []);
+
 
     const updateList = (list) => {
         setLists((prevLists) =>
