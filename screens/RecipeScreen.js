@@ -1,6 +1,5 @@
-import { View, Text, StyleSheet, Modal, ScrollView, TouchableOpacity, FlatList } from "react-native";
-
-import { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
+import { View, Text, StyleSheet, Modal, ScrollView, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { AddRecipeModal } from "../component/AddRecipeModal";
 import { AntDesign } from '@expo/vector-icons';
 import colors from "../component/Colors";
@@ -9,107 +8,103 @@ import { doc, addDoc, collection, setDoc, getDocs, error } from "firebase/firest
 import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
 
-
 export function RecipeScreen(props) {
+  const [recipe, setRecipe] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const authStatus = useContext(AuthContext);
+  const FSdb = useContext(FSContext);
+  const [recipeList, setRecipeList] = useState([]);
+  const [showListModal, setShowListModal] = useState(false);
+  const [loading, setLoading] = useState(true); // Add loading state
 
-    const [recipe, setRecipe] = useState([]);
-    const [showModal, setShowModal] = useState(false)
-    const authStatus = useContext(AuthContext);
-    const FSdb = useContext(FSContext);
-    const [recipeList, setRecipeList] = useState([]);
-    const [showListModal, setShowListModal] = useState(false);
+  const addRecipeList = async (recipeList) => {
+    // Write the list in Firestore
+    const ref = await addDoc(collection(FSdb, "recipes"), recipeList);
+  };
 
+  const renderRecipeList = ({ item }) => (
+    <View style={styles.recipeItem}>
+      <Text style={styles.recipeName}>{item.name}</Text>
+    </View>
+  );
 
-
-    const addRecipeList = async (recipeList) => {
-        // https://firebase.google.com/docs/firestore/manage-data/add-data?hl=en&authuser=0
-        // write the list in Firestore
-        const ref = await addDoc(collection(FSdb, "recipes"), recipeList)
+  const fetchRecipeList = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(FSdb, 'recipes'));
+      const fetchedRecipeList = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setRecipeList(fetchedRecipeList);
+      setLoading(false); // Set loading state to false after fetching
+      console.log(fetchedRecipeList);
+    } catch (error) {
+      console.error('Error fetching recipe list: ', error);
     }
+  };
 
-    // const addRecipeToList = (newRecipe) => {
-    //     setRecipeList((prevList) => [...prevList, newRecipe]);
-    //   };
+  useEffect(() => {
+    fetchRecipeList();
+  }, []);
 
-    // const renderList = ({ item }) => (
-    //     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-    //         {/* <View style={styles.recipeItem}> */}
-    //             <Text style={styles.recipeName}>{item.name}</Text>
-    //             {/* <Text style={styles.recipeDescription}>{item.description}</Text> */}
-    //         {/* </View> */}
-    //     </ScrollView>
-    // );
-
-    const renderRecipeList = ({ item }) => (
-        <View style={styles.recipeItem}>
-            <Text style={styles.recipeName}>{item.name}</Text>
-            {/* <Text style={styles.recipeDescription}>{item.description}</Text> */}
+  const render = (loading) => {
+    if (loading) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator size="large" color={colors.blue} />
         </View>
-    );
+      );
+    }
+    // Add code to handle the case when loading is false
+    // You can return a different component or null, depending on your requirements
+    return null;
+  };
 
+  return (
+    <ScrollView>
+      <View>
+        <View style={styles.header}>
+          <View style={styles.headerLeft}></View>
+          <Text style={styles.headerTitle}>My Recipes</Text>
+        </View>
+        <Modal
+          transparent={false}
+          animationType="slide"
+          visible={showModal}
+          onRequestClose={() => setShowModal(false)}
+        >
+          <AddRecipeModal closeModal={() => setShowModal(false)} addRecipeList={addRecipeList} />
+        </Modal>
+        <View style={styles.divider} />
+        <Text style={styles.title}></Text>
+        <TouchableOpacity style={styles.addRecipeList} onPress={() => setShowModal(true)}>
+          <AntDesign name="plus" color={"white"} size={24} />
+          <Text style={styles.add}>add recipe</Text>
+        </TouchableOpacity>
+      </View>
+      {/* <View style={styles.divider} /> */}
+      {loading ? (
+        <View style={styles.container}>
+          <ActivityIndicator size="large" color="black" />
+        </View>
+   
+        ) : recipeList.length > 0 ? (
+        <FlatList
+          data={recipeList}
+          keyExtractor={(item) => item.id.toString()}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          renderItem={renderRecipeList}
+        />
+        ) : (
+            <View style={styles.container}>
+            <Text>No recipes found</Text>
+          </View>
+      )}
+    </ScrollView>
+  );
+}
 
-
-
-    const fetchRecipeList = async () => {
-        try {
-            const querySnapshot = await getDocs(collection(FSdb, 'recipes'));
-            const fetchedRecipeList = querySnapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setRecipeList(fetchedRecipeList);
-            console.log(fetchedRecipeList);
-        } catch (error) {
-            console.error('Error fetching recipe list: ', error);
-        }
-    };
-
-    useEffect(() => {
-        fetchRecipeList();
-    }, []);
-
-
-
-    return (
-        <ScrollView>
-            <View>
-                <View style={styles.header}>
-                    <View style={styles.headerLeft}>
-                    </View>
-                    <Text style={styles.headerTitle}>My Recipes</Text>
-                </View>
-                <Modal
-                    transparent={false}
-                    animationType="slide"
-                    visible={showModal}
-                    onRequestClose={() => setShowModal(false)}
-                >
-                    <AddRecipeModal
-                        closeModal={() => setShowModal(false)}
-                        addRecipeList={addRecipeList} />
-                </Modal>
-
-                <View style={styles.divider} />
-                <Text style={styles.title}></Text>
-                <TouchableOpacity style={styles.addRecipeList} onPress={() => setShowModal(true)}>
-                    <AntDesign name="plus" color={"white"} size={24} />
-                    <Text style={styles.add}>add recipe</Text>
-                </TouchableOpacity>
-            </View>
-
-            {/* <View style={{ height: 200, paddingHorizontal: 32, marginTop: 32 }}> */}
-            <View style={styles.divider} />
-                <FlatList
-                    data={recipeList}
-                    keyExtractor={(item) => item.id.toString()}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={renderRecipeList}
-                />
-            {/* </View> */}
-        </ScrollView>
-    );
-};
 
 const styles = StyleSheet.create({
     page: {
@@ -131,7 +126,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     divider: {
-        backgroundColor: colors.lightBlue,
+        backgroundColor: "black",
         height: 1,
         flex: 1,
         alignSelf: "center",
@@ -153,23 +148,34 @@ const styles = StyleSheet.create({
         backgroundColor: "#FD8749",
     },
     add: {
-        color: "white",
+        color: "blue",
         textAlign: "center",
         fontSize: 20,
     },
     recipeItem: {
-        backgroundColor: colors.lightBlue,
+        backgroundColor: "blue",
+        color:"white",
         padding: 20,
         marginHorizontal: 10,
+        marginTop:100,
         borderRadius: 10,
         justifyContent: "center",
         alignItems: "center",
-        width: 200, // Adjust the width as needed
+        width: 100, // Adjust the width as needed
     },
     recipeName: {
-        color: colors.black,
+        color: "orange",
         fontSize: 20,
         fontWeight: "bold",
         textAlign: "center",
+    },
+    container: {
+        flex: 1,
+        backgroundColor: "green",
+        alignItems: "center",
+        justifyContent: "center",
+        minWidth:150,
+        minHeight:400,
+
     },
 })
