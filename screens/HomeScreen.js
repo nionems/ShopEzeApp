@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native"
 import { useEffect, useContext, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from "react-native-gesture-handler";
-import { doc, addDoc, collection, setDoc,getDocs } from "firebase/firestore"
+import { doc, addDoc, collection, setDoc } from "firebase/firestore"
 
 //component
 import { SignOutButton } from "../component/SignOutButton";
@@ -53,16 +53,16 @@ export function HomeScreen(props) {
           console.error('Error fetching lists: ', error);
         }
       };
-      useEffect(() => {
-        getLists();
-    }, []);
+    //   useEffect(() => {
+    //     getLists();
+    // }, []);
 
 
-    const updateList = (list) => {
-        setLists((prevLists) =>
-            prevLists.map((item) => (item.id === list.id ? list : item))
-        );
-    };
+    // const updateList = (list) => {
+    //     setLists((prevLists) =>
+    //         prevLists.map((item) => (item.id === list.id ? list : item))
+    //     );
+    // };
 
     
 
@@ -108,7 +108,6 @@ export function HomeScreen(props) {
                  </Modal>
 
                 <View style={styles.divider} />
-                <Text style={styles.title}>tobuy</Text>
                 <TouchableOpacity style={styles.addList} onPress={() => setShowModal(true)}>
                     <AntDesign name="plus" color={"white"} size={24} />
                     <Text style={styles.add}>add list</Text>

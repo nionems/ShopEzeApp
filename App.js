@@ -49,6 +49,7 @@ export default function App() {
     ]);
   };
 
+
   const updateList = (list) => {
     setLists((prevLists) =>
       prevLists.map((item) => (item.id === list.id ? list : item))

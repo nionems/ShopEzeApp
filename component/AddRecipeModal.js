@@ -1,31 +1,20 @@
 import { useContext, useState } from "react";
-import {
-    View,
-    Text,
-    StyleSheet,
-    KeyboardAvoidingView,
-    TouchableOpacity,
-    TextInput
-} from "react-native";
+import {View,Text,StyleSheet,KeyboardAvoidingView,TouchableOpacity,TextInput} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../component/Colors";
 import { AuthContext } from "../contexts/AuthContext";
 
-export function AddListModal(props) {
-    const [name, setName] = useState()
+export function AddRecipeModal(props) {
+
+    const [recipeName, setRecipeName] = useState()
     const [color, setColor] = useState()
     const backgroundColors = ["#26ACA7", "#24A6D9", "#757572", "#8022D9", "#D159D8", "#D85963", "#c5d16d"]
     const ListOwner = useContext( AuthContext )
 
-
-
-
-    const createList = () => {
-
-        //const list = { name, color,owner,collaborators };
-        
-        props.addList({
-            name: name, 
+    const createRecipe = () => {
+     
+        props.addRecipeList({
+            recipeName: recipeName, 
             color: color, 
             owner: ListOwner.uid,
             collaborators: [ ListOwner.uid ]
@@ -49,12 +38,12 @@ export function AddListModal(props) {
             </TouchableOpacity>
 
             <View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
-                <Text style={styles.title}>Create A List</Text>
+                <Text style={styles.title}>Create A Recipe</Text>
 
                 <TextInput
                     style={styles.input}
-                    placeholder="List Name?"
-                    onChangeText={text => setName(text) }
+                    placeholder="Recipe Name?"
+                    onChangeText={text => setRecipeName(text) }
                 />
 
                 <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>
@@ -63,21 +52,20 @@ export function AddListModal(props) {
 
                 <TouchableOpacity
                     style={[styles.create, { backgroundColor: color }]}
-                    onPress={() => createList() }
+                    onPress={() => createRecipe() }
                 >
-                    <Text style={{ color: "#78cfcb" , fontWeight: "1600",fontSize:24 }}>Create!</Text>
+                    <Text style={{ color: "#f0aa86" , fontWeight: "1600",fontSize:24 }}>Create!</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
     )
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor:"#78cfcb",
+        backgroundColor: "#f0aa86",
     },
     title: {
         fontSize: 28,
@@ -108,33 +96,6 @@ const styles = StyleSheet.create({
         borderRadius: 4
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
