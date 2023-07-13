@@ -49,6 +49,13 @@ export default function App() {
     ]);
   };
 
+  const addRecipeList = (recipeList) => {
+    setRecipeLists((prevLists) => [
+      ...prevLists,
+      { ...recipeList, id: prevLists.length + 1, tobuy: [] },
+    ]);
+  };
+
 
   const updateList = (list) => {
     setLists((prevLists) =>
@@ -59,6 +66,13 @@ export default function App() {
   const renderList = (list) => {
     return <TobuyList list={list} updateList={this.updateList} />;
   };
+
+  const renderRecipeList = ({ item }) => (
+    <View style={styles.recipeItem}>
+      <Text style={styles.recipeName}>{item.name}</Text>
+      {/* <Text style={styles.recipeDescription}>{item.description}</Text> */}
+    </View>
+  );
   
   const handleSignUp = (email, password) => {
     const auth = FBauth // Replace with your Firebase auth instance
@@ -133,7 +147,12 @@ export default function App() {
             <FBAuthContext.Provider value={FBauth} >
               <AuthContext.Provider value={auth}>
                 <FSContext.Provider value={FBdb}>
-                <TabScreen {...props} {...props} handler={addList} {...props} handler={updateList} {...props} handler={renderList} />
+                <TabScreen //{...props} 
+                {...props} handler={addList} 
+                {...props} handler={updateList} 
+                {...props} handler={addRecipeList}
+                {...props} handler={renderList} 
+                {...props} handler={renderRecipeList}/>
                 </FSContext.Provider>
               </AuthContext.Provider>
             </FBAuthContext.Provider>
