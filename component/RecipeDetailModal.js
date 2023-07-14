@@ -11,11 +11,12 @@ import { FSContext } from "../contexts/FSContext";
 
 export const RecipeDetailsModal = ({ item, onUpdate, closeModal }) => {
   const [newRecipeName, setNewRecipeName] = useState(item.recipeName);
-  const [newRecipeIngredients, setNewRecipeIngredients] = useState(item.recipeIngredients);
-  const [recipeIngredients, setRecipeIngredients] = useState([]);
+  const [newIngredients, setNewIngredients] = useState(item.ingredients);
+  const [recipeIngredients, setNewRecipeIngredients] = useState([]);
   const backgroundColors = ["#26ACA7", "#24A6D9", "#757572", "#8022D9", "#D159D8", "#D85963", "#c5d16d"];
   const [color, setColor] = useState();
   const FSdb = useContext(FSContext);
+  const [ingredients , setIngredients]= useState("")
 
   const Colors = backgroundColors.map((color) => {
     return (
@@ -87,7 +88,7 @@ export const RecipeDetailsModal = ({ item, onUpdate, closeModal }) => {
         />
         <TextInput
           style={styles.input}
-          value={newRecipeIngredients}
+          value={newIngredients}
           onChangeText={setNewRecipeIngredients}
           placeholder="Ingredients"
         />

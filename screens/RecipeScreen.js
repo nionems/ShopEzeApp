@@ -36,6 +36,8 @@ export function RecipeScreen(props) {
     <TouchableOpacity onPress={() => handleItemPress(item)}>
       <View style={styles.recipeItem}>
         <Text style={styles.recipeNameStyle}>{item?.recipeName}</Text>
+        <Text style={styles.ingredientsStyle}>{item?.ingredients}</Text>
+
       </View>
     </TouchableOpacity>
   );
@@ -222,6 +224,12 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
     },
+    ingredientsStyle: {
+      color: "black",
+      fontSize: 20,
+      fontWeight: "bold",
+      textAlign: "center",
+  },
     // container: {
     //     flex: 1,
     //     backgroundColor: "green",
