@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { View, Text, StyleSheet, Modal, ScrollView, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { AddRecipeModal } from "../component/AddRecipeModal";
+import { RecipeDetailsModal } from '../component/RecipeDetailModal';
 import { AntDesign } from '@expo/vector-icons';
 import colors from "../component/Colors";
 import { doc, addDoc, collection, setDoc, getDocs, error,onSnapshot } from "firebase/firestore"
@@ -16,22 +17,37 @@ export function RecipeScreen(props) {
   const [recipeList, setRecipeList] = useState([]);
   const [showListModal, setShowListModal] = useState(false);
   const [loading, setLoading] = useState(true); // Add loading state
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const addRecipeList = async (recipeList) => {
     // Write the list in Firestore
     const ref = await addDoc(collection(FSdb, "recipes"), recipeList);
   };
 
+  const handleItemPress = (item) => {
+    setSelectedItem(item);
+  };
   // const renderRecipeList = ({ item }) => (
   //   <View style={styles.recipeItem}>
   //     <Text style={styles.recipeName}>{item.name}</Text>
   //   </View>
   // );
   const renderRecipeList = ({ item }) => (
-    <View style={styles.recipeItem}>
-      <Text style={styles.recipeNameStyle}>{item?.recipeName }</Text>
-    </View>
+    <TouchableOpacity onPress={() => handleItemPress(item)}>
+      <View style={styles.recipeItem}>
+        <Text style={styles.recipeNameStyle}>{item?.recipeName}</Text>
+      </View>
+    </TouchableOpacity>
   );
+  
+
+  // const RecipeDetailsModal = () => {
+  //   // Use the selectedItem state to display the details in the modal
+    
+  //   return (
+  //     // Modal content goes here
+  //   );
+  // };
   const fetchRecipeList = async () => {
     try {
       const recipeCollectionRef = collection(FSdb, 'recipes');
@@ -61,24 +77,31 @@ export function RecipeScreen(props) {
       console.error('Error fetching recipe list: ', error);
     }
   };
-  
 
   useEffect(() => {
     fetchRecipeList();
   }, []);
 
-  // const render = (loading) => {
-  //   if (loading) {
-  //     return (
-  //       <View style={styles.container}>
-  //         <ActivityIndicator size="large" color={colors.blue} />
-  //       </View>
-  //     );
+
+  // const fetchBackgroundColor = async () => {
+  //   try {
+  //     const backgroundColorDocRef = doc(FSdb, 'settings', 'color');
+  //     const backgroundColorSnapshot = await getDocs(backgroundColorDocRef);
+  
+  //     if (backgroundColorSnapshot.exists()) {
+  //       const color = backgroundColorSnapshot.data().color;
+  //       setBackgroundColor(color);
+  //     } else {
+  //       console.error('Background color document does not exist');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching background color: ', error);
   //   }
-  //   // Add code to handle the case when loading is false
-  //   // You can return a different component or null, depending on your requirements
-  //   return null;
   // };
+  // useEffect(() => {
+  //   fetchBackgroundColor();
+  // }, []);
+
 
   return (
     <ScrollView>
@@ -104,21 +127,31 @@ export function RecipeScreen(props) {
       </View>
       <View style={styles.divider} />
       {loading ? (
-        // <View style={styles.container}>
           <ActivityIndicator size="large" color="black" />
-        // </View>
    
         ) : recipeList.length > 0 ? (
-        <FlatList
+          <FlatList
           data={recipeList}
           keyExtractor={(item) => item.id.toString()}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={renderRecipeList}
         />
-        ) : (
-            <View style={styles.container}>
-          </View>
+      ) : (
+        <Text></Text>
+        // Show empty list message
+      )}
+  
+      {/* Render RecipeDetailsModal when a recipe item is selected */}
+      {selectedItem && (
+        <Modal
+          transparent={true}
+          animationType="slide"
+          visible={true}
+          onRequestClose={() => setSelectedItem(null)}
+        >
+          <RecipeDetailsModal item={selectedItem} closeModal={() => setSelectedItem(null)} />
+        </Modal>
       )}
     </ScrollView>
   );

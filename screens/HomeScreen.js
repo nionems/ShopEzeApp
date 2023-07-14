@@ -83,6 +83,7 @@ export function HomeScreen(props) {
     const renderShoppingList = ({ item }) => (
         <View style={styles.listItem}>
           <Text style={styles.nameStyle}>{item?.name }</Text>
+          
         </View>
       );
 
