@@ -10,6 +10,7 @@ export function AddRecipeModal(props) {
     const [color, setColor] = useState()
     const backgroundColors = ["#26ACA7", "#24A6D9", "#757572", "#8022D9", "#D159D8", "#D85963", "#c5d16d"]
     const ListOwner = useContext( AuthContext )
+    const [ingredients , setIngredients]= useState("")
 
     const createRecipe = () => {
      
@@ -17,7 +18,9 @@ export function AddRecipeModal(props) {
             recipeName: recipeName, 
             color: color, 
             owner: ListOwner.uid,
-            collaborators: [ ListOwner.uid ]
+            collaborators: [ ListOwner.uid ],
+            ingredients: ingredients
+            
         })
         props.closeModal()
     }
@@ -45,6 +48,12 @@ export function AddRecipeModal(props) {
                     placeholder="Recipe Name?"
                     onChangeText={text => setRecipeName(text) }
                 />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Recipe Ingredient?"
+                    onChangeText={text => setIngredients(text) }
+                />
+
 
                 <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>
                     {Colors}
