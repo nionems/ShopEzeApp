@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Modal, ScrollView, TouchableOpacity, FlatList, 
 import { AddRecipeModal } from "../component/AddRecipeModal";
 import { AntDesign } from '@expo/vector-icons';
 import colors from "../component/Colors";
-import { doc, addDoc, collection, setDoc, getDocs, error } from "firebase/firestore"
+import { doc, addDoc, collection, setDoc, getDocs, error,onSnapshot } from "firebase/firestore"
 //context
 import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
@@ -22,26 +22,59 @@ export function RecipeScreen(props) {
     const ref = await addDoc(collection(FSdb, "recipes"), recipeList);
   };
 
+  // const renderRecipeList = ({ item }) => (
+  //   <View style={styles.recipeItem}>
+  //     <Text style={styles.recipeName}>{item.name}</Text>
+  //   </View>
+  // );
   const renderRecipeList = ({ item }) => (
     <View style={styles.recipeItem}>
-      <Text style={styles.recipeName}>{item.name}</Text>
+      <Text style={styles.recipeName}>{item?.recipeName }</Text>
     </View>
   );
-
   const fetchRecipeList = async () => {
     try {
-      const querySnapshot = await getDocs(collection(FSdb, 'recipes'));
+      const recipeCollectionRef = collection(FSdb, 'recipes');
+      const querySnapshot = await getDocs(recipeCollectionRef);
       const fetchedRecipeList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setRecipeList(fetchedRecipeList);
-      setLoading(false); // Set loading state to false after fetching
+      setLoading(false);
       console.log(fetchedRecipeList);
+
+      // Listen for real-time updates
+      const unsubscribe = onSnapshot(recipeCollectionRef, (snapshot) => {
+        const updatedRecipeList = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setRecipeList(updatedRecipeList);
+      });
+
+      // Clean up the listener when the component unmounts
+      return () => {
+        unsubscribe();
+      };
     } catch (error) {
       console.error('Error fetching recipe list: ', error);
     }
   };
+  // const fetchRecipeList = async () => {
+  //   try {
+  //     const querySnapshot = await getDocs(collection(FSdb, 'recipes'));
+  //     const fetchedRecipeList = querySnapshot.docs.map((doc) => ({
+  //       id: doc.id,
+  //       ...doc.data(),
+  //     }));
+  //     setRecipeList(fetchedRecipeList);
+  //     setLoading(false); // Set loading state to false after fetching
+  //     console.log(fetchedRecipeList);
+  //   } catch (error) {
+  //     console.error('Error fetching recipe list: ', error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchRecipeList();
@@ -82,11 +115,11 @@ export function RecipeScreen(props) {
           <Text style={styles.add}>add recipe</Text>
         </TouchableOpacity>
       </View>
-      {/* <View style={styles.divider} /> */}
+      <View style={styles.divider} />
       {loading ? (
-        <View style={styles.container}>
+        // <View style={styles.container}>
           <ActivityIndicator size="large" color="black" />
-        </View>
+        // </View>
    
         ) : recipeList.length > 0 ? (
         <FlatList
@@ -148,13 +181,12 @@ const styles = StyleSheet.create({
         backgroundColor: "#FD8749",
     },
     add: {
-        color: "blue",
+        color: "white",
         textAlign: "center",
         fontSize: 20,
     },
     recipeItem: {
-        backgroundColor: "blue",
-        color:"white",
+        backgroundColor: "#26ACA7",
         padding: 20,
         marginHorizontal: 10,
         marginTop:100,
@@ -162,20 +194,22 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         width: 100, // Adjust the width as needed
+        minWidth:200,
+        minHeight:200,
     },
     recipeName: {
-        color: "orange",
+        color: "white",
         fontSize: 20,
         fontWeight: "bold",
         textAlign: "center",
     },
-    container: {
-        flex: 1,
-        backgroundColor: "green",
-        alignItems: "center",
-        justifyContent: "center",
-        minWidth:150,
-        minHeight:400,
+    // container: {
+    //     flex: 1,
+    //     backgroundColor: "green",
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    //     minWidth:150,
+    //     minHeight:400,
 
-    },
+    // },
 })
