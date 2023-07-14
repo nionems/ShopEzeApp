@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList ,ActivityIndicator} from "react-native";
 import { useNavigation } from "@react-navigation/native"
 import { useEffect, useContext, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from "react-native-gesture-handler";
-import { doc, addDoc, collection, setDoc } from "firebase/firestore"
+import { doc, addDoc, collection, setDoc,onSnapshot,getDocs  } from "firebase/firestore"
 
 //component
 import { SignOutButton } from "../component/SignOutButton";
@@ -29,33 +29,49 @@ export function HomeScreen(props) {
     const [addTobuyVisible, setAddTobuyVisible] = useState(false);
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
+    const [shoppingList, setShoppingList] = useState([]);
 
-    const addList = async (list) => {
+    const addShoppingList = async (list) => {
         // https://firebase.google.com/docs/firestore/manage-data/add-data?hl=en&authuser=0
         // write the list in Firestore
        const ref = await addDoc( collection( FSdb, "lists"), list )
     }
-    
-    // const getLists = async () => {
-        
-    // }
-    const getLists = async () => {
+    const fetchShoppingList = async () => {
         try {
-          const querySnapshot = await getDocs(collection(FSdb, 'lists'));
-          const fetchedLists = [];
-          querySnapshot.forEach((doc) => {
-            const list = { id: doc.id, ...doc.data() };
-            fetchedLists.push(list);
-          });
-          setLists(fetchedLists);
+          const listCollectionRef = collection(FSdb, 'lists');
+          const querySnapshot = await getDocs(listCollectionRef);
+          const fetchedShoppingList = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setShoppingList(fetchedShoppingList);
           setLoading(false);
+          console.log(fetchedShoppingList);
+    
+          // Listen for real-time updates
+          const unsubscribe = onSnapshot(listCollectionRef, (snapshot) => {
+            const updatedShoppingList = snapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setShoppingList(updatedShoppingList);
+          });
+    
+          // Clean up the listener when the component unmounts
+          return () => {
+            unsubscribe();
+          };
         } catch (error) {
-          console.error('Error fetching lists: ', error);
+          console.error('Error fetching shopping list: ', error);
         }
       };
-    //   useEffect(() => {
-    //     getLists();
-    // }, []);
+      
+    
+      useEffect(() => {
+        fetchShoppingList();
+      }, []);
+    
+    
 
 
     // const updateList = (list) => {
@@ -64,21 +80,27 @@ export function HomeScreen(props) {
     //     );
     // };
 
-    
-
-    const renderList = ({ item }) => (
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <ShoppingList list={item} updateList={updateList} />
-        </ScrollView>
+    const renderShoppingList = ({ item }) => (
+        <View style={styles.listItem}>
+          <Text style={styles.nameStyle}>{item?.name }</Text>
+        </View>
       );
 
-    
+      
+
+    // const renderList = ({ item }) => (
+    //     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+    //       <ShoppingList list={item} updateList={updateList} />
+    //     </ScrollView>
+    //   );
     // {
     //     lists.map((list) => (
     //         <Text key={list.id}>{list.name}</Text>
     //     ))
     // }
     //if SignOut the user will be redirected to welcome screen
+
+
     useEffect(() => {
         if (!authStatus) {
             navigation.reset({ index: 0, routes: [{ name: "Welcome" }] })
@@ -104,7 +126,7 @@ export function HomeScreen(props) {
                      visible={showModal}
                      onRequestClose={() => setShowModal(false)}
                      >
-                     <AddListModal closeModal={() => setShowModal(false)} addList={addList}  />
+                     <AddListModal closeModal={() => setShowModal(false)} addShoppingList={addShoppingList}  />
                  </Modal>
 
                 <View style={styles.divider} />
@@ -114,17 +136,24 @@ export function HomeScreen(props) {
                 </TouchableOpacity>
             </View>
 
-            <View style={{ height: 275, paddingLeft: 32, marginTop: 200 }}>
-                
-                <FlatList
-                    data={lists}
-                    keyExtractor={(item) => item.id.toString()} // Use a unique key for each item
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({ item }) => (<ShoppingList list={item} updateList={updateList} />)}
-                    keyboardShouldPersistTaps="always"  
-                />
-            </View>
+            <View style={styles.divider} />
+      {loading ? (
+        // <View style={styles.container}>
+          <ActivityIndicator size="large" color="black" />
+        // </View>
+   
+        ) : shoppingList.length > 0 ? (
+        <FlatList
+          data={shoppingList}
+          keyExtractor={(item) => item.id.toString()}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          renderItem={renderShoppingList}
+        />
+        ) : (
+            <View style={styles.container}>
+          </View>
+      )}
     </ScrollView>
     );
 };
@@ -158,14 +187,14 @@ const styles = StyleSheet.create({
         marginRight: 100,
       },
     
-    container: {
-        flex: 1,
-        backgroundColor: "#ffff",
-        alignItems: "center",
-        justifyContent: "center",
-    },
+    // container: {
+    //     flex: 1,
+    //     backgroundColor: "#ffff",
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    // },
     divider: {
-        backgroundColor: colors.lightBlue,
+        backgroundColor: "black",
         height: 1,
         flex: 1,
         alignSelf: "center",
@@ -191,7 +220,25 @@ const styles = StyleSheet.create({
             color: "white",
             textAlign: "center",
             fontSize:20,
-    }
+    },
+    listItem: {
+        backgroundColor: "#26ACA7",
+        padding: 20,
+        marginHorizontal: 10,
+        marginTop:100,
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        width: 100, // Adjust the width as needed
+        minWidth:200,
+        minHeight:200,
+    },
+    nameStyle: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: "bold",
+        textAlign: "center",
+    },
 })
 
 

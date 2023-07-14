@@ -29,7 +29,7 @@ export function RecipeScreen(props) {
   // );
   const renderRecipeList = ({ item }) => (
     <View style={styles.recipeItem}>
-      <Text style={styles.recipeName}>{item?.recipeName }</Text>
+      <Text style={styles.recipeNameStyle}>{item?.recipeName }</Text>
     </View>
   );
   const fetchRecipeList = async () => {
@@ -61,37 +61,24 @@ export function RecipeScreen(props) {
       console.error('Error fetching recipe list: ', error);
     }
   };
-  // const fetchRecipeList = async () => {
-  //   try {
-  //     const querySnapshot = await getDocs(collection(FSdb, 'recipes'));
-  //     const fetchedRecipeList = querySnapshot.docs.map((doc) => ({
-  //       id: doc.id,
-  //       ...doc.data(),
-  //     }));
-  //     setRecipeList(fetchedRecipeList);
-  //     setLoading(false); // Set loading state to false after fetching
-  //     console.log(fetchedRecipeList);
-  //   } catch (error) {
-  //     console.error('Error fetching recipe list: ', error);
-  //   }
-  // };
+  
 
   useEffect(() => {
     fetchRecipeList();
   }, []);
 
-  const render = (loading) => {
-    if (loading) {
-      return (
-        <View style={styles.container}>
-          <ActivityIndicator size="large" color={colors.blue} />
-        </View>
-      );
-    }
-    // Add code to handle the case when loading is false
-    // You can return a different component or null, depending on your requirements
-    return null;
-  };
+  // const render = (loading) => {
+  //   if (loading) {
+  //     return (
+  //       <View style={styles.container}>
+  //         <ActivityIndicator size="large" color={colors.blue} />
+  //       </View>
+  //     );
+  //   }
+  //   // Add code to handle the case when loading is false
+  //   // You can return a different component or null, depending on your requirements
+  //   return null;
+  // };
 
   return (
     <ScrollView>
@@ -131,7 +118,6 @@ export function RecipeScreen(props) {
         />
         ) : (
             <View style={styles.container}>
-            <Text>No recipes found</Text>
           </View>
       )}
     </ScrollView>
@@ -197,7 +183,7 @@ const styles = StyleSheet.create({
         minWidth:200,
         minHeight:200,
     },
-    recipeName: {
+    recipeNameStyle: {
         color: "white",
         fontSize: 20,
         fontWeight: "bold",

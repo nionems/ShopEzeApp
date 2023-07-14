@@ -42,7 +42,7 @@ export default function App() {
     }
   })
 
-  const addList = (list) => {
+  const addShoppingList = (list) => {
     setLists((prevLists) => [
       ...prevLists,
       { ...list, id: prevLists.length + 1, tobuy: [] },
@@ -148,7 +148,7 @@ export default function App() {
               <AuthContext.Provider value={auth}>
                 <FSContext.Provider value={FBdb}>
                 <TabScreen //{...props} 
-                {...props} handler={addList} 
+                {...props} handler={addShoppingList} 
                 {...props} handler={updateList} 
                 {...props} handler={addRecipeList}
                 {...props} handler={renderList} 
