@@ -10,12 +10,12 @@ import { SignOutButton } from "../component/SignOutButton";
 import colors from "../component/Colors";
 import ShoppingList from "../component/ShoppingList";
 import {AddListModal} from "../component/AddListModal";
-//import ListModal from "../component/ListModal";
+import {ListModal} from "../component/ListModal";
 
 //context
 import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
-//import { FBAuthContext } from "../contexts/FBAuthContext";
+
 
 export function HomeScreen(props) {
 
@@ -30,6 +30,12 @@ export function HomeScreen(props) {
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
     const [shoppingList, setShoppingList] = useState([]);
+    const [selectedItem, setSelectedItem] = useState(null);
+    
+
+    const handleItemPress = (item) => {
+        setSelectedItem(item);
+      };
 
     const addShoppingList = async (list) => {
         // https://firebase.google.com/docs/firestore/manage-data/add-data?hl=en&authuser=0
@@ -81,13 +87,13 @@ export function HomeScreen(props) {
     // };
 
     const renderShoppingList = ({ item }) => (
+        <TouchableOpacity onPress={() => handleItemPress(item)}>
         <View style={styles.listItem}>
           <Text style={styles.nameStyle}>{item?.name }</Text>
-          
         </View>
+        </TouchableOpacity>
       );
-
-      
+     
 
     // const renderList = ({ item }) => (
     //     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -150,21 +156,30 @@ export function HomeScreen(props) {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={renderShoppingList}
-        />
-        ) : (
-            <View style={styles.container}>
-          </View>
-      )}
-    </ScrollView>
+          />
+          ) : (
+            <Text></Text>
+            // Show empty list message
+          )}
+      
+          {/* Render RecipeDetailsModal when a recipe item is selected */}
+          {selectedItem && (
+            <Modal
+              transparent={true}
+              animationType="slide"
+              visible={true}
+              onRequestClose={() => setSelectedItem(null)}
+            >
+              <ListModal item={selectedItem} closeModal={() => setSelectedItem(null)} />
+            </Modal>
+          )}
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
 
-    // page: {
-    //     justifyContent: "center",
-    //     alignItems: "center",
-    // },
+  
     header: {
         flexDirection: "row",
         justifyContent: "space-between",
@@ -188,12 +203,6 @@ const styles = StyleSheet.create({
         marginRight: 100,
       },
     
-    // container: {
-    //     flex: 1,
-    //     backgroundColor: "#ffff",
-    //     alignItems: "center",
-    //     justifyContent: "center",
-    // },
     divider: {
         backgroundColor: "black",
         height: 1,
