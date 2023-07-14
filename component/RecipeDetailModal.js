@@ -75,22 +75,26 @@ export const RecipeDetailsModal = ({ item, onUpdate, closeModal }) => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      {/* <View style={styles.container}> */}
-      <TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={closeModal}>
-        <AntDesign name="close" size={24} color={colors.black} />
-      </TouchableOpacity>
+      
+      
+      <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+          <AntDesign name="close" size={24} color={colors.black} />
+        </TouchableOpacity>
+
+      <Text style={styles.title}> {newRecipeName}</Text>
       <View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
-        <Text style={styles.title}>Recipe Details</Text>
         <TextInput
           style={styles.input}
           value={newRecipeName}
           onChangeText={setNewRecipeName}
+          multiline={true}
         />
         <TextInput
-          style={styles.input}
+          style={styles.inputDetails}
           value={newIngredients}
           onChangeText={setNewRecipeIngredients}
           placeholder="Ingredients"
+          multiline={true}
         />
 
         <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>
@@ -118,12 +122,7 @@ export const RecipeDetailsModal = ({ item, onUpdate, closeModal }) => {
 
 
 const styles = StyleSheet.create({
-    //   container: {
-    //     flex: 1,
-    //     justifyContent: "center",
-    //     alignItems: "center",
-    //     backgroundColor: "lightgrey",
-    //   },
+   
     section: {
         flex: 1,
         alignSelf: "stretch",
@@ -137,44 +136,53 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "800",
         color: "black",
+        alignItems:"center",
+        alignSelf:"center",
+        marginRight:100,
+        marginLeft:100,
+        padding:10,
     },
-
     footer: {
         paddingHorizontal: 32,
         flexDirection: "row",
         alignItems: "center",
     },
-    input: {
-        flex: 1,
-        height: 48,
-        borderWidth: StyleSheet.hairlineWidth,
-        borderRadius: 6,
-        marginRight: 8,
-        paddingHorizontal: 8,
-    },
-
     container: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#f0aa86",
     },
-    title: {
-        fontSize: 28,
-        fontWeight: "800",
-        color: colors.black,
-        alignSelf: "center",
-        marginBottom: 16
-    },
+   
     input: {
         borderWidth: StyleSheet.hairlineWidth,
         borderColor: colors.blue,
         borderRadius: 6,
         height: 50,
-        marginTop: 8,
+        marginTop: 100,
         paddingHorizontal: 16,
-        fontSize: 18
+        fontSize: 18,
+        backgroundColor:"white",
+        textAlign:"center"
     },
+    closeButton: {
+      marginLeft: "auto",
+      padding:10,
+      paddingTop:10,
+    },
+    inputDetails: {
+      borderWidth: StyleSheet.hairlineWidth,
+      borderColor: colors.blue,
+      borderRadius: 6,
+      marginTop: 8,
+      minHeight:350,
+      minWidth:350,
+      fontSize: 18,
+      backgroundColor:"white",
+      textAlign:"center",
+      alignItems:"center",
+      
+  },
     create: {
         marginTop: 24,
         height: 50,
