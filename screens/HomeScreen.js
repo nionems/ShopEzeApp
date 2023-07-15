@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         flex: 2,
         marginRight: 100,
+        shadowOpacity:10,
       },
     
     divider: {
@@ -225,17 +226,20 @@ const styles = StyleSheet.create({
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: "#26ACA7",
+            shadowOpacity:10,
     },
         add: {
             color: "white",
             textAlign: "center",
             fontSize:20,
+            shadowOpacity:10,
     },
     listItem: {
         backgroundColor: "#26ACA7",
         padding: 20,
         marginHorizontal: 10,
         marginTop:100,
+        shadowOpacity: 10,
         borderRadius: 10,
         justifyContent: "center",
         alignItems: "center",
@@ -245,9 +249,10 @@ const styles = StyleSheet.create({
     },
     nameStyle: {
         color: "white",
-        fontSize: 20,
+        fontSize: 40,
         fontWeight: "bold",
         textAlign: "center",
+        shadowOpacity: 10,
     },
 })
 

@@ -81,11 +81,12 @@ const styles = StyleSheet.create({
         fontWeight: "800",
         color: colors.black,
         alignSelf: "center",
-        marginBottom: 16
+        marginBottom: 16,
+       
     },
     input: {
         borderWidth: StyleSheet.hairlineWidth,
-        borderColor: colors.blue,
+        borderColor:"#26ACA7",
         borderRadius: 6,
         height: 50,
         marginTop: 8,

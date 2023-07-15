@@ -177,7 +177,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: "#FD8749",
         fontStyle: "italic",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        shadowOpacity:10,
     },
     divider: {
         backgroundColor: "black",
@@ -200,11 +201,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#FD8749",
+        shadowOpacity:10,
     },
     add: {
         color: "white",
         textAlign: "center",
         fontSize: 20,
+        shadowOpacity:10,
     },
     recipeItem: {
         backgroundColor: "#26ACA7",
@@ -214,19 +217,21 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         justifyContent: "center",
         alignItems: "center",
+        shadowOpacity: 10,
         width: 100, // Adjust the width as needed
         minWidth:200,
         minHeight:200,
     },
     recipeNameStyle: {
         color: "white",
-        fontSize: 20,
+        shadowOpacity: 10,
+        fontSize: 40,
         fontWeight: "bold",
         textAlign: "center",
     },
     ingredientsStyle: {
-      color: "black",
-      fontSize: 20,
+      color: "lightgray",
+      fontSize: 15,
       fontWeight: "bold",
       textAlign: "center",
   },

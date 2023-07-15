@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: 'center',
     color: "#FD8749",
+    shadowOpacity:10,
     fontStyle: "italic",
     fontWeight: "bold"
   },

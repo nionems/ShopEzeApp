@@ -38,7 +38,7 @@ import { Animated } from "react-native";
              
 
             <TouchableOpacity style={styles.modalButton} onPress={() => {}}>
-            <Text style={{ color: "#f0aa86" , fontWeight: "1600",fontSize:24 }}>Add</Text>
+            <Text style={{ color: "#f0aa86" , fontWeight: "600",fontSize:24 }}>Add</Text>
             </TouchableOpacity>
           </View>
           </KeyboardAvoidingView>

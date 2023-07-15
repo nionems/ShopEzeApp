@@ -101,25 +101,23 @@ export const RecipeDetailsModal = ({ item, onUpdate, closeModal }) => {
           {Colors}
         </View>
         <TouchableOpacity
-          style={[styles.create, { backgroundColor: color }]}
+          style={[styles.updateBtn, { backgroundColor: color }]}
           onPress={handleUpdate}
         >
-          <Text style={{ color: "#f0aa86", fontWeight: "1600", fontSize: 24 }}>Update Recipe</Text>
+          <Text style={{ color: "#f0aa86", fontWeight: "600", fontSize: 24 }}>Update Recipe</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.modalDeleteButton} onPress={handleDelete}>
-          <Text style={{ color: "#f0aa86", fontWeight: "1600", fontSize: 24 }}>Delete Recipe</Text>
+          <Text style={{ color: "#f0aa86", fontWeight: "600", fontSize: 24 }}>Delete Recipe</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.modalButton} onPress={() => { }}>
-          <Text style={{ color: "#f0aa86", fontWeight: "1600", fontSize: 24 }}>Cancel</Text>
+          <Text style={{ color: "#f0aa86", fontWeight: "600", fontSize: 24 }}>Cancel</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
 };
-
-
 
 const styles = StyleSheet.create({
    
@@ -133,14 +131,18 @@ const styles = StyleSheet.create({
         borderBottomWidth: 3,
     },
     title: {
-        fontSize: 30,
+        fontSize: 40,
         fontWeight: "800",
-        color: "black",
+        color: "#26ACA7",
+        // backgroundColor:"white",to add color of the recipe created
         alignItems:"center",
         alignSelf:"center",
         marginRight:100,
         marginLeft:100,
-        padding:10,
+        shadowOpacity:10,
+
+   
+        padding:5,
     },
     footer: {
         paddingHorizontal: 32,
@@ -156,39 +158,46 @@ const styles = StyleSheet.create({
    
     input: {
         borderWidth: StyleSheet.hairlineWidth,
-        borderColor: colors.blue,
-        borderRadius: 6,
-        height: 50,
-        marginTop: 100,
-        paddingHorizontal: 16,
+        borderColor: "#26ACA7",
+        borderRadius: 6, 
         fontSize: 18,
-        backgroundColor:"white",
-        textAlign:"center"
+        backgroundColor:"#f0aa86",
+        textAlign:"center",
+        minHeight:30,
+        minWidth:350,
     },
     closeButton: {
       marginLeft: "auto",
       padding:10,
       paddingTop:10,
+      marginTop:100,
+      marginRight:30,
+    
     },
     inputDetails: {
       borderWidth: StyleSheet.hairlineWidth,
-      borderColor: colors.blue,
-      borderRadius: 6,
-      marginTop: 8,
+      borderColor: "#26ACA7",  
+      borderRadius:6,
+      marginTop:5,
       minHeight:350,
       minWidth:350,
       fontSize: 18,
-      backgroundColor:"white",
+      backgroundColor: "#f0aa86",
       textAlign:"center",
       alignItems:"center",
       
   },
-    create: {
+    updateBtn: {
         marginTop: 24,
         height: 50,
         borderRadius: 6,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        shadowOpacity:10,
+        
+
+        
+
     },
     modalButton: {
         marginTop: 24,
@@ -197,6 +206,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#FD8749",
+        shadowOpacity:10,
     },
     modalDeleteButton: {
         marginTop: 24,
@@ -205,6 +215,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "red",
+        shadowOpacity:10,
+
     },
     colorSelect: {
         width: 30,

@@ -25,6 +25,7 @@ export function SignOutButton( props ) {
 const styles = StyleSheet.create({
   button:{
     marginLeft:5,
+    shadowOpacity:10,
     
   }
 })

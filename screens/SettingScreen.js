@@ -228,6 +228,7 @@ const styles = StyleSheet.create({
     color: "#FD8749",
     fontStyle: "italic",
     fontWeight: "bold",
+    shadowOpacity:10,
     flex: 2,
     marginRight: 100,
   },
