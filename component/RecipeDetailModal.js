@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard,Alert } from "react-native";
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import colors from "./Colors";
 import { Swipeable } from "react-native-gesture-handler";
@@ -43,36 +43,49 @@ export const RecipeDetailsModal = ({ item, onUpdate, closeModal }) => {
     }
   };
 
-  const handleDelete = async () => {
-    try {
-      // Call the onDelete function with the recipe ID and Firestore reference
-      await onDelete(item.id, FSdb);
+  const handleDelete = () => {
+    Alert.alert(
+      "Delete Recipe",
+      "Are you sure you want to delete this recipe?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              // Call the onDelete function with the recipe ID, Firestore reference, and closeModal function
+              await onDelete(item.id, FSdb, closeModal);
+            } catch (error) {
+              console.error("Error deleting recipe:", error);
+              // Handle the error appropriately (e.g., show an error message)
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
-      // Close the modal or navigate to a different screen
+  const onDelete = async (recipeId) => {
+    try {
+      // Construct the Firestore document reference
+      const recipeRef = doc(FSdb, "recipes", recipeId);
+  
+      // Delete the document from Firestore
+      await deleteDoc(recipeRef);
+  
+      // Perform any additional actions after successful deletion
+      // (e.g., show a success message, update the UI, etc.)
       closeModal();
     } catch (error) {
       console.error("Error deleting recipe:", error);
       // Handle the error appropriately (e.g., show an error message)
     }
   };
-
-  const onDelete = async (recipeId, db) => {
-    try {
-      // Construct the Firestore document reference
-      const recipeRef = doc(db, "recipes", recipeId);
-
-      // Delete the document from Firestore
-      await deleteDoc(recipeRef);
-
-      // Perform any additional actions after successful deletion
-      // (e.g., show a success message, update the UI, etc.)
-    } catch (error) {
-      console.error("Error deleting recipe:", error);
-      // Handle the error appropriately (e.g., show an error message)
-      throw error;
-    }
-  };
-
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       
