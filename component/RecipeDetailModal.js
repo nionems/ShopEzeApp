@@ -88,9 +88,7 @@ export const RecipeDetailsModal = ({ item, onUpdate, closeModal }) => {
   };
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      
-      
-      <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+      <TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={closeModal}>
           <AntDesign name="close" size={24} color={colors.black} />
         </TouchableOpacity>
 
@@ -147,33 +145,26 @@ const styles = StyleSheet.create({
         fontSize: 40,
         fontWeight: "800",
         color: "#26ACA7",
-        // backgroundColor:"white",to add color of the recipe created
         alignItems:"center",
         alignSelf:"center",
         marginRight:100,
         marginLeft:100,
-        shadowOpacity:10,
+        //shadowOpacity:10,
+     
+    },
 
-   
-        padding:5,
-    },
-    footer: {
-        paddingHorizontal: 32,
-        flexDirection: "row",
-        alignItems: "center",
-    },
     container: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#f0aa86",
+        backgroundColor: "#FD8749",
     },
    
     input: {
         borderWidth: StyleSheet.hairlineWidth,
         borderColor: "#26ACA7",
         borderRadius: 6, 
-        fontSize: 18,
+        fontSize: 20,
         backgroundColor:"#f0aa86",
         textAlign:"center",
         minHeight:30,
@@ -194,24 +185,27 @@ const styles = StyleSheet.create({
       marginTop:5,
       minHeight:350,
       minWidth:350,
-      fontSize: 18,
+      fontSize: 20,
       backgroundColor: "#f0aa86",
       textAlign:"center",
       alignItems:"center",
       
   },
-    updateBtn: {
-        marginTop: 24,
-        height: 50,
-        borderRadius: 6,
-        alignItems: "center",
-        justifyContent: "center",
-        shadowOpacity:10,
-        
-
-        
-
-    },
+    // updateBtn: {
+    //     marginTop: 24,
+    //     height: 50,
+    //     borderRadius: 6,
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    //     shadowOpacity:10,
+    // },
+    updatyeBtn: {
+      marginTop: 24,
+      height: 50,
+      borderRadius: 6,
+      alignItems: "center",
+      justifyContent: "center"
+  },
     modalButton: {
         marginTop: 24,
         height: 50,
@@ -229,7 +223,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "red",
         shadowOpacity:10,
-
     },
     colorSelect: {
         width: 30,
@@ -240,10 +233,9 @@ const styles = StyleSheet.create({
         color: "#78cfcb",
     },
     placeHolderStyle: {
-
         color: colors.grey,
-
-    }
+    },
+    
 });
 
 

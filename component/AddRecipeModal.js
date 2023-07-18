@@ -49,7 +49,7 @@ export function AddRecipeModal(props) {
                     onChangeText={text => setRecipeName(text) }
                 />
                 <TextInput
-                    style={styles.input}
+                    style={styles.inputDetails}
                     placeholder="Recipe Ingredient?"
                     onChangeText={text => setIngredients(text) }
                 />
@@ -70,28 +70,54 @@ export function AddRecipeModal(props) {
     )
 }
 const styles = StyleSheet.create({
+    section: {
+        flex: 1,
+        alignSelf: "stretch",
+    },
+    header: {
+        justifyContent: "flex-end",
+        marginLeft: 64,
+        borderBottomWidth: 3,
+    },
+    title: {
+        fontSize: 38,
+        fontWeight: "800",
+        color: "#26ACA7",
+        alignItems:"center",
+        alignSelf:"center",
+        marginBottom:10,
+       // shadowOpacity:10,
+     
+    },
+
     container: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#f0aa86",
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: "800",
-        color: colors.black,
-        alignSelf: "center",
-        marginBottom: 16,
-       
+        backgroundColor: "#FD8749",
     },
     input: {
         borderWidth: StyleSheet.hairlineWidth,
-        borderColor:"#26ACA7",
-        borderRadius: 6,
-        height: 50,
-        marginTop: 8,
-        paddingHorizontal: 16,
-        fontSize: 18
+        borderColor: "#26ACA7",
+        borderRadius: 6, 
+        fontSize: 18,
+        backgroundColor:"#f0aa86",
+        textAlign:"center",
+        minHeight:30,
+        minWidth:350,
+    },
+    inputDetails: {
+        borderWidth: StyleSheet.hairlineWidth,
+        borderColor: "#26ACA7",  
+        borderRadius:6,
+        marginTop:5,
+        minHeight:350,
+        minWidth:350,
+        fontSize: 20,
+        backgroundColor: "#f0aa86",
+        textAlign:"center",
+        alignItems:"center",
+        
     },
     create: {
         marginTop: 24,
@@ -104,7 +130,8 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         borderRadius: 4
-    }
+    },
+    
 });
 
 
