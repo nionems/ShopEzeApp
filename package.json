@@ -18,7 +18,7 @@
     "@react-navigation/native-stack": "^6.9.12",
     "@unimodules/core": "^7.1.2",
     "colors": "^1.4.0",
-    "expo": "^48.0.19",
+    "expo": "^48.0.20",
     "expo-asset": "~8.9.1",
     "expo-barcode-scanner": "~12.3.2",
     "expo-camera": "~13.2.1",
@@ -44,7 +44,8 @@
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.18.12",
-    "react-navigation": "^4.4.4"
+    "react-navigation": "^4.4.4",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

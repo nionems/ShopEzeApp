@@ -1,53 +1,91 @@
-
 import React, { useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard } from "react-native";
-import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import colors from "./Colors";
-import { Swipeable } from "react-native-gesture-handler";
-import { Animated } from "react-native";
 
+export const ListModal = ({ name, list, onUpdate, closeModal }) => {
+  const [newItem, setNewItem] = useState("");
+  const [listItems, setListItems] = useState(list.items);
+  
 
+  const addNewItem = () => {
+    if (newItem.trim() !== "") {
+      setListItems(prevItems => [...prevItems, { title: newItem }]);
+      setNewItem("");
+      Keyboard.dismiss();
+    }
+  };
 
+  const renderItem = ({ item, index }) => (
+    <TouchableOpacity
+      onPress={() => {
+        // Handle item press
+      }}
+      onLongPress={() => {
+        // Handle item long press
+      }}
+    >
+      <View style={styles.itemContainer}>
+        <AntDesign
+          name="checkcircle"
+          size={24}
+          color="green"
+        />
+        <Text style={styles.itemText}>{item.title}</Text>
+      </View>
+    </TouchableOpacity>
+  );
 
-    export const ListModal= ({ item, onUpdate,closeModal }) => {
+  return (
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <SafeAreaView style={styles.container}>
+        <TouchableOpacity
+          style={{ position: "absolute", top: 64, right: 32, zIndex: 10 }}
+          onPress={closeModal}
+        >
+          <AntDesign name="close" size={24} color={colors.black} />
+        </TouchableOpacity>
 
-
-        const [tobuyCount, setTobuyCount] = useState('');
-
- 
-
-        const [name, setName] = useState()
-
-
-       
-        
-      
-        return (
-            <KeyboardAvoidingView style={styles.container} behavior="padding">
-               <TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={closeModal}>
-                <AntDesign name="close" size={24} color={colors.black} />
-            </TouchableOpacity>
-            <View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>   
-            <Text style={styles.title}>Recipe Details</Text>
-            
-            
-            <TextInput
-              style={styles.input}
-             
-            />
-             
-
-            <TouchableOpacity style={styles.modalButton} onPress={() => {}}>
-            <Text style={{ color: "#f0aa86" , fontWeight: "600",fontSize:24 }}>Add</Text>
-            </TouchableOpacity>
+        <View style={[styles.section, styles.header, { borderBottomColor: list.color }]}>
+          <View>
+            <Text style={styles.title}>{name}</Text>
           </View>
-          </KeyboardAvoidingView>
-        );
-      };
-      
+        </View>
+
+        <View style={[styles.section, { flex: 3, marginVertical: 16 }]}>
+          <FlatList
+            data={listItems}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+            contentContainerStyle={{ paddingHorizontal: 32, paddingVertical: 64 }}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
+
+        <KeyboardAvoidingView style={[styles.section, styles.footer]} behavior="padding">
+          <TextInput
+            style={[styles.input, { borderColor: list.color }]}
+            placeholder="Add new item..."
+            onChangeText={setNewItem}
+            value={newItem}
+          />
+
+          <TouchableOpacity style={[styles.addButton, { backgroundColor: list.color }]} onPress={addNewItem}>
+            <AntDesign name="plus" size={16} color={colors.white} />
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
+  );
+};
 
 const styles = StyleSheet.create({
-
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "lightgrey",
+  },
   section: {
     flex: 1,
     alignSelf: "stretch",
@@ -55,18 +93,17 @@ const styles = StyleSheet.create({
   header: {
     justifyContent: "flex-end",
     marginLeft: 64,
-    borderBottomWidth: 3,
+    borderBottomWidth: 3
   },
   title: {
     fontSize: 30,
     fontWeight: "800",
     color: "black",
   },
-  
   footer: {
     paddingHorizontal: 32,
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "center"
   },
   input: {
     flex: 1,
@@ -76,60 +113,26 @@ const styles = StyleSheet.create({
     marginRight: 8,
     paddingHorizontal: 8,
   },
-
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor:"#f0aa86",
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: "800",
-        color: colors.black,
-        alignSelf: "center",
-        marginBottom: 16
-    },
-    input: {
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: colors.blue,
-        borderRadius: 6,
-        height: 50,
-        marginTop: 8,
-        paddingHorizontal: 16,
-        fontSize: 18
-    },
-    create: {
-        marginTop: 24,
-        height: 50,
-        borderRadius: 6,
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    modalButton: {
-        marginBottom: 24,
-        height: 50,
-        borderRadius: 6,
-        alignItems: "center",
-        justifyContent: "flex-end",
-        backgroundColor:"#FD8749",
-    },
-   
-    colorSelect: {
-        width: 30,
-        height: 30,
-        borderRadius: 4,
-    },
-    modalButtonText:{
-        color:"#78cfcb",
-    }
-    
+  addButton: {
+    borderRadius: 4,
+    padding: 16,
+    alignItems: 'center',
+    justifyContent: "center"
+  },
+  itemContainer: {
+    paddingVertical: 16,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  itemText: {
+    color: colors.black,
+    fontWeight: "700",
+    fontSize: 16,
+    marginLeft: 16,
+  },
 });
 
-
-
-
-
+export default ListModal;
 
 
 

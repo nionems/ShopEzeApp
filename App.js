@@ -70,6 +70,36 @@ export default function App() {
     );
   };
 
+  const handleUpdate = async () => {
+    try {
+      const updatedList = {
+        name: listName,
+        tobuy: listItems,
+      };
+
+      onUpdate(item.id, updatedList);
+      closeModal();
+    } catch (error) {
+      console.error("Error updating shopping list:", error);
+    }
+  };
+
+  const handleAddItem = () => {
+    if (newItem.trim() !== "") {
+      const newItemObj = {
+        id: counter, // Use the counter as the ID
+        name: newItem.trim(),
+        completed: false,
+      };
+      setList((prevList) => {
+        return { ...prevList, tobuy: [...prevList.tobuy, newItemObj] };
+      });
+      setNewItem("");
+      setCounter((prevCounter) => prevCounter + 1); // Increment the counter
+      Keyboard.dismiss();
+    }
+  };
+
   const renderList = (list) => {
     return <TobuyList list={list} updateList={this.updateList} />;
   };
@@ -153,7 +183,7 @@ export default function App() {
             <FBAuthContext.Provider value={FBauth} >
               <AuthContext.Provider value={auth}>
                 <FSContext.Provider value={FBdb}>
-                <TabScreen {...props} {...props} handler={addList} {...props} handler={updateList} {...props} handler={renderList} />
+                <TabScreen {...props} {...props} handler={addList} {...props} handler={updateList} {...props} handler={renderList} {...props}/>
                 </FSContext.Provider>
               </AuthContext.Provider>
             </FBAuthContext.Provider>

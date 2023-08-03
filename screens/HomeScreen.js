@@ -35,9 +35,9 @@ export function HomeScreen(props) {
     const [selectedItem, setSelectedItem] = useState(null);
     
 
-    const handleItemPress = (item) => {
-        setSelectedItem(item);
-      };
+   const handleItemPress = (item) => {
+  setSelectedItem(item);
+};
       const addList = async (list) => {
         // https://firebase.google.com/docs/firestore/manage-data/add-data?hl=en&authuser=0
         // write the list in Firestore
@@ -81,12 +81,6 @@ export function HomeScreen(props) {
     
     
 
-
-    // const updateList = (list) => {
-    //     setLists((prevLists) =>
-    //         prevLists.map((item) => (item.id === list.id ? list : item))
-    //     );
-    // };
 
     const renderShoppingList = ({ item }) => (
         <TouchableOpacity onPress={() => handleItemPress(item)}>
@@ -171,9 +165,11 @@ export function HomeScreen(props) {
               transparent={true}
               animationType="slide"
               visible={true}
-              onRequestClose={() => setSelectedItem(null)}
+              //onRequestClose={() => setSelectedItem(null)}
+              onRequestClose={() => setShowModal(false)}
             >
-              <ListModal item={selectedItem} closeModal={() => setSelectedItem(null)} />
+             <ListModal name="My List" list={{ items: [], color: "green" }} closeModal={() => {}} />
+
             </Modal>
           )}
         </ScrollView>
