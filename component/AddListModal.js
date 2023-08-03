@@ -5,6 +5,7 @@ import colors from "../component/Colors";
 import { AuthContext } from "../contexts/AuthContext";
 import {ListModal} from "../component/ListModal";
 
+
 export function AddListModal(props) {
 
     const [name, setName] = useState()
@@ -23,10 +24,8 @@ export function AddListModal(props) {
         })
         props.closeModal()
         setShowListModal(true);
-                     
-     
     }
-
+    
     const Colors = backgroundColors.map( ( color ) => {
         return (
             <TouchableOpacity

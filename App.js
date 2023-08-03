@@ -22,6 +22,7 @@ import { firebaseConfig } from './config/Config';
 import { initializeApp } from 'firebase/app'
 import {getAuth,createUserWithEmailAndPassword,fetchSignInMethodsForEmail,onAuthStateChanged,signOut,signInWithEmailAndPassword} from "firebase/auth"
 import {getFirestore,doc,setDoc,addDoc,collection,query,where,onSnapshot} from 'firebase/firestore'
+import { AddListModal } from './component/AddListModal';
 
 const Stack = createNativeStackNavigator();
 const FBapp = initializeApp(firebaseConfig)
@@ -42,7 +43,13 @@ export default function App() {
     }
   })
 
-  const addShoppingList = (list) => {
+  // const addShoppingList = (list) => {
+  //   setLists((prevLists) => [
+  //     ...prevLists,
+  //     { ...list, id: prevLists.length + 1, tobuy: [] },
+  //   ]);
+  // };
+  const addList = (list) => {
     setLists((prevLists) => [
       ...prevLists,
       { ...list, id: prevLists.length + 1, tobuy: [] },
@@ -140,14 +147,25 @@ export default function App() {
             </AuthContext.Provider>
           }
         </Stack.Screen>
-
         <Stack.Screen name="Home" options={{ headerShown: false }}>
           {(props) =>
           
             <FBAuthContext.Provider value={FBauth} >
               <AuthContext.Provider value={auth}>
                 <FSContext.Provider value={FBdb}>
-                <TabScreen //{...props} 
+                <TabScreen {...props} {...props} handler={addList} {...props} handler={updateList} {...props} handler={renderList} />
+                </FSContext.Provider>
+              </AuthContext.Provider>
+            </FBAuthContext.Provider>
+          }
+        </Stack.Screen>
+        {/* <Stack.Screen name="Home" options={{ headerShown: false }}>
+          {(props) =>
+          
+            <FBAuthContext.Provider value={FBauth} >
+              <AuthContext.Provider value={auth}>
+                <FSContext.Provider value={FBdb}>
+                <TabScreen
                 {...props} handler={addShoppingList} 
                 {...props} handler={updateList} 
                 {...props} handler={addRecipeList}
@@ -157,7 +175,7 @@ export default function App() {
               </AuthContext.Provider>
             </FBAuthContext.Provider>
           }
-        </Stack.Screen>
+        </Stack.Screen> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

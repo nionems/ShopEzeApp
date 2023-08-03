@@ -9,8 +9,10 @@ import { doc, addDoc, collection, setDoc,onSnapshot,getDocs  } from "firebase/fi
 import { SignOutButton } from "../component/SignOutButton";
 import colors from "../component/Colors";
 import ShoppingList from "../component/ShoppingList";
-import {AddListModal} from "../component/AddListModal";
 import {ListModal} from "../component/ListModal";
+import { addShoppingList } from "../component/AddListModal";
+import { AddListModal } from "../component/AddListModal";
+
 
 //context
 import { AuthContext } from "../contexts/AuthContext";
@@ -36,12 +38,12 @@ export function HomeScreen(props) {
     const handleItemPress = (item) => {
         setSelectedItem(item);
       };
-
-    const addShoppingList = async (list) => {
+      const addList = async (list) => {
         // https://firebase.google.com/docs/firestore/manage-data/add-data?hl=en&authuser=0
         // write the list in Firestore
        const ref = await addDoc( collection( FSdb, "lists"), list )
     }
+
     const fetchShoppingList = async () => {
         try {
           const listCollectionRef = collection(FSdb, 'lists');
@@ -128,14 +130,15 @@ export function HomeScreen(props) {
                  <Text style={styles.headerTitle}>My Lists</Text>
                  </View>
                  <Modal
-                     transparent={false}
-                     animationType="slide"
-                     visible={showModal}
-                     onRequestClose={() => setShowModal(false)}
-                     >
-                     <AddListModal closeModal={() => setShowModal(false)} addShoppingList={addShoppingList}  />
-                 </Modal>
-
+  transparent={false}
+  animationType="slide"
+  visible={showModal}
+  onRequestClose={() => setShowModal(false)}
+>
+  {/* Change addList to addShoppingList */}
+  <AddListModal closeModal={() => setShowModal(false)} addList={addList} />
+</Modal>
+                
                 <View style={styles.divider} />
                 <TouchableOpacity style={styles.addList} onPress={() => setShowModal(true)}>
                     <AntDesign name="plus" color={"white"} size={24} />
