@@ -24,26 +24,26 @@ export function SettingScreen() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
-  const handleLogoPress = async () => {
-    try {
-      const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  // const handleLogoPress = async () => {
+  //   try {
+  //     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-      if (permissionResult.granted === false) {
-        throw new Error('Permission to access the camera roll is required.');
-      }
+  //     if (permissionResult.granted === false) {
+  //       throw new Error('Permission to access the camera roll is required.');
+  //     }
 
-      const pickerResult = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        quality: 1.0,
-      });
+  //     const pickerResult = await ImagePicker.launchImageLibraryAsync({
+  //       mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //       quality: 1.0,
+  //     });
 
-      if (!pickerResult.cancelled) {
-        setProfilePicture(pickerResult.uri);
-      }
-    } catch (error) {
-      Alert.alert('Error', error.message);
-    }
-  };
+  //     if (!pickerResult.cancelled) {
+  //       setProfilePicture(pickerResult.uri);
+  //     }
+  //   } catch (error) {
+  //     Alert.alert('Error', error.message);
+  //   }
+  // };
 
 
   const handleChangePassword = () => {
@@ -76,26 +76,26 @@ export function SettingScreen() {
   };
 
 
-  const handleUpdateProfile = () => {
-    // Get the current user
-    const user = firebase.auth().currentUser;
+  // const handleUpdateProfile = () => {
+  //   // Get the current user
+  //   const user = firebase.auth().currentUser;
 
-    if (user) {
-      // Update the user document in the Firestore collection
-      fs.collection("users").doc(user.uid).update({
-        name: name,
-        lastName: lastName,
-        nickname: nickname,
-      })
-        .then(() => {
-          Alert.alert('Success', 'Profile updated successfully.');
-          // You can perform additional actions after updating the profile
-        })
-        .catch((error) => {
-          Alert.alert('Error', error.message);
-        });
-    }
-  };
+  //   if (user) {
+  //     // Update the user document in the Firestore collection
+  //     fs.collection("users").doc(user.uid).update({
+  //       name: name,
+  //       lastName: lastName,
+  //       nickname: nickname,
+  //     })
+  //       .then(() => {
+  //         Alert.alert('Success', 'Profile updated successfully.');
+  //         // You can perform additional actions after updating the profile
+  //       })
+  //       .catch((error) => {
+  //         Alert.alert('Error', error.message);
+  //       });
+  //   }
+  // };
 
   const renderProfilePicture = () => {
     if (profilePicture) {
@@ -139,31 +139,15 @@ export function SettingScreen() {
         <Text style={styles.headerTitle}>Settings</Text>
       </View>
       <View style={styles.container}>
-        <TouchableOpacity onPress={handleLogoPress}>
+        <TouchableOpacity>
           {selectedImage ? (
             <Image source={{ avatar }} style={styles.avatar} />
           ) : (
             renderProfilePicture()
           )}
         </TouchableOpacity>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your name"
-          value={name}
-          onChangeText={setName}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your last name"
-          value={lastName}
-          onChangeText={setLastName}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your nickname"
-          value={nickname}
-          onChangeText={setNickname}
-        />
+        
+        
         <View style={styles.container}>
           <TextInput
             style={styles.input}
@@ -189,12 +173,7 @@ export function SettingScreen() {
 
       </View>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleUpdateProfile}>
-        <Text style={styles.buttonText}>Update Profile</Text>
-      </TouchableOpacity>
-
+      
       <TouchableOpacity
         style={styles.buttonDelete}
         onPress={handleDeleteProfile}>
