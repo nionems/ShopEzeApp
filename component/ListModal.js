@@ -1,358 +1,261 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard } from "react-native";
-import { AntDesign } from '@expo/vector-icons';
+import React, { useContext, useEffect, useState } from "react";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard, Modal } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 import colors from "./Colors";
+import { doc, addDoc, deleteDoc, arrayRemove, arrayUnion, updateDoc, onSnapshot } from "firebase/firestore";
+import { FSContext } from "../contexts/FSContext";
+import { v4 as uuidv4 } from "uuid";
+import Checkbox from "expo-checkbox";
+import { useNavigation } from "@react-navigation/native";
 
-export const ListModal = ({ name, list, onUpdate, closeModal }) => {
-  const [newItem, setNewItem] = useState("");
-  const [listItems, setListItems] = useState(list.items);
-  
+import { EditListModal } from "./EditListModal";
+import { AddCollabModal } from "./AddCollaborator";
 
-  const addNewItem = () => {
-    if (newItem.trim() !== "") {
-      setListItems(prevItems => [...prevItems, { title: newItem }]);
-      setNewItem("");
-      Keyboard.dismiss();
-    }
-  };
+function lightenColor(colorHex, lightenAmount) {
+	const red = parseInt(colorHex.slice(1, 3), 16);
+	const green = parseInt(colorHex.slice(3, 5), 16);
+	const blue = parseInt(colorHex.slice(5, 7), 16);
 
-  const renderItem = ({ item, index }) => (
-    <TouchableOpacity
-      onPress={() => {
-        // Handle item press
-      }}
-      onLongPress={() => {
-        // Handle item long press
-      }}
-    >
-      <View style={styles.itemContainer}>
-        <AntDesign
-          name="checkcircle"
-          size={24}
-          color="green"
-        />
-        <Text style={styles.itemText}>{item.title}</Text>
-      </View>
-    </TouchableOpacity>
-  );
+	const newRed = Math.min(Math.round(red + lightenAmount * (255 - red)), 255);
+	const newGreen = Math.min(Math.round(green + lightenAmount * (255 - green)), 255);
+	const newBlue = Math.min(Math.round(blue + lightenAmount * (255 - blue)), 255);
+	const newColorHex = "#" + [newRed, newGreen, newBlue].map((color) => color.toString(16).padStart(2, "0")).join("");
+	return newColorHex;
+}
 
-  return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-      <SafeAreaView style={styles.container}>
-        <TouchableOpacity
-          style={{ position: "absolute", top: 64, right: 32, zIndex: 10 }}
-          onPress={closeModal}
-        >
-          <AntDesign name="close" size={24} color={colors.black} />
-        </TouchableOpacity>
+export const ListModal = ({ list, closeModal }) => {
+	const [listItems, setListItems] = useState([]);
+	const [listData, setListData] = useState(list);
+	const [showModal, setShowModal] = useState(false);
+	const [newItem, setNewItem] = useState("");
+	const [showCollabModal, setCollabModal] = useState(false);
 
-        <View style={[styles.section, styles.header, { borderBottomColor: list.color }]}>
-          <View>
-            <Text style={styles.title}>{name}</Text>
-          </View>
-        </View>
+	const FSdb = useContext(FSContext);
 
-        <View style={[styles.section, { flex: 3, marginVertical: 16 }]}>
-          <FlatList
-            data={listItems}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()}
-            contentContainerStyle={{ paddingHorizontal: 32, paddingVertical: 64 }}
-            showsVerticalScrollIndicator={false}
-          />
-        </View>
+	const addNewItem = () => {
+		if (newItem.trim() !== "") {
+			const toAdd = { title: newItem, id: uuidv4(), status: false };
+			addListItem(list.id, toAdd);
+			setNewItem("");
+			Keyboard.dismiss();
+		}
+	};
 
-        <KeyboardAvoidingView style={[styles.section, styles.footer]} behavior="padding">
-          <TextInput
-            style={[styles.input, { borderColor: list.color }]}
-            placeholder="Add new item..."
-            onChangeText={setNewItem}
-            value={newItem}
-          />
+	const addListItem = async (listId, newItem) => {
+		// Get the reference to the specific list document
+		const listRef = doc(FSdb, "lists", listId);
 
-          <TouchableOpacity style={[styles.addButton, { backgroundColor: list.color }]} onPress={addNewItem}>
-            <AntDesign name="plus" size={16} color={colors.white} />
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
-  );
+		// Update the list document to add the new item to the listItems array
+		await updateDoc(listRef, {
+			listItems: arrayUnion(newItem),
+		});
+	};
+
+	const removeListItem = async (listId, item) => {
+		console.log("delte", listId, item);
+		const listRef = doc(FSdb, "lists", listId);
+		await updateDoc(listRef, {
+			listItems: arrayRemove(item),
+		});
+	};
+
+	const updateItemStatus = async (listId, itemId, newStatus) => {
+		const listRef = doc(FSdb, "lists", listId);
+		await updateDoc(listRef, {
+			listItems: listData.listItems.map((item) => {
+				if (item.id === itemId) {
+					return { ...item, status: newStatus };
+				}
+				return item;
+			}),
+		});
+	};
+
+	const handleItemToggle = async (itemId, newStatus) => {
+		console.log("cjececlkasd0", itemId, newStatus);
+		await updateItemStatus(list.id, itemId, newStatus);
+	};
+
+	const editList = async (update) => {
+		console.log("toeud", list);
+		updateTitleAndColor(list.id, update);
+	};
+	const updateTitleAndColor = async (listId, update) => {
+		const listRef = doc(FSdb, "lists", listId);
+		await updateDoc(listRef, update);
+	};
+
+	const deleteDocById = async () => {
+		try {
+			// Assuming you have the correct reference to your Firestore database
+			const docRef = doc(FSdb, "lists", list.id);
+
+			// Delete the document
+			await deleteDoc(docRef);
+			console.log("Document deleted successfully.");
+		} catch (error) {
+			console.error("Error deleting document:", error);
+		}
+	};
+	const renderItem = ({ item, index }) => (
+		<View style={styles.itemContainer}>
+			<View style={{ flexDirection: "row", alignContent: "center", justifyContent: "center" }}>
+				<Checkbox style={{ borderRadius: 10 }} pa color={listData.color} value={item.status} onValueChange={(newValue) => handleItemToggle(item.id, newValue)} />
+				<Text style={styles.itemText}>{item.title}</Text>
+			</View>
+			<TouchableOpacity onPress={() => removeListItem(list.id, item)}>
+				<AntDesign name="delete" size={24} color={lightenColor(listData?.color, 0.4)} />
+			</TouchableOpacity>
+		</View>
+	);
+
+	useEffect(() => {
+		const documentRef = doc(FSdb, "lists", list.id);
+
+		const unsubscribe = onSnapshot(documentRef, (snapshot) => {
+			if (snapshot.exists()) {
+				setListData(snapshot.data());
+			} else {
+				setListItems([]);
+			}
+		});
+
+		return () => {
+			unsubscribe();
+		};
+	}, [list.id]);
+	return (
+		<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+			<SafeAreaView style={[styles.container, { backgroundColor: lightenColor(listData?.color, 0.9) }]}>
+				<View style={{ flexDirection: "row", justifyContent: "space-between", width: "90%" }}>
+					<View style={{ flexDirection: "row" }}>
+						<TouchableOpacity
+							style={{}}
+							onPress={() => {
+								console.log("called");
+								setShowModal(true);
+							}}
+						>
+							<AntDesign name="edit" size={24} color={lightenColor(listData?.color, 0.4)} />
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={{ marginHorizontal: "15%" }}
+							onPress={() => {
+								console.log("called");
+								setCollabModal(true);
+							}}
+						>
+							<AntDesign name="adduser" size={24} color={lightenColor(listData?.color, 0.4)} />
+						</TouchableOpacity>
+						<TouchableOpacity
+							onPress={() => {
+								console.log("called");
+								deleteDocById();
+								closeModal();
+							}}
+						>
+							<AntDesign name="delete" size={24} color={lightenColor(listData?.color, 0.4)} />
+						</TouchableOpacity>
+					</View>
+					<TouchableOpacity
+						style={{}}
+						onPress={() => {
+							console.log("called");
+							closeModal();
+						}}
+					>
+						<AntDesign name="close" size={24} color={lightenColor(listData?.color, 0.4)} />
+					</TouchableOpacity>
+				</View>
+
+				<View style={[styles.section, styles.header, { borderBottomColor: listData?.color }]}>
+					<View>
+						<Text style={styles.title}>{listData?.name}</Text>
+					</View>
+				</View>
+
+				<View style={[styles.section, { flex: 7, marginVertical: 16 }]}>
+					<FlatList
+						data={listData?.listItems}
+						renderItem={renderItem}
+						keyExtractor={(item, index) => index.toString()}
+						contentContainerStyle={{ paddingHorizontal: 32 }}
+						showsVerticalScrollIndicator={false}
+					/>
+				</View>
+
+				<KeyboardAvoidingView style={[styles.section, styles.footer]} behavior="padding">
+					<TextInput style={[styles.input, { borderColor: list.color }]} placeholder="Add new item..." onChangeText={setNewItem} value={newItem} />
+
+					<TouchableOpacity style={[styles.addButton, { backgroundColor: list.color }]} onPress={addNewItem}>
+						<AntDesign name="plus" size={16} color={colors.white} />
+					</TouchableOpacity>
+					<Modal transparent={false} animationType="slide" visible={showModal} onRequestClose={() => setShowModal(false)}>
+						{/* Change addList to addShoppingList */}
+						<EditListModal closeModal={() => setShowModal(false)} addList={editList} data={listData} />
+					</Modal>
+					<Modal transparent={false} animationType="slide" visible={showCollabModal} onRequestClose={() => setCollabModal(false)}>
+						{/* Change addList to addShoppingList */}
+						<AddCollabModal closeModal={() => setCollabModal(false)} addList={editList} data={list} />
+					</Modal>
+				</KeyboardAvoidingView>
+			</SafeAreaView>
+		</KeyboardAvoidingView>
+	);
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "lightgrey",
-  },
-  section: {
-    flex: 1,
-    alignSelf: "stretch",
-  },
-  header: {
-    justifyContent: "flex-end",
-    marginLeft: 64,
-    borderBottomWidth: 3
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: "800",
-    color: "black",
-  },
-  footer: {
-    paddingHorizontal: 32,
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  input: {
-    flex: 1,
-    height: 48,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 6,
-    marginRight: 8,
-    paddingHorizontal: 8,
-  },
-  addButton: {
-    borderRadius: 4,
-    padding: 16,
-    alignItems: 'center',
-    justifyContent: "center"
-  },
-  itemContainer: {
-    paddingVertical: 16,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  itemText: {
-    color: colors.black,
-    fontWeight: "700",
-    fontSize: 16,
-    marginLeft: 16,
-  },
+	container: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	section: {
+		flex: 1,
+		alignSelf: "stretch",
+		// backgroundColor: "pink",
+	},
+	header: {
+		justifyContent: "flex-end",
+		marginLeft: 64,
+		borderBottomWidth: 3,
+	},
+	title: {
+		fontSize: 30,
+		fontWeight: "800",
+		color: "black",
+		// backgroundColor: "yellow",
+	},
+	footer: {
+		paddingHorizontal: 32,
+		flexDirection: "row",
+		alignItems: "center",
+	},
+	input: {
+		flex: 1,
+		height: 48,
+		borderWidth: StyleSheet.hairlineWidth,
+		borderRadius: 6,
+		marginRight: 8,
+		paddingHorizontal: 8,
+	},
+	addButton: {
+		borderRadius: 4,
+		padding: 16,
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	itemContainer: {
+		paddingVertical: 16,
+		flexDirection: "row",
+		justifyContent: "space-between",
+	},
+	itemText: {
+		color: colors.black,
+		fontWeight: "700",
+		fontSize: 16,
+		marginLeft: 16,
+	},
 });
 
 export default ListModal;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export default class ListModal extends React.Component {
-    
-//     state = {
-//         newTobuy: ""
-//     };
-//     toggleTobuyCompleted = index => {
-//         let list = this.props.list;
-//         list.tobuy[index].completed = !list.tobuy[index].completed;
-//         this.props.updateList(list);
-//     };
-
-//     addTobuy = () => {
-//         let list = this.props.list;
-
-//         if (!list.tobuy.some(tobuy => tobuy.title === this.state.newTobuy)) {
-//             list.tobuy.push({ title: this.state.newTobuy, completed: false });
-//             this.props.updateList(list);
-//         }
-
-//         this.setState({ newTobuy: "" });
-//         Keyboard.dismiss();
-//     };
-
-//     deleteTobuy = index => {
-//         const list = this.props.list;
-//         const updatedTobuy = [...list.tobuy];
-//         updatedTobuy.splice(index, 1);
-      
-//         const updatedList = { ...list, tobuy: updatedTobuy };
-//         this.props.updateList(updatedList);
-//       };
-      
-//       renderTobuy = (tobuy, index) => {
-//         return (
-//           <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)} onSwipeableRightOpen={() => this.deleteTobuy(index)}>
-//             <View style={styles.tobuyContainer}>
-//               <TouchableOpacity onPress={() => this.toggleTobuyCompleted(index)}>
-//                 <Ionicons
-//                   name={tobuy.completed ? "ios-square" : "ios-square-outline"}
-//                   size={24}
-//                   color={colors.gray}
-//                   style={{ width: 32 }}
-//                 />
-//               </TouchableOpacity>
-      
-//               <Text
-//                 style={[
-//                   styles.tobuy,
-//                   {
-//                     textDecorationLine: tobuy.completed ? "line-through" : "none",
-//                     color: tobuy.completed ? colors.gray : colors.black
-//                   }
-//                 ]}
-//               >
-//                 {tobuy.title}
-//               </Text>
-//             </View>
-//           </Swipeable>
-//         );
-//       };
-//     rightActions = (dragX, index) => {
-//         const scale = dragX.interpolate({
-//             inputRange: [-100, 0],
-//             outputRange: [1, 0.9],
-//             extrapolate: "clamp"
-//         });
-
-//         const opacity = dragX.interpolate({
-//             inputRange: [-100, -20, 0],
-//             outputRange: [1, 0.9, 0],
-//             extrapolate: "clamp"
-//         });
-
-//         return (
-//             <TouchableOpacity onPress={() => this.deleteTobuy(index)}>
-//                 <Animated.View style={[styles.deleteButton, { opacity: opacity }]}>
-//                     <Animated.Text style={{ color: colors.white, fontWeight: "800", transform: [{ scale }] }}>
-//                         Delete
-//                     </Animated.Text>
-//                 </Animated.View>
-//             </TouchableOpacity>
-//         );
-//     };
-
-
-
-
-
-//     render() {
-
-//         const list = this.props.list
-
-//         const tobuyCount = list.tobuy.length
-//         const completedCount = list.tobuy.filter(tobuy => tobuy.completed).length;
-
-//         return (
-//             <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-//             <SafeAreaView style={styles.container}>
-//                 <TouchableOpacity 
-//                     style={{ position: 'absolute', top: 64, right: 32, zIndex: 10 }}
-//                     onPress={this.props.closeModal}
-//                 >
-//                     <AntDesign name="close" size={24} color={colors.black} />
-//                 </TouchableOpacity>
-//                 <View style={[styles.section, styles.header, { borderBottomColor: list.color }]}>
-//                     <View>
-//                         <Text style={styles.title}>{list.name}</Text>
-//                         <Text style={styles.tobuyCount}>
-//                             {completedCount} of {tobuyCount} items
-//                         </Text>
-//                     </View>
-//                 </View>
-//                 <View style={[styles.section, { flex: 3, marginVertical:16 }]}>
-//                     <FlatList
-//                         data={list.tobuy}
-//                         renderItem={({ item, index }) => this.renderTobuy(item, index)}
-//                         keyExtractor={(item, index) => index.toString()}
-//                         contentContainerStyle={{ paddingHorizontal: 32, paddingVertical: 64 }}
-//                         showsVerticalScrollIndicator={false}
-//                     />
-//                 </View>
-//                 <KeyboardAvoidingView style={[styles.section, styles.footer]} behavior="padding">
-//                     <TextInput
-//                         style={[styles.input, { borderColor: list.color }]}
-//                         onChangeText={text => this.setState({ newTobuy: text })}
-//                         value={this.state.newTobuy} />
-
-//                     <TouchableOpacity
-//                         style={[styles.addTobuy, { backgroundColor: list.color }]}
-//                         onPress={() => this.addTobuy()}>
-//                         <AntDesign name="plus" size={16} color={colors.white} />
-//                     </TouchableOpacity>
-//                 </KeyboardAvoidingView>
-//             </SafeAreaView>
-//             </KeyboardAvoidingView>
-//         )
-//     }
-// }
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         justifyContent: "center",
-//         alignItems: "center",
-//         backgroundColor:"lightgrey",
-   
-//     },
-//     section: {
-//         flex: 1,
-//         alignSelf: "stretch",
-//     },
-//     header: {
-//         justifyContent: "flex-end",
-//         marginLeft: 64,
-//         borderBottomWidth: 3
-//     },
-//     title: {
-//         fontSize: 30,
-//         fontWeight: "800",
-//         color: "black"
-
-
-//     },
-//     tobuyCount: {
-//         marginTop: 4,
-//         marginBottom: 16,
-//         color: "grey",
-//         fontWeight: "600",
-//     },
-//     footer: {
-//         paddingHorizontal: 32,
-//         flexDirection: "row",
-//         alignItems: "center"
-//     },
-//     input: {
-//         flex: 1,
-//         height: 48,
-//         borderWidth: StyleSheet.hairlineWidth,
-//         borderRadius: 6,
-//         marginRight: 8,
-//         paddingHorizontal: 8,
-//     },
-//     addTobuy: {
-//         borderRadius: 4,
-//         padding: 16,
-//         alignItems: 'center',
-//         justifyContent: "center"
-//     },
-//     tobuyContainer: {
-//         paddingVertical: 16,
-//         flexDirection: "row",
-//         alignItems: "center",
-//     },
-//     tobuy: {
-//         color: colors.black,
-//         fontWeight: "700",
-//         fontSize: 16
-//     },
-//     deleteButton: {
-//         flex: 1,
-//         backgroundColor: "red",
-//         justifyContent: "center",
-//         alignItems: "center",
-//         width: 80,
-//         borderRadius:10
-//     }
-
-
-// })
