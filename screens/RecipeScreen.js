@@ -34,7 +34,7 @@ export function RecipeScreen(props) {
   // );
   const renderRecipeList = ({ item }) => (
     <TouchableOpacity onPress={() => handleItemPress(item)}>
-      <View style={styles.recipeItem}>
+      <View style={[styles.recipeItem, { backgroundColor: item.color }]}>
         <Text style={styles.recipeNameStyle}>{item?.recipeName}</Text>
         <Text style={styles.ingredientsStyle}>{item?.ingredients}</Text>
 

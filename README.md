@@ -38,3 +38,4 @@ npm update @react-navigation/material-bottom-tabs react-native-paper
 npm install react-native-paper@latest
 npm install expo-checkbox
 npm audit fix
+npx expo install expo-checkbox@~2.3.1 react-native@0.71.8

@@ -8,9 +8,7 @@ import { doc, addDoc, collection, setDoc, onSnapshot, getDocs } from "firebase/f
 //component
 import { SignOutButton } from "../component/SignOutButton";
 import colors from "../component/Colors";
-import ShoppingList from "../component/ShoppingList";
 import { ListModal } from "../component/ListModal";
-import { addShoppingList } from "../component/AddListModal";
 import { AddListModal } from "../component/AddListModal";
 
 //context
@@ -108,18 +106,7 @@ export function HomeScreen(props) {
 		);
 	};
 
-	// const renderList = ({ item }) => (
-	//     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-	//       <ShoppingList list={item} updateList={updateList} />
-	//     </ScrollView>
-	//   );
-	// {
-	//     lists.map((list) => (
-	//         <Text key={list.id}>{list.name}</Text>
-	//     ))
-	// }
-	//if SignOut the user will be redirected to welcome screen
-
+	
 	useEffect(() => {
 		if (!authStatus) {
 			navigation.reset({ index: 0, routes: [{ name: "Welcome" }] });
@@ -153,12 +140,16 @@ export function HomeScreen(props) {
 
 			<View style={styles.divider} />
 			{loading ? (
-				// <View style={styles.container}>
 				<ActivityIndicator size="large" color="black" />
-			) : // </View>
+			) : 
 
 			shoppingList.length > 0 ? (
-				<FlatList data={shoppingList} keyExtractor={(item) => item.id.toString()} horizontal={false} showsHorizontalScrollIndicator={false} renderItem={renderShoppingList} />
+				<FlatList 
+				data={shoppingList} 
+				keyExtractor={(item) => item.id.toString()} 
+				horizontal={true} 
+				showsHorizontalScrollIndicator={false} 
+				renderItem={renderShoppingList} />
 			) : (
 				<Text></Text>
 				// Show empty list message
@@ -166,7 +157,12 @@ export function HomeScreen(props) {
 
 			{/* Render RecipeDetailsModal when a recipe item is selected */}
 			{selectedItem && (
-				<Modal transparent={true} animationType="slide" visible={true} onRequestClose={() => setSelectedItem(null)}>
+				<Modal 
+				transparent={true} 
+				animationType="slide" 
+				horizontal={true}
+				visible={true} 
+				onRequestClose={() => setSelectedItem(null)}>
 					<ListModal
 						list={selectedItem}
 						closeModal={() => {
