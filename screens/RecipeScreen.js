@@ -27,11 +27,7 @@ export function RecipeScreen(props) {
   const handleItemPress = (item) => {
     setSelectedItem(item);
   };
-  // const renderRecipeList = ({ item }) => (
-  //   <View style={styles.recipeItem}>
-  //     <Text style={styles.recipeName}>{item.name}</Text>
-  //   </View>
-  // );
+ 
   const renderRecipeList = ({ item }) => (
     <TouchableOpacity onPress={() => handleItemPress(item)}>
       <View style={[styles.recipeItem, { backgroundColor: item.color }]}>
