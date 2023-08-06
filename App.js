@@ -39,12 +39,7 @@ export default function App() {
 		}
 	});
 
-	// const addShoppingList = (list) => {
-	//   setLists((prevLists) => [
-	//     ...prevLists,
-	//     { ...list, id: prevLists.length + 1, tobuy: [] },
-	//   ]);
-	// };
+	
 	const addList = (list) => {
 		setLists((prevLists) => [...prevLists, { ...list, id: prevLists.length + 1, tobuy: [] }]);
 	};
