@@ -1,51 +1,31 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { View, TextInput, Button, Image, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
 import { SignOutButton } from '../component/SignOutButton'
-import ImagePicker from 'react-native-image-picker';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 //context
 import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
+//import { FBAuthContext } from "../contexts/FBAuthContext";
+
+import { doc, addDoc, collection, setDoc, onSnapshot, getDocs } from "firebase/firestore";
 
 export function SettingScreen() {
 
+
+
   const authStatus = useContext(AuthContext);
-  const fs = useContext(FSContext);
+	const FSdb = useContext(FSContext);
+  //const FBauth = getAuth(FBapp);
 
   const avatar = require('../assets/avatarProfile.png');
-
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [profilePicture, setProfilePicture] = useState('');
-  const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
-  // const handleLogoPress = async () => {
-  //   try {
-  //     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-  //     if (permissionResult.granted === false) {
-  //       throw new Error('Permission to access the camera roll is required.');
-  //     }
-
-  //     const pickerResult = await ImagePicker.launchImageLibraryAsync({
-  //       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-  //       quality: 1.0,
-  //     });
-
-  //     if (!pickerResult.cancelled) {
-  //       setProfilePicture(pickerResult.uri);
-  //     }
-  //   } catch (error) {
-  //     Alert.alert('Error', error.message);
-  //   }
-  // };
-
-
+  
   const handleChangePassword = () => {
     const user = firebase.auth().currentUser;
     if (user) {
@@ -108,10 +88,10 @@ export function SettingScreen() {
   const handleDeleteProfile = () => {
     // Get the current user
     const user = firebase.auth().currentUser;
-
+  
     if (user) {
       // Delete the user document from the Firestore collection
-      fs.collection("users").doc(user.uid).delete()
+      firebase.firestore().collection("users").doc(user.uid).delete()
         .then(() => {
           // Delete the user account
           user.delete()

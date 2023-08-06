@@ -9,6 +9,7 @@ import { doc, addDoc, collection, setDoc, getDocs, error,onSnapshot } from "fire
 import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
 
+
 export function RecipeScreen(props) {
   const [recipe, setRecipe] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +19,11 @@ export function RecipeScreen(props) {
   const [showListModal, setShowListModal] = useState(false);
   const [loading, setLoading] = useState(true); // Add loading state
   const [selectedItem, setSelectedItem] = useState(null);
+
+
+  const ListOwner = useContext(AuthContext);
+
+
 
   const addRecipeList = async (recipeList) => {
     // Write the list in Firestore
@@ -39,17 +45,12 @@ export function RecipeScreen(props) {
   );
   
 
-  // const RecipeDetailsModal = () => {
-  //   // Use the selectedItem state to display the details in the modal
-    
-  //   return (
-  //     // Modal content goes here
-  //   );
-  // };
+ 
   const fetchRecipeList = async () => {
     try {
       const recipeCollectionRef = collection(FSdb, 'recipes');
       const querySnapshot = await getDocs(recipeCollectionRef);
+      
       const fetchedRecipeList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -80,25 +81,52 @@ export function RecipeScreen(props) {
     fetchRecipeList();
   }, []);
 
-
-  // const fetchBackgroundColor = async () => {
+  // const fetchRecipeList = async () => {
   //   try {
-  //     const backgroundColorDocRef = doc(FSdb, 'settings', 'color');
-  //     const backgroundColorSnapshot = await getDocs(backgroundColorDocRef);
-  
-  //     if (backgroundColorSnapshot.exists()) {
-  //       const color = backgroundColorSnapshot.data().color;
-  //       setBackgroundColor(color);
-  //     } else {
-  //       console.error('Background color document does not exist');
-  //     }
+  //     const recipeCollectionRef = collection(FSdb, 'recipes');
+  //     const querySnapshot = await getDocs(recipeCollectionRef);
+      
+  //     const fetchedRecipeList = querySnapshot.docs.map((doc) => {
+  //       const data = doc.data();
+  //       const collaborators = data.collaborators || []; // Handle the case where collaborators is undefined
+  //       const isYourIdInCollaborators = collaborators.includes(ListOwner?.uid);
+  //     });
+
+
+  //     setRecipeList(fetchedRecipeList);
+  //     setLoading(false);
+  //     console.log(fetchedRecipeList);
+
+  //     // Listen for real-time updates
+  //     const unsubscribe = onSnapshot(recipeCollectionRef, (snapshot) => {
+  //       const updatedRecipeList = snapshot.docs.map((doc) => {
+  //        const data = doc.data();
+	// 					const collaborators = data.collaborators || []; // Handle the case where collaborators is undefined
+	// 					const isYourIdInCollaborators = collaborators.includes(ListOwner?.uid);
+
+	// 					return isYourIdInCollaborators ? { id: doc.id, ...data } : null;
+	// 				})
+  //       setRecipeList(updatedRecipeList);
+  //     });
+
+      // Clean up the listener when the component unmounts
+  //     return () => {
+  //       unsubscribe();
+  //     };
   //   } catch (error) {
-  //     console.error('Error fetching background color: ', error);
+  //     console.error('Error fetching recipe list: ', error);
   //   }
   // };
+
   // useEffect(() => {
-  //   fetchBackgroundColor();
+  //   fetchRecipeList();
   // }, []);
+
+
+  
+
+
+  
 
 
   return (

@@ -7,7 +7,7 @@ import { FSContext } from "../contexts/FSContext";
 import { v4 as uuidv4 } from "uuid";
 import Checkbox from "expo-checkbox";
 import { useNavigation } from "@react-navigation/native";
-
+import 'firebase/auth';
 import { EditListModal } from "./EditListModal";
 import { AddCollabModal } from "./AddCollaborator";
 
