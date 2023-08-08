@@ -99,7 +99,10 @@ export function WelcomeScreen(props) {
 						<Text style={[styles.btnText, { color: "white" }]}>ABOUT THE APP</Text>
 					</TouchableOpacity>
 				</View>
-				<Modal transparent={false} animationType="slide" visible={showModal} onRequestClose={() => setShowModal(false)}>
+			
+				<Modal
+				 transparent={false} animationType="slide" visible={showModal} onRequestClose={() => setShowModal(false)}>
+					<ScrollView>
 					<View style={styles.modal}>
 						<View style={styles.modalHeader}>
 							<Text style={styles.headerTitle}>About The App</Text>
@@ -123,9 +126,11 @@ export function WelcomeScreen(props) {
 							</TouchableOpacity>
 						</View>
 					</View>
+					</ScrollView>
 				</Modal>
 			</ImageBackground>
 		</View>
+		
 	);
 }
 const styles = StyleSheet.create({

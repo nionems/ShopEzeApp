@@ -3,20 +3,32 @@ import { View, TextInput, Button, Image, StyleSheet, Text, TouchableOpacity, Ale
 import { SignOutButton } from '../component/SignOutButton'
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+
+
+
+
+import 'firebase/database'; // Add this line for the database functionality
+
 //context
 import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
-//import { FBAuthContext } from "../contexts/FBAuthContext";
 
-import { doc, addDoc, collection, setDoc, onSnapshot, getDocs } from "firebase/firestore";
+
+import { doc, addDoc,deleteDoc, collection, setDoc, onSnapshot, getDocs } from "firebase/firestore";
+
+import { ScrollView } from 'react-native-gesture-handler';
 
 export function SettingScreen() {
 
+  //const route = useRoute();
+  //const { userId } = route.params;
+
+  //const authStatus = useContext(AuthContext);
+  const FSdb = useContext(FSContext);
 
 
+  const currentUser = useContext(AuthContext);
   const authStatus = useContext(AuthContext);
-	const FSdb = useContext(FSContext);
-  //const FBauth = getAuth(FBapp);
 
   const avatar = require('../assets/avatarProfile.png');
   const [profilePicture, setProfilePicture] = useState('');
@@ -25,7 +37,7 @@ export function SettingScreen() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
-  
+
   const handleChangePassword = () => {
     const user = firebase.auth().currentUser;
     if (user) {
@@ -55,28 +67,6 @@ export function SettingScreen() {
     }
   };
 
-
-  // const handleUpdateProfile = () => {
-  //   // Get the current user
-  //   const user = firebase.auth().currentUser;
-
-  //   if (user) {
-  //     // Update the user document in the Firestore collection
-  //     fs.collection("users").doc(user.uid).update({
-  //       name: name,
-  //       lastName: lastName,
-  //       nickname: nickname,
-  //     })
-  //       .then(() => {
-  //         Alert.alert('Success', 'Profile updated successfully.');
-  //         // You can perform additional actions after updating the profile
-  //       })
-  //       .catch((error) => {
-  //         Alert.alert('Error', error.message);
-  //       });
-  //   }
-  // };
-
   const renderProfilePicture = () => {
     if (profilePicture) {
       return <Image source={{ uri: profilePicture }} style={styles.profilePicture} />;
@@ -85,81 +75,85 @@ export function SettingScreen() {
     }
   };
 
-  const handleDeleteProfile = () => {
-    // Get the current user
-    const user = firebase.auth().currentUser;
   
-    if (user) {
-      // Delete the user document from the Firestore collection
-      firebase.firestore().collection("users").doc(user.uid).delete()
-        .then(() => {
-          // Delete the user account
-          user.delete()
-            .then(() => {
-              Alert.alert('Success', 'Profile deleted successfully.');
-              // You can redirect the user to another screen or sign them out
-            })
-            .catch((error) => {
-              Alert.alert('Error', error.message);
-            });
-        })
-        .catch((error) => {
-          Alert.alert('Error', error.message);
-        });
+  const handleDeleteUser = async () => {
+    try {
+      console.log("Deleting user...");
+      if (!user) {
+        Alert.alert('Error', 'Please provide a user ID');
+        return;
+      }
+  
+      console.log("Deleting user document:", user);
+  
+      // Get a reference to the user document using doc() function
+
+      const userDocRef = doc(FSdb, 'userAuth', authStatus.user);
+
+      // Delete user document from the "userAuth" collection in Firestore
+      await deleteDoc(userDocRef);
+  
+      console.log("User deleted successfully");
+      Alert.alert('Success', 'User deleted successfully');
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      Alert.alert('Error', 'An error occurred while deleting the user');
     }
   };
 
+  
   return (
-    <View style={styles.page}>
-
-      <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <SignOutButton/>
+    <ScrollView>
+      <View style={styles.page}>
+        <View style={styles.header}>
+          <View style={styles.headerLeft}>
+            <SignOutButton />
+          </View>
+          <Text style={styles.headerTitle}>Settings</Text>
         </View>
-        <Text style={styles.headerTitle}>Settings</Text>
-      </View>
-      <View style={styles.container}>
-        <TouchableOpacity>
-          {selectedImage ? (
-            <Image source={{ avatar }} style={styles.avatar} />
-          ) : (
-            renderProfilePicture()
-          )}
-        </TouchableOpacity>
-        
-        
         <View style={styles.container}>
-          <TextInput
-            style={styles.input}
-            placeholder="Current Password"
-            secureTextEntry={true}
-            value={currentPassword}
-            onChangeText={setCurrentPassword}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="New Password"
-            secureTextEntry={true}
-            value={newPassword}
-            onChangeText={setNewPassword}
-          />
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleChangePassword}>
-            <Text style={styles.buttonText}>Change password</Text>
+          <TouchableOpacity>
+            {selectedImage ? (
+             <Image source={avatar} style={styles.avatar} />
+            ) : (
+              renderProfilePicture()
+            )}
           </TouchableOpacity>
-        </View>
-
-      </View>
-
       
-      <TouchableOpacity
-        style={styles.buttonDelete}
-        onPress={handleDeleteProfile}>
-        <Text style={styles.buttonText}>Delete Profile</Text>
-      </TouchableOpacity>
-    </View>
+
+          <View style={styles.container}><View>
+         
+          </View>
+            <TextInput
+              style={styles.input}
+              placeholder="Current Password"
+              secureTextEntry={true}
+              value={currentPassword}
+              onChangeText={setCurrentPassword}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="New Password"
+              secureTextEntry={true}
+              value={newPassword}
+              onChangeText={setNewPassword}
+            />
+
+             <TouchableOpacity
+              style={styles.button}
+              onPress={handleChangePassword}>
+              <Text style={styles.buttonText}>Change password</Text>
+            </TouchableOpacity>
+          </View>
+
+        </View> 
+        <TouchableOpacity
+          style={styles.buttonDelete}
+          onPress={handleDeleteUser}>
+          <Text style={styles.buttonText}>Delete Profile</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   )
 }
 const styles = StyleSheet.create({
@@ -167,7 +161,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  
+
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -187,7 +181,7 @@ const styles = StyleSheet.create({
     color: "#FD8749",
     fontStyle: "italic",
     fontWeight: "bold",
-    shadowOpacity:10,
+    shadowOpacity: 10,
     flex: 2,
     marginRight: 100,
   },

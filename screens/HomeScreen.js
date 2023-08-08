@@ -21,13 +21,13 @@ export function HomeScreen(props) {
 	const authStatus = useContext(AuthContext);
 	const FSdb = useContext(FSContext);
 
-	const [lists, setLists] = useState([]);
 	const [showModal, setShowModal] = useState(false);
 	const [addTobuyVisible, setAddTobuyVisible] = useState(false);
-	const [user, setUser] = useState({});
+	
 	const [loading, setLoading] = useState(true);
 	const [shoppingList, setShoppingList] = useState([]);
 	const [selectedItem, setSelectedItem] = useState(null);
+
 
 	console.log("current user", ListOwner?.uid);
 	const handleItemPress = (item) => {

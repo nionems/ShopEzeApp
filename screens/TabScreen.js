@@ -7,7 +7,7 @@ import { RecipeScreen } from "./RecipeScreen"
 import { MealPlanScreen } from './MealPlanScreen';
 import { BarCodeScreen } from "./BarCodeScreen";
 import { SettingScreen } from "./SettingScreen";
-//import tempData from "../component/tempData";
+
 
 
 
@@ -16,6 +16,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 export function TabScreen() {
 
+    
     const HomeScreenOptions = {
         tabBarLabel: "List",
         tabBarIcon: ({ color }) => <IonIcons name="list-outline" color={color} size={28} />

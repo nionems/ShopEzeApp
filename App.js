@@ -170,23 +170,6 @@ export default function App() {
 						</FBAuthContext.Provider>
 					)}
 				</Stack.Screen>
-				{/* <Stack.Screen name="Home" options={{ headerShown: false }}>
-          {(props) =>
-          
-            <FBAuthContext.Provider value={FBauth} >
-              <AuthContext.Provider value={auth}>
-                <FSContext.Provider value={FBdb}>
-                <TabScreen
-                {...props} handler={addShoppingList} 
-                {...props} handler={updateList} 
-                {...props} handler={addRecipeList}
-                {...props} handler={renderList} 
-                {...props} handler={renderRecipeList}/>
-                </FSContext.Provider>
-              </AuthContext.Provider>
-            </FBAuthContext.Provider>
-          }
-        </Stack.Screen> */}
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
