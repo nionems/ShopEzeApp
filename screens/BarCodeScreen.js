@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Button, Image } from 'react-native';
+import { Text, View, StyleSheet, Button, Image, Linking } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
 import { requestCameraPermissionsAsync } from 'expo-camera';
@@ -49,6 +49,20 @@ export function BarCodeScreen() {
     setProductData(null);
   };
 
+
+  const handleGoogleSearch = async ({ data }) => {
+    setScanned(true);
+    setBarcodeData(data);
+
+    fetchProductData(data);
+
+    // Open a Google search URL for the scanned product
+    const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(
+      productData?.name || 'Product'
+    )}`;
+    Linking.openURL(searchUrl);
+  };
+
   if (hasPermission === null) {
     return <Text>Requesting camera permission</Text>;
   }
@@ -80,6 +94,7 @@ export function BarCodeScreen() {
             <Text>No product data available</Text>
           )}
           <Button title="Scan Again" onPress={scanAgain} color="#26ACA7"/>
+          <Button title="buy" onPress={handleGoogleSearch} color="#26ACA7"/>
           
         </View>
       )}
