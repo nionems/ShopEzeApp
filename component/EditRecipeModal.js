@@ -1,25 +1,25 @@
 import { useContext, useState } from "react";
 import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TextInput } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import colors from "../component/Colors";
+import colors from "./Colors";
 import { AuthContext } from "../contexts/AuthContext";
-import { ListModal } from "../component/ListModal";
 
-export function AddListModal(props) {
-	const [name, setName] = useState();
-	const [color, setColor] = useState();
+export function EditRecipeModal({ addList, closeModal, data }) {
+	console.log("rp", data);
+	const [recipeName, setRecipeName] = useState(data?.recipeName);
+	const [description, setDescription] = useState(data?.description);
+	const [color, setColor] = useState(data?.color);
 	const backgroundColors = ["#26ACA7", "#24A6D9", "#757572", "#8022D9", "#D159D8", "#D85963", "#c5d16d"];
 	const ListOwner = useContext(AuthContext);
 	const [showListModal, setShowListModal] = useState(false);
 
 	const createList = () => {
-		props.addList({
-			name: name,
+		addList({
+			recipeName: recipeName,
+			description: description,
 			color: color,
-			owner: ListOwner.uid,
-			collaborators: [ListOwner.uid],
 		});
-		props.closeModal();
+		closeModal();
 		setShowListModal(true);
 	};
 
@@ -29,17 +29,23 @@ export function AddListModal(props) {
 
 	return (
 		<KeyboardAvoidingView style={styles.container} behavior="padding">
-			<TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={props.closeModal}>
+			<TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={closeModal}>
 				<AntDesign name="close" size={24} color={colors.black} />
 			</TouchableOpacity>
 
 			<View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
-				<Text style={styles.title}>Create A List</Text>
-				<TextInput style={styles.input} placeholder="List Name?" onChangeText={(text) => setName(text)} />
+				<Text style={styles.title}>Create A Recipe</Text>
+
+				<TextInput style={styles.input} placeholder="Recipe Name?" value={recipeName} onChangeText={(text) => setRecipeName(text)} />
+				<TextInput style={styles.input} placeholder="Recipe Ingredient?" value={description} onChangeText={(text) => setDescription(text)} />
+
 				<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>{Colors}</View>
-				<TouchableOpacity style={[styles.create, { backgroundColor: color }]} onPress={() => createList()}>
-					<Text style={{ color: "#78cfcb", fontWeight: "1600", fontSize: 24 }}>Create</Text>
-				</TouchableOpacity>
+
+				{recipeName !== "" && description !== "" && color !== "" && (
+					<TouchableOpacity style={[styles.create, { backgroundColor: color }]} onPress={() => createList()}>
+						<Text style={{ color: "#f0aa86", fontWeight: "1600", fontSize: 24 }}>Update!</Text>
+					</TouchableOpacity>
+				)}
 			</View>
 		</KeyboardAvoidingView>
 	);

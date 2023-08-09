@@ -5,12 +5,8 @@ import colors from "./Colors";
 import { doc, addDoc, deleteDoc, arrayRemove, arrayUnion, updateDoc, onSnapshot } from "firebase/firestore";
 import { FSContext } from "../contexts/FSContext";
 import { v4 as uuidv4 } from "uuid";
-import Checkbox from "expo-checkbox";
 import { useNavigation } from "@react-navigation/native";
-
-import { EditListModal } from "./EditListModal";
-import { AddCollabModal } from "./AddCollaborator";
-import { AuthContext } from "../contexts/AuthContext";
+import { EditRecipeModal } from "./EditRecipeModal";
 
 function lightenColor(colorHex, lightenAmount) {
 	const red = parseInt(colorHex.slice(1, 3), 16);
@@ -24,18 +20,18 @@ function lightenColor(colorHex, lightenAmount) {
 	return newColorHex;
 }
 
-export const ListModal = ({ list, closeModal }) => {
+export const RecipeView = ({ list, closeModal }) => {
+	console.log("list", list);
 	const [listItems, setListItems] = useState([]);
 	const [listData, setListData] = useState(list);
 	const [showModal, setShowModal] = useState(false);
 	const [newItem, setNewItem] = useState("");
-	const [showCollabModal, setCollabModal] = useState(false);
-	console.log(list);
+
 	const FSdb = useContext(FSContext);
-	const ListOwner = useContext(AuthContext);
+
 	const addNewItem = () => {
 		if (newItem.trim() !== "") {
-			const toAdd = { title: newItem, id: uuidv4(), status: false };
+			const toAdd = { title: newItem, id: uuidv4() };
 			addListItem(list.id, toAdd);
 			setNewItem("");
 			Keyboard.dismiss();
@@ -43,20 +39,17 @@ export const ListModal = ({ list, closeModal }) => {
 	};
 
 	const addListItem = async (listId, newItem) => {
-		// Get the reference to the specific list document
-		const listRef = doc(FSdb, "lists", listId);
-
-		// Update the list document to add the new item to the listItems array
+		const listRef = doc(FSdb, "recipes", listId);
 		await updateDoc(listRef, {
-			listItems: arrayUnion(newItem),
+			ingredients: arrayUnion(newItem),
 		});
 	};
 
 	const removeListItem = async (listId, item) => {
 		console.log("delte", listId, item);
-		const listRef = doc(FSdb, "lists", listId);
+		const listRef = doc(FSdb, "recipes", listId);
 		await updateDoc(listRef, {
-			listItems: arrayRemove(item),
+			ingredients: arrayRemove(item),
 		});
 	};
 
@@ -72,26 +65,19 @@ export const ListModal = ({ list, closeModal }) => {
 		});
 	};
 
-	const handleItemToggle = async (itemId, newStatus) => {
-		console.log("cjececlkasd0", itemId, newStatus);
-		await updateItemStatus(list.id, itemId, newStatus);
-	};
-
 	const editList = async (update) => {
 		console.log("toeud", list);
 		updateTitleAndColor(list.id, update);
 	};
 	const updateTitleAndColor = async (listId, update) => {
-		const listRef = doc(FSdb, "lists", listId);
+		const listRef = doc(FSdb, "recipes", listId);
 		await updateDoc(listRef, update);
 	};
 
 	const deleteDocById = async () => {
 		try {
 			// Assuming you have the correct reference to your Firestore database
-			const docRef = doc(FSdb, "lists", list.id);
-
-			// Delete the document
+			const docRef = doc(FSdb, "recipes", list.id);
 			await deleteDoc(docRef);
 			console.log("Document deleted successfully.");
 		} catch (error) {
@@ -100,8 +86,8 @@ export const ListModal = ({ list, closeModal }) => {
 	};
 	const renderItem = ({ item, index }) => (
 		<View style={styles.itemContainer}>
-			<View style={{ flexDirection: "row", alignContent: "center", justifyContent: "center" }}>
-				<Checkbox style={{ borderRadius: 10 }} pa color={listData.color} value={item.status} onValueChange={(newValue) => handleItemToggle(item.id, newValue)} />
+			<View style={{ flexDirection: "row", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
+				<View style={{ width: 15, height: 15, borderRadius: 10, backgroundColor: lightenColor(listData?.color, 0.1) }}></View>
 				<Text style={styles.itemText}>{item.title}</Text>
 			</View>
 			<TouchableOpacity onPress={() => removeListItem(list.id, item)}>
@@ -111,8 +97,7 @@ export const ListModal = ({ list, closeModal }) => {
 	);
 
 	useEffect(() => {
-		const documentRef = doc(FSdb, "lists", list.id);
-
+		const documentRef = doc(FSdb, "recipes", list.id);
 		const unsubscribe = onSnapshot(documentRef, (snapshot) => {
 			if (snapshot.exists()) {
 				setListData(snapshot.data());
@@ -139,26 +124,17 @@ export const ListModal = ({ list, closeModal }) => {
 						>
 							<AntDesign name="edit" size={24} color={lightenColor(listData?.color, 0.4)} />
 						</TouchableOpacity>
+
 						<TouchableOpacity
 							style={{ marginHorizontal: "15%" }}
 							onPress={() => {
 								console.log("called");
-								setCollabModal(true);
+								deleteDocById();
+								closeModal();
 							}}
 						>
-							<AntDesign name="adduser" size={24} color={lightenColor(listData?.color, 0.4)} />
+							<AntDesign name="delete" size={24} color={lightenColor(listData?.color, 0.4)} />
 						</TouchableOpacity>
-						{list.owner == ListOwner?.uid && (
-							<TouchableOpacity
-								onPress={() => {
-									console.log("called");
-									deleteDocById();
-									closeModal();
-								}}
-							>
-								<AntDesign name="delete" size={24} color={lightenColor(listData?.color, 0.4)} />
-							</TouchableOpacity>
-						)}
 					</View>
 					<TouchableOpacity
 						style={{}}
@@ -173,13 +149,13 @@ export const ListModal = ({ list, closeModal }) => {
 
 				<View style={[styles.section, styles.header, { borderBottomColor: listData?.color }]}>
 					<View>
-						<Text style={styles.title}>{listData?.name}</Text>
+						<Text style={styles.title}>{listData?.recipeName}</Text>
 					</View>
 				</View>
 
 				<View style={[styles.section, { flex: 7, marginVertical: 16 }]}>
 					<FlatList
-						data={listData?.listItems}
+						data={listData?.ingredients}
 						renderItem={renderItem}
 						keyExtractor={(item, index) => index.toString()}
 						contentContainerStyle={{ paddingHorizontal: 32 }}
@@ -195,11 +171,7 @@ export const ListModal = ({ list, closeModal }) => {
 					</TouchableOpacity>
 					<Modal transparent={false} animationType="slide" visible={showModal} onRequestClose={() => setShowModal(false)}>
 						{/* Change addList to addShoppingList */}
-						<EditListModal closeModal={() => setShowModal(false)} addList={editList} data={listData} />
-					</Modal>
-					<Modal transparent={false} animationType="slide" visible={showCollabModal} onRequestClose={() => setCollabModal(false)}>
-						{/* Change addList to addShoppingList */}
-						<AddCollabModal closeModal={() => setCollabModal(false)} addList={editList} data={list} />
+						<EditRecipeModal closeModal={() => setShowModal(false)} addList={editList} data={listData} />
 					</Modal>
 				</KeyboardAvoidingView>
 			</SafeAreaView>
@@ -261,4 +233,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default ListModal;
+export default RecipeView;
