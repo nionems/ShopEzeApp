@@ -30,20 +30,11 @@ export function RecipeScreen(props) {
 		setSelectedItem(item);
 	};
 
-	// const renderRecipeList = ({ item }) => (
-	// 	<TouchableOpacity onPress={() => handleItemPress(item)}>
-	// 		<View style={styles.recipeItem}>
-	// 			<Text style={styles.recipeNameStyle}>{item?.recipeName}</Text>
-	// 			<Text style={styles.ingredientsStyle}>{item?.description}</Text>
-	// 		</View>
-	// 	</TouchableOpacity>
-	// );
   const renderRecipeList = ({ item }) => (
     <TouchableOpacity onPress={() => handleItemPress(item)}>
       <View style={[styles.recipeItem, { backgroundColor: item.color }]}>
         <Text style={styles.recipeNameStyle}>{item?.recipeName}</Text>
-        <Text style={styles.ingredientsStyle}>{item?.ingredients}</Text>
-
+        <Text style={styles.ingredientsStyle}>{item?.description}</Text>
       </View>
     </TouchableOpacity>
   );

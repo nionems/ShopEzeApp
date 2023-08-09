@@ -110,7 +110,8 @@ export const RecipeView = ({ list, closeModal }) => {
 			unsubscribe();
 		};
 	}, [list.id]);
-	return (
+	
+    return (
 		<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
 			<SafeAreaView style={[styles.container, { backgroundColor: lightenColor(listData?.color, 0.9) }]}>
 				<View style={{ flexDirection: "row", justifyContent: "space-between", width: "90%" }}>
@@ -162,13 +163,16 @@ export const RecipeView = ({ list, closeModal }) => {
 						showsVerticalScrollIndicator={false}
 					/>
 				</View>
-
-				<KeyboardAvoidingView style={[styles.section, styles.footer]} behavior="padding">
+             
+                
+                <KeyboardAvoidingView
+				 style={[styles.section, styles.footer]} behavior="padding">
 					<TextInput style={[styles.input, { borderColor: list.color }]} placeholder="Add new item..." onChangeText={setNewItem} value={newItem} />
 
 					<TouchableOpacity style={[styles.addButton, { backgroundColor: list.color }]} onPress={addNewItem}>
 						<AntDesign name="plus" size={16} color={colors.white} />
 					</TouchableOpacity>
+                
 					<Modal transparent={false} animationType="slide" visible={showModal} onRequestClose={() => setShowModal(false)}>
 						{/* Change addList to addShoppingList */}
 						<EditRecipeModal closeModal={() => setShowModal(false)} addList={editList} data={listData} />
@@ -176,6 +180,9 @@ export const RecipeView = ({ list, closeModal }) => {
 				</KeyboardAvoidingView>
 			</SafeAreaView>
 		</KeyboardAvoidingView>
+        
+        
+        
 	);
 };
 

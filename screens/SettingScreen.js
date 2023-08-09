@@ -63,28 +63,6 @@ export function SettingScreen() {
 		}
 	};
 
-	const handleUpdateProfile = () => {
-		// Get the current user
-		const user = firebase.auth().currentUser;
-
-		if (user) {
-			// Update the user document in the Firestore collection
-			fs.collection("users")
-				.doc(user.uid)
-				.update({
-					name: name,
-					lastName: lastName,
-					nickname: nickname,
-				})
-				.then(() => {
-					Alert.alert("Success", "Profile updated successfully.");
-					// You can perform additional actions after updating the profile
-				})
-				.catch((error) => {
-					Alert.alert("Error", error.message);
-				});
-		}
-	};
 
 	const renderProfilePicture = () => {
 		if (profilePicture) {
@@ -94,32 +72,49 @@ export function SettingScreen() {
 		}
 	};
 
-	const handleDeleteProfile = async () => {
-		const user = FBauth.currentUser;
-		if (user) {
-			const userAuthCollectionRef = collection(FSdb, "userAuth");
-			const q = query(userAuthCollectionRef, where("id", "==", user.uid));
-			const querySnapshot = await getDocs(q);
-			if (querySnapshot.empty) {
-				console.log("User not found.");
-			} else {
-				const res = querySnapshot.docs.map((doc) => ({
-					did: doc.id,
-					...doc.data(),
-				}));
-
-				try {
-					await deleteDoc(doc(FSdb, "userAuth", res[0].did));
-					await deleteUser(user);
-					await signOut(FBauth);
-					console.log("User successfully deleted!");
-				} catch (error) {
-					console.error("Error deleting document: ", error);
-				}
-			}
-		}
-	};
-
+	
+  const handleDeleteProfile = async () => {
+    Alert.alert(
+      "Delete Profile",
+      "Are you sure you want to delete your profile? This action cannot be undone.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            const user = FBauth.currentUser;
+            if (user) {
+              const userAuthCollectionRef = collection(FSdb, "userAuth");
+              const q = query(userAuthCollectionRef, where("id", "==", user.uid));
+              const querySnapshot = await getDocs(q);
+              if (querySnapshot.empty) {
+                console.log("User not found.");
+              } else {
+                const res = querySnapshot.docs.map((doc) => ({
+                  did: doc.id,
+                  ...doc.data(),
+                }));
+  
+                try {
+                  await deleteDoc(doc(FSdb, "userAuth", res[0].did));
+                  await deleteUser(user);
+                  await signOut(FBauth);
+                  console.log("User successfully deleted!");
+                } catch (error) {
+                  console.error("Error deleting document: ", error);
+                }
+              }
+            }
+          },
+        },
+      ]
+    );
+  };
+  
 	return (
 		<View style={styles.page}>
 			<View style={styles.header}>
