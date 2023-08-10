@@ -2,6 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView,
 import { useEffect, useState, useContext } from 'react'
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../contexts/AuthContext";
+import { FontAwesome } from "@expo/vector-icons";
 
 export function SignInScreen(props) {
 
@@ -10,7 +11,8 @@ export function SignInScreen(props) {
     const [password, setPassword] = useState("")
     const [validPassword, setValidPassword] = useState(false)
     const [validForm, setValidForm] = useState(false)
-
+    const [showPassword, setShowPassword] = useState(false);
+ 
     const navigation = useNavigation()
 
     const authStatus = useContext(AuthContext)
@@ -72,13 +74,16 @@ export function SignInScreen(props) {
                     />
                 </View>
                 <View>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="password 8 character minimum"
-                        value={password}
-                        onChangeText={(pwText) => setPassword(pwText)}
-                        secureTextEntry={true}
-                    />
+                <TextInput
+          style={styles.input}
+          placeholder="password 8 character minimum"
+          value={password}
+          onChangeText={(pwText) => setPassword(pwText)}
+          secureTextEntry={!showPassword}
+        />
+        <TouchableOpacity style={styles.iconContainer} onPress={() => setShowPassword(!showPassword)}>
+          <FontAwesome name={showPassword ? "eye-slash" : "eye"} size={20} color="#26ACA7" />
+        </TouchableOpacity>
                 </View>
                 <TouchableOpacity
                     style={(validForm) ? styles.button : styles.buttonDisabled}
@@ -153,6 +158,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     input: {
+        paddingVertical:10,
         backgroundColor: "#ffffff",
         padding: 4,
         borderWidth: 1,
@@ -160,6 +166,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 10,
     },
+  
     validInput: {
         borderColor: "#00693e",
         borderWidth: 1,
@@ -195,4 +202,16 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "white",
     },
+    inputContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        borderBottomWidth: 1,
+        borderColor: "#26ACA7",
+        marginBottom: 10,
+      },
+   
+      iconContainer: {
+        marginLeft: 10, // Add margin to separate the icon from the input
+        alignItems:"center",
+      },
 })

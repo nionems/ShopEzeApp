@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, addDoc, collection, setDoc, onSnapshot, getDocs } from "firebase/firestore";
+import { FontAwesome } from "@expo/vector-icons";
 
 //context
 import { AuthContext } from "../contexts/AuthContext";
@@ -19,6 +20,7 @@ export function SignUpScreen(props) {
 	const [error, setError] = useState("");
 	const FSdb = useContext(FSContext);
 	const navigation = useNavigation();
+	const [showPassword, setShowPassword] = useState(false);
 
 	//declare context
 	const authStatus = useContext(AuthContext);
@@ -126,13 +128,17 @@ export function SignUpScreen(props) {
 					<TextInput style={validEmail ? styles.validInput : styles.input} placeholder="enter your email here" value={email} onChangeText={(emailText) => setEmail(emailText)} />
 				</View>
 				<View>
-					<TextInput
-						style={validPassword ? styles.validInput : styles.input}
-						placeholder="password 8 character minimum"
-						value={password}
-						onChangeText={(pwText) => setPassword(pwText)}
-						secureTextEntry={true}
-					/>
+				<TextInput
+          style={validPassword ? styles.validInput : styles.input}
+          placeholder="password 8 character minimum"
+          value={password}
+          onChangeText={(pwText) => setPassword(pwText)}
+          secureTextEntry={!showPassword}
+        />
+		<TouchableOpacity style={styles.iconContainer} onPress={() => setShowPassword(!showPassword)}>
+          <FontAwesome name={showPassword ? "eye-slash" : "eye"} size={20} color="#26ACA7" />
+        </TouchableOpacity>
+
 				</View>
 				<TouchableOpacity
 					style={validForm ? styles.button : styles.buttonDisabled}
@@ -254,6 +260,21 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		//marginBottom: 100,
 	},
+	inputContainer: {
+		flexDirection: "row",
+		alignItems: "center",
+		borderBottomWidth: 1,
+		borderColor: "#26ACA7",
+		marginBottom: 10,
+	  },
+	  validInput: {
+		// Apply your styles for valid password input
+	  },
+	  iconContainer: {
+		marginLeft: 10,
+		alignItems:"center"
+	  },
+	
 });
 
 // import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";

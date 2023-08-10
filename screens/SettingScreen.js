@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { View, TextInput, Button, Image, StyleSheet, Text, TouchableOpacity, Alert, ScrollView, Dimensions } from "react-native";
 import { SignOutButton } from "../component/SignOutButton";
 import ImagePicker from "react-native-image-picker";
+import { FontAwesome } from "@expo/vector-icons"; // Import the icon component
 
 import { EmailAuthCredential, updatePassword, reauthenticateWithCredential, deleteUser, signOut } from "firebase/auth";
 import { doc, deleteDoc, collection, setDoc, onSnapshot, getDocs, query, where } from "firebase/firestore";
@@ -29,6 +30,8 @@ export function SettingScreen() {
 	const [selectedImage, setSelectedImage] = useState(null);
 	const [currentPassword, setCurrentPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
+	const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+	const [showNewPassword, setShowNewPassword] = useState(false);
 
 	const handleLogoPress = async () => {
 		try {
@@ -75,116 +78,137 @@ export function SettingScreen() {
 		}
 	};
 
-	
-  const handleDeleteProfile = async () => {
-    Alert.alert(
-      "Delete Profile",
-      "Are you sure you want to delete your profile? This action cannot be undone.",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: async () => {
-            const user = FBauth.currentUser;
-            if (user) {
-              const userAuthCollectionRef = collection(FSdb, "userAuth");
-              const q = query(userAuthCollectionRef, where("id", "==", user.uid));
-              const querySnapshot = await getDocs(q);
-              if (querySnapshot.empty) {
-                console.log("User not found.");
-              } else {
-                const res = querySnapshot.docs.map((doc) => ({
-                  did: doc.id,
-                  ...doc.data(),
-                }));
-  
-                try {
-                  await deleteDoc(doc(FSdb, "userAuth", res[0].did));
-                  await deleteUser(user);
-                  await signOut(FBauth);
-                  console.log("User successfully deleted!");
-                } catch (error) {
-                  console.error("Error deleting document: ", error);
-                }
-              }
-            }
-          },
-        },
-      ]
-    );
-  };
-  
-	return (
-    <ScrollView contentContainerStyle={styles.page}>
 
-				<View style={styles.header}>
-					<View style={styles.headerLeft}>
-						<SignOutButton />
-					</View>
-					<View style={styles.headerTitleContainer}>
-						<Text style={styles.headerTitle}>Settings</Text>
-					</View>
-					<View style={styles.headerRight}></View>
+	const handleDeleteProfile = async () => {
+		Alert.alert(
+			"Delete Profile",
+			"Are you sure you want to delete your profile? This action cannot be undone.",
+			[
+				{
+					text: "Cancel",
+					style: "cancel",
+				},
+				{
+					text: "Delete",
+					style: "destructive",
+					onPress: async () => {
+						const user = FBauth.currentUser;
+						if (user) {
+							const userAuthCollectionRef = collection(FSdb, "userAuth");
+							const q = query(userAuthCollectionRef, where("id", "==", user.uid));
+							const querySnapshot = await getDocs(q);
+							if (querySnapshot.empty) {
+								console.log("User not found.");
+							} else {
+								const res = querySnapshot.docs.map((doc) => ({
+									did: doc.id,
+									...doc.data(),
+								}));
+
+								try {
+									await deleteDoc(doc(FSdb, "userAuth", res[0].did));
+									await deleteUser(user);
+									await signOut(FBauth);
+									console.log("User successfully deleted!");
+								} catch (error) {
+									console.error("Error deleting document: ", error);
+								}
+							}
+						}
+					},
+				},
+			]
+		);
+	};
+
+	return (
+		<ScrollView contentContainerStyle={styles.page}>
+
+			<View style={styles.header}>
+				<View style={styles.headerLeft}>
+					<SignOutButton />
 				</View>
+				<View style={styles.headerTitleContainer}>
+					<Text style={styles.headerTitle}>Settings</Text>
+				</View>
+				<View style={styles.headerRight}></View>
+			</View>
 			<View style={styles.container}>
 				<TouchableOpacity onPress={handleLogoPress}>{selectedImage ? <Image source={{ avatar }} style={styles.avatar} /> : renderProfilePicture()}</TouchableOpacity>
 
 				<View style={styles.container}>
-					<TextInput style={styles.input} placeholder="Current Password" secureTextEntry={true} value={currentPassword} onChangeText={setCurrentPassword} />
-					<TextInput style={styles.input} placeholder="New Password" secureTextEntry={true} value={newPassword} onChangeText={setNewPassword} />
+					<TextInput
+						style={styles.input}
+						placeholder="Current Password"
+						secureTextEntry={!showCurrentPassword}
+						value={currentPassword}
+						onChangeText={setCurrentPassword}
+					/>
+					<TouchableOpacity onPress={() => setShowCurrentPassword(!showCurrentPassword)}>
+						{/* Use the FontAwesome component for the eye icon */}
+						<FontAwesome name={showCurrentPassword ? "eye-slash" : "eye"} size={20} color="#26ACA7" />
+					</TouchableOpacity>
+
+					<TextInput
+						style={styles.input}
+						placeholder="New Password"
+						secureTextEntry={!showNewPassword}
+						value={newPassword}
+						onChangeText={setNewPassword}
+					/>
+					<TouchableOpacity onPress={() => setShowNewPassword(!showNewPassword)}>
+						{/* Use the FontAwesome component for the eye icon */}
+						<FontAwesome name={showNewPassword ? "eye-slash" : "eye"} size={20} color="#26ACA7" />
+					</TouchableOpacity>
 
 					<TouchableOpacity style={styles.button} onPress={() => handleChangePassword()}>
 						<Text style={styles.buttonText}>Change password</Text>
 					</TouchableOpacity>
 				</View>
-		
 
-			<TouchableOpacity style={styles.buttonDelete} onPress={() => handleDeleteProfile()}>
-				<Text style={styles.buttonText}>Delete Profile</Text>
-			</TouchableOpacity>
+
+				<TouchableOpacity style={styles.buttonDelete} onPress={() => handleDeleteProfile()}>
+					<Text style={styles.buttonText}>Delete Profile</Text>
+				</TouchableOpacity>
 			</View>
-  </ScrollView>
+		</ScrollView>
 	);
 }
 const styles = StyleSheet.create({
-//   page: {
-//     justifyContent: "center",
-//     alignItems: "center",
-//     paddingVertical: 0,
-//   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#26ACA7",
-    marginTop: 50,
-    height: 70,
-    paddingHorizontal: 16,
-    
-   
-  },
-  headerLeft: {
-    flex: 1,
-  },
-  headerTitleContainer: {
-    flex: 2,
-    alignItems: "center",
-  },
-  headerTitle: {
-    fontSize: 40,
-    color: "#FD8749",
-    fontStyle: "italic",
-    fontWeight: "bold",
-    marginTop: 10,
-    shadowOpacity: 10,
-  },
-  headerRight: {
-    flex: 1,
-  },
+	//   page: {
+	//     justifyContent: "center",
+	//     alignItems: "center",
+	//     paddingVertical: 0,
+	//   },
+	header: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		backgroundColor: "#26ACA7",
+		marginTop: 50,
+		height: 70,
+		paddingHorizontal: 16,
+
+
+	},
+	headerLeft: {
+		flex: 1,
+	},
+	headerTitleContainer: {
+		flex: 2,
+		alignItems: "center",
+	},
+	headerTitle: {
+		fontSize: 40,
+		color: "#FD8749",
+		fontStyle: "italic",
+		fontWeight: "bold",
+		marginTop: 10,
+		shadowOpacity: 10,
+	},
+	headerRight: {
+		flex: 1,
+	},
 	buttonText: {
 		color: "#ffffff",
 		textAlign: "center",
@@ -198,7 +222,7 @@ const styles = StyleSheet.create({
 		marginLeft: 10,
 		borderRadius: 10,
 		padding: 10,
-		alignContent:"center",
+		alignContent: "center",
 	},
 	buttonDelete: {
 		backgroundColor: "red",
@@ -208,7 +232,7 @@ const styles = StyleSheet.create({
 		marginLeft: 10,
 		borderRadius: 10,
 		padding: 10,
-		alignContent:"center",
+		alignContent: "center",
 	},
 	input: {
 		alignContent: "center",
@@ -223,7 +247,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 		borderRadius: 10,
 	},
-	
+
 	avatar: {
 		alignItems: "center",
 		alignContent: "center",
@@ -236,7 +260,7 @@ const styles = StyleSheet.create({
 		marginTop: 40,
 		borderColor: "#26ACA7",
 	},
-	container:{
+	container: {
 		alignContent: "center",
 		alignItems: "center",
 	}
