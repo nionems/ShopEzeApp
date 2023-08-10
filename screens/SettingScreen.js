@@ -120,15 +120,16 @@ export function SettingScreen() {
   
 	return (
     <ScrollView contentContainerStyle={styles.page}>
-    <View style={styles.header}>
-  <View style={styles.headerLeft}>
-    <SignOutButton />
-  </View>
-  <View style={styles.headerTitleContainer}>
-    <Text style={styles.headerTitle}>Settings</Text>
-  </View>
-  <View style={styles.headerRight}></View>
-</View>
+
+				<View style={styles.header}>
+					<View style={styles.headerLeft}>
+						<SignOutButton />
+					</View>
+					<View style={styles.headerTitleContainer}>
+						<Text style={styles.headerTitle}>Settings</Text>
+					</View>
+					<View style={styles.headerRight}></View>
+				</View>
 			<View style={styles.container}>
 				<TouchableOpacity onPress={handleLogoPress}>{selectedImage ? <Image source={{ avatar }} style={styles.avatar} /> : renderProfilePicture()}</TouchableOpacity>
 
@@ -152,8 +153,7 @@ const styles = StyleSheet.create({
   page: {
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 30,
-    paddingHorizontal: 20,
+    paddingVertical: 5,
   },
   header: {
     flexDirection: "row",
@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     height: 70,
     paddingHorizontal: 16,
+    
    
   },
   headerLeft: {

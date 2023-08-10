@@ -188,6 +188,11 @@ const styles = StyleSheet.create({
     width: width * 0.9, // Adjust the width as needed
     aspectRatio: 1, // This will maintain a square aspect ratio for the calendar
   },
+  page: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 60,
+  },
   input: {
     width: '80%',
     height: 40,
