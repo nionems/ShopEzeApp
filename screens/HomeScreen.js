@@ -23,7 +23,7 @@ export function HomeScreen(props) {
 
 	const [showModal, setShowModal] = useState(false);
 	const [addTobuyVisible, setAddTobuyVisible] = useState(false);
-	
+
 	const [loading, setLoading] = useState(true);
 	const [shoppingList, setShoppingList] = useState([]);
 	const [selectedItem, setSelectedItem] = useState(null);
@@ -106,7 +106,7 @@ export function HomeScreen(props) {
 		);
 	};
 
-	
+
 	useEffect(() => {
 		if (!authStatus) {
 			navigation.reset({ index: 0, routes: [{ name: "Welcome" }] });
@@ -124,7 +124,10 @@ export function HomeScreen(props) {
 					<View style={styles.headerLeft}>
 						<SignOutButton />
 					</View>
-					<Text style={styles.headerTitle}>My Lists</Text>
+					<View style={styles.headerTitleContainer}>
+						<Text style={styles.headerTitle}>My List</Text>
+					</View>
+					<View style={styles.headerRight}></View>
 				</View>
 				<Modal transparent={false} animationType="slide" visible={showModal} onRequestClose={() => setShowModal(false)}>
 					{/* Change addList to addShoppingList */}
@@ -141,28 +144,28 @@ export function HomeScreen(props) {
 			<View style={styles.divider} />
 			{loading ? (
 				<ActivityIndicator size="large" color="black" />
-			) : 
+			) :
 
-			shoppingList.length > 0 ? (
-				<FlatList 
-				data={shoppingList} 
-				keyExtractor={(item) => item.id.toString()} 
-				horizontal={true} 
-				showsHorizontalScrollIndicator={false} 
-				renderItem={renderShoppingList} />
-			) : (
-				<Text></Text>
-				// Show empty list message
-			)}
+				shoppingList.length > 0 ? (
+					<FlatList
+						data={shoppingList}
+						keyExtractor={(item) => item.id.toString()}
+						horizontal={true}
+						showsHorizontalScrollIndicator={false}
+						renderItem={renderShoppingList} />
+				) : (
+					<Text></Text>
+					// Show empty list message
+				)}
 
 			{/* Render RecipeDetailsModal when a recipe item is selected */}
 			{selectedItem && (
-				<Modal 
-				transparent={true} 
-				animationType="slide" 
-				horizontal={true}
-				visible={true} 
-				onRequestClose={() => setSelectedItem(null)}>
+				<Modal
+					transparent={true}
+					animationType="slide"
+					horizontal={true}
+					visible={true}
+					onRequestClose={() => setSelectedItem(null)}>
 					<ListModal
 						list={selectedItem}
 						closeModal={() => {
@@ -177,29 +180,34 @@ export function HomeScreen(props) {
 }
 
 const styles = StyleSheet.create({
+
 	header: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
 		backgroundColor: "#26ACA7",
-		marginTop: 50,
+		marginTop: 60,
 		height: 70,
-		minWidth: 400,
 		paddingHorizontal: 16,
-	},
-	headerLeft: {
+	  },
+	  headerLeft: {
 		flex: 1,
-	},
-	headerTitle: {
+	  },
+	  headerTitleContainer: {
+		flex: 2,
+		alignItems: "center",
+	  },
+	  headerTitle: {
 		fontSize: 40,
-		textAlign: "center",
 		color: "#FD8749",
 		fontStyle: "italic",
 		fontWeight: "bold",
-		flex: 2,
-		marginRight: 100,
+		marginTop: 10,
 		shadowOpacity: 10,
-	},
+	  },
+	  headerRight: {
+		flex: 1,
+	  },
 
 	divider: {
 		backgroundColor: "black",
@@ -211,7 +219,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		alignContent: "center",
 		textAlign: "center",
-		fontSize: 30,
+		fontSize: 50,
 	},
 
 	addList: {

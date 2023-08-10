@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, TextInput, Button, Image, StyleSheet, Text, TouchableOpacity, Alert } from "react-native";
+import { View, TextInput, Button, Image, StyleSheet, Text, TouchableOpacity, Alert, ScrollView, Dimensions } from "react-native";
 import { SignOutButton } from "../component/SignOutButton";
 import ImagePicker from "react-native-image-picker";
 
@@ -10,6 +10,9 @@ import { doc, deleteDoc, collection, setDoc, onSnapshot, getDocs, query, where }
 import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
 import { FBAuthContext } from "../contexts/FBAuthContext";
+
+const { width } = Dimensions.get('window');
+
 
 export function SettingScreen() {
 	const FBauth = useContext(FBAuthContext);
@@ -116,8 +119,8 @@ export function SettingScreen() {
   };
   
 	return (
-		<View style={styles.page}>
-			<View style={styles.header}>
+    <ScrollView contentContainerStyle={styles.page}>
+    <View style={styles.header}>
 				<View style={styles.headerLeft}>
 					<SignOutButton />
 				</View>
@@ -139,38 +142,35 @@ export function SettingScreen() {
 			<TouchableOpacity style={styles.buttonDelete} onPress={() => handleDeleteProfile()}>
 				<Text style={styles.buttonText}>Delete Profile</Text>
 			</TouchableOpacity>
-		</View>
+  </ScrollView>
 	);
 }
 const styles = StyleSheet.create({
-	page: {
-		justifyContent: "center",
-		alignItems: "center",
-	},
-
-	header: {
-		flexDirection: "row",
-		justifyContent: "space-between",
-		alignItems: "center",
-		backgroundColor: "#26ACA7",
-		marginTop: 83,
-		height: 70,
-		minWidth: 400,
-		paddingHorizontal: 16,
-	},
-	headerLeft: {
-		flex: 1,
-	},
-	headerTitle: {
-		fontSize: 40,
-		textAlign: "center",
-		color: "#FD8749",
-		fontStyle: "italic",
-		fontWeight: "bold",
-		shadowOpacity: 10,
-		flex: 2,
-		marginRight: 100,
-	},
+  page: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 30,
+    paddingHorizontal: 20,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#26ACA7",
+    marginTop: 30,
+    height: 70,
+    minWidth: 1000,
+    paddingHorizontal: 20,
+  },
+  headerTitle: {
+    fontSize: 40,
+    textAlign: "center",
+    color: "#FD8749",
+    fontStyle: "italic",
+    fontWeight: "bold",
+    shadowOpacity: 10,
+    flex: 2,
+  },
 	buttonText: {
 		color: "#ffffff",
 		textAlign: "center",
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		backgroundColor: "#26ACA7",
-		marginTop: 5,
+		marginTop: 10,
 		marginVertical: 15,
 		marginRight: 10,
 		marginLeft: 10,
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
 	},
 	buttonDelete: {
 		backgroundColor: "#FD8749",
-		marginTop: 5,
+		marginTop: 10,
 		marginVertical: 15,
 		marginRight: 10,
 		marginLeft: 10,
@@ -202,17 +202,12 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderColor: "#26ACA7",
 		marginBottom: 2,
-		marginTop: 2,
+		marginTop: 5,
 		marginLeft: 30,
 		paddingHorizontal: 10,
 		borderRadius: 10,
 	},
-	profilePicture: {
-		width: 150,
-		height: 150,
-		borderRadius: 75,
-		marginBottom: 20,
-	},
+	
 	avatar: {
 		alignItems: "center",
 		alignContent: "center",
@@ -222,7 +217,7 @@ const styles = StyleSheet.create({
 		minHeight: 200,
 		minWidth: 200,
 		marginBottom: 10,
-		marginTop: 1,
+		marginTop: 40,
 		borderColor: "#26ACA7",
 	},
 });

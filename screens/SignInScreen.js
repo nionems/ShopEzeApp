@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, KeyboardAvoidingView } from "react-native";
 import { useEffect, useState, useContext } from 'react'
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../contexts/AuthContext";
@@ -52,6 +52,7 @@ export function SignInScreen(props) {
     }, [authStatus])
 
     return (
+        <KeyboardAvoidingView>
         <ScrollView>
             <View style={styles.page}>
                 <View style={styles.header}>
@@ -94,6 +95,7 @@ export function SignInScreen(props) {
                 </TouchableOpacity>
             </View>
         </ScrollView>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: "#26ACA7",
         height: 70,
-        minWidth: 400,
+        minWidth: 1500,
         marginTop:50,
     },
     headerTitle: {

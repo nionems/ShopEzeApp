@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, KeyboardAvoidingView } from "react-native";
 import { useEffect, useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -109,6 +109,7 @@ export function SignUpScreen(props) {
 	};
 
 	return (
+		<KeyboardAvoidingView>
 		<ScrollView>
 			<View style={styles.page}>
 				<View style={styles.header}>
@@ -147,6 +148,7 @@ export function SignUpScreen(props) {
 				</TouchableOpacity>
 			</View>
 		</ScrollView>
+		</KeyboardAvoidingView>
 	);
 }
 

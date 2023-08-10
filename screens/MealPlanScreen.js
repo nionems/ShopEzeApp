@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TextInput, StyleSheet, ScrollView, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, StyleSheet, ScrollView, KeyboardAvoidingView, TouchableOpacity, Dimensions } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 
+
+
+const { width } = Dimensions.get('window');
+
 export function MealPlanScreen(props) {
+
   const [meal, setMeal] = useState('');
   const [ingredient, setIngredient] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
@@ -81,8 +86,8 @@ export function MealPlanScreen(props) {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <ScrollView>
-        <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.innerContainer}>
           <View style={styles.page}>
             <View style={styles.header}>
               <Text style={styles.headerTitle}>Meal Plan</Text>
@@ -92,10 +97,10 @@ export function MealPlanScreen(props) {
             {selectedDate ? new Date(selectedDate).toDateString() : ''}
           </Text>
           <Calendar
-            style={styles.calendar}
-            onDayPress={handleDateSelect}
-            markedDates={{ [selectedDate]: { selected: true } }}
-          />
+  style={styles.calendar}
+  onDayPress={handleDateSelect}
+  markedDates={{ [selectedDate]: { selected: true } }}
+/>
           <TextInput
             style={styles.input}
             placeholder="Enter a meal"
@@ -125,6 +130,14 @@ export function MealPlanScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  innerContainer: {
+    width: width * 0.9, // Adjust the width to your preference
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -156,9 +169,8 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: "#26ACA7",
-    marginTop: 50,
     height: 70,
-    minWidth: 400,
+    minWidth: 1400,
   },
   headerTitle: {
     fontSize: 40,
@@ -171,10 +183,10 @@ const styles = StyleSheet.create({
   },
   calendar: {
     marginBottom: 10,
-    backgroundColor: "#26ACA7",
+    backgroundColor: "white",
     marginTop: 10,
-    minWidth: 400,
-
+    width: width * 0.9, // Adjust the width as needed
+    aspectRatio: 1, // This will maintain a square aspect ratio for the calendar
   },
   input: {
     width: '80%',

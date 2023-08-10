@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
 	},
 	header: {
 		backgroundColor: "#26ACA7",
-		marginTop: 50,
+    marginTop: 60,
 		height: 70,
 		minWidth: 400,
 	},
@@ -192,13 +192,4 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		textAlign: "center",
 	},
-	// container: {
-	//     flex: 1,
-	//     backgroundColor: "green",
-	//     alignItems: "center",
-	//     justifyContent: "center",
-	//     minWidth:150,
-	//     minHeight:400,
-
-	// },
 });
