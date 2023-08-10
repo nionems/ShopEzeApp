@@ -141,20 +141,21 @@ export function SettingScreen() {
 						<Text style={styles.buttonText}>Change password</Text>
 					</TouchableOpacity>
 				</View>
-			</View>
+		
 
 			<TouchableOpacity style={styles.buttonDelete} onPress={() => handleDeleteProfile()}>
 				<Text style={styles.buttonText}>Delete Profile</Text>
 			</TouchableOpacity>
+			</View>
   </ScrollView>
 	);
 }
 const styles = StyleSheet.create({
-  page: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 5,
-  },
+//   page: {
+//     justifyContent: "center",
+//     alignItems: "center",
+//     paddingVertical: 0,
+//   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -197,15 +198,17 @@ const styles = StyleSheet.create({
 		marginLeft: 10,
 		borderRadius: 10,
 		padding: 10,
+		alignContent:"center",
 	},
 	buttonDelete: {
-		backgroundColor: "#FD8749",
+		backgroundColor: "red",
 		marginTop: 10,
 		marginVertical: 15,
 		marginRight: 10,
 		marginLeft: 10,
 		borderRadius: 10,
 		padding: 10,
+		alignContent:"center",
 	},
 	input: {
 		alignContent: "center",
@@ -216,7 +219,6 @@ const styles = StyleSheet.create({
 		borderColor: "#26ACA7",
 		marginBottom: 2,
 		marginTop: 5,
-		marginLeft: 30,
 		paddingHorizontal: 10,
 		borderRadius: 10,
 	},
@@ -233,4 +235,8 @@ const styles = StyleSheet.create({
 		marginTop: 40,
 		borderColor: "#26ACA7",
 	},
+	container:{
+		alignContent: "center",
+		alignItems: "center",
+	}
 });
