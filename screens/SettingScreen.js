@@ -121,11 +121,14 @@ export function SettingScreen() {
 	return (
     <ScrollView contentContainerStyle={styles.page}>
     <View style={styles.header}>
-				<View style={styles.headerLeft}>
-					<SignOutButton />
-				</View>
-				<Text style={styles.headerTitle}>Settings</Text>
-			</View>
+  <View style={styles.headerLeft}>
+    <SignOutButton />
+  </View>
+  <View style={styles.headerTitleContainer}>
+    <Text style={styles.headerTitle}>Settings</Text>
+  </View>
+  <View style={styles.headerRight}></View>
+</View>
 			<View style={styles.container}>
 				<TouchableOpacity onPress={handleLogoPress}>{selectedImage ? <Image source={{ avatar }} style={styles.avatar} /> : renderProfilePicture()}</TouchableOpacity>
 
@@ -157,19 +160,28 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#26ACA7",
-    marginTop: 30,
+    marginTop: 50,
     height: 70,
-    minWidth: 1000,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
+   
+  },
+  headerLeft: {
+    flex: 1,
+  },
+  headerTitleContainer: {
+    flex: 2,
+    alignItems: "center",
   },
   headerTitle: {
     fontSize: 40,
-    textAlign: "center",
     color: "#FD8749",
     fontStyle: "italic",
     fontWeight: "bold",
+    marginTop: 10,
     shadowOpacity: 10,
-    flex: 2,
+  },
+  headerRight: {
+    flex: 1,
   },
 	buttonText: {
 		color: "#ffffff",
