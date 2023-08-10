@@ -3,11 +3,10 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect, useContext, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
-import { doc, addDoc, collection, setDoc, onSnapshot, getDocs } from "firebase/firestore";
+import {  addDoc, collection, onSnapshot, getDocs } from "firebase/firestore";
 
 //component
 import { SignOutButton } from "../component/SignOutButton";
-import colors from "../component/Colors";
 import { ListModal } from "../component/ListModal";
 import { AddListModal } from "../component/AddListModal";
 

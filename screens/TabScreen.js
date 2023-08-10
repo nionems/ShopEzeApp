@@ -8,10 +8,6 @@ import { MealPlanScreen } from './MealPlanScreen';
 import { BarCodeScreen } from "./BarCodeScreen";
 import { SettingScreen } from "./SettingScreen";
 
-
-
-
-
 const Tab = createMaterialBottomTabNavigator();
 
 export function TabScreen() {

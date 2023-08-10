@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TextInput,Alert } from "react-native";
+import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity,Alert } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "./Colors";
 import { AuthContext } from "../contexts/AuthContext";
@@ -8,6 +8,7 @@ import { FSContext } from "../contexts/FSContext";
 import { List, Avatar, Searchbar, Text as TextP, ActivityIndicator } from "react-native-paper";
 
 export function AddCollabModal({ closeModal, data }) {
+	// Component function for adding collaborators
 	const [searchQuery, setSearchQuery] = useState("");
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -121,10 +122,7 @@ export function AddCollabModal({ closeModal, data }) {
 					</View>
 				)}
 				{loading && <ActivityIndicator animating={true} color="black" />}
-				{/* 
-				<TouchableOpacity style={[styles.create, { backgroundColor: "yellow" }]} onPress={() => findUserByEmail(query)}>
-					<Text style={{ color: "#78cfcb", fontWeight: "bold", fontSize: 24 }}>Upadate</Text>
-				</TouchableOpacity> */}
+			
 			</View>
 		</KeyboardAvoidingView>
 	);

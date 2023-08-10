@@ -6,21 +6,27 @@ import { doc, addDoc, deleteDoc, arrayRemove, arrayUnion, updateDoc, onSnapshot 
 import { FSContext } from "../contexts/FSContext";
 import { v4 as uuidv4 } from "uuid";
 import Checkbox from "expo-checkbox";
-import { useNavigation } from "@react-navigation/native";
 
 import { EditListModal } from "./EditListModal";
 import { AddCollabModal } from "./AddCollaborator";
 import { AuthContext } from "../contexts/AuthContext";
 
+// This function takes a color in hexadecimal format and lightens it by a specified amount.
 function lightenColor(colorHex, lightenAmount) {
+	
+	// Convert the hexadecimal color code to its red, green, and blue components.
 	const red = parseInt(colorHex.slice(1, 3), 16);
 	const green = parseInt(colorHex.slice(3, 5), 16);
 	const blue = parseInt(colorHex.slice(5, 7), 16);
-
+	
+	// Create a new color hex code by combining the lightened red, green, and blue values.
 	const newRed = Math.min(Math.round(red + lightenAmount * (255 - red)), 255);
 	const newGreen = Math.min(Math.round(green + lightenAmount * (255 - green)), 255);
 	const newBlue = Math.min(Math.round(blue + lightenAmount * (255 - blue)), 255);
+	
+	// Create a new color hex code by combining the lightened red, green, and blue values.
 	const newColorHex = "#" + [newRed, newGreen, newBlue].map((color) => color.toString(16).padStart(2, "0")).join("");
+	
 	return newColorHex;
 }
 
@@ -33,11 +39,17 @@ export const ListModal = ({ list, closeModal }) => {
 	console.log(list);
 	const FSdb = useContext(FSContext);
 	const ListOwner = useContext(AuthContext);
+	
 	const addNewItem = () => {
+		// Check if the trimmed value of 'newItem' is not empty
 		if (newItem.trim() !== "") {
+			// Create an object containing the title, a unique id, and a default status (false)
 			const toAdd = { title: newItem, id: uuidv4(), status: false };
+			// Call the 'addListItem' function to add the new item to the list
 			addListItem(list.id, toAdd);
+			// Clear the 'newItem' input field
 			setNewItem("");
+			// Dismiss the keyboard (if it's open)
 			Keyboard.dismiss();
 		}
 	};
@@ -54,31 +66,40 @@ export const ListModal = ({ list, closeModal }) => {
 
 	const removeListItem = async (listId, item) => {
 		console.log("delte", listId, item);
+		// Get a reference to the document of the list in Firestore
 		const listRef = doc(FSdb, "lists", listId);
+		
+		// Use the 'updateDoc' function to remove the specified item from the 'listItems' array
 		await updateDoc(listRef, {
 			listItems: arrayRemove(item),
 		});
 	};
 
 	const updateItemStatus = async (listId, itemId, newStatus) => {
+		 
+		// Get a reference to the document of the list in Firestore
 		const listRef = doc(FSdb, "lists", listId);
+		
+		  // Use the 'updateDoc' function to update the 'listItems' array
 		await updateDoc(listRef, {
 			listItems: listData.listItems.map((item) => {
 				if (item.id === itemId) {
+					// If the item ID matches, update its 'status' property
 					return { ...item, status: newStatus };
 				}
+				// If the item ID doesn't match, keep the item unchanged
 				return item;
 			}),
 		});
 	};
 
 	const handleItemToggle = async (itemId, newStatus) => {
-		console.log("cjececlkasd0", itemId, newStatus);
+		console.log("handleitemtoggled", itemId, newStatus);
 		await updateItemStatus(list.id, itemId, newStatus);
 	};
 
 	const editList = async (update) => {
-		console.log("toeud", list);
+		console.log("listEdited", list);
 		updateTitleAndColor(list.id, update);
 	};
 	const updateTitleAndColor = async (listId, update) => {
@@ -116,7 +137,7 @@ export const ListModal = ({ list, closeModal }) => {
 		);
 	  };
 	  
-	const renderItem = ({ item, index }) => (
+	const renderItem = ({ item }) => (
 		<View style={styles.itemContainer}>
 			<View style={{ flexDirection: "row", alignContent: "center", justifyContent: "center" }}>
 				<Checkbox style={{ borderRadius: 10 }} pa color={listData.color} value={item.status} onValueChange={(newValue) => handleItemToggle(item.id, newValue)} />

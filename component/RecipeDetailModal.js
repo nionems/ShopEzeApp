@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard, Alert } from "react-native";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { View, Text, StyleSheet, TouchableOpacity, KeyboardAvoidingView, TextInput, Keyboard, Alert } from "react-native";
+import { AntDesign} from "@expo/vector-icons";
 import colors from "./Colors";
 
 import { doc, deleteDoc } from "firebase/firestore";
@@ -14,7 +14,7 @@ export const RecipeDetailsModal = ({ item, onUpdate, closeModal }) => {
 	const backgroundColors = ["#26ACA7", "#24A6D9", "#757572", "#8022D9", "#D159D8", "#D85963", "#c5d16d"];
 	const [color, setColor] = useState();
 	const FSdb = useContext(FSContext);
-	const [ingredients, setIngredients] = useState("");
+	//const [ingredients, setIngredients] = useState("");
 
 	const Colors = backgroundColors.map((color) => {
 		return <TouchableOpacity key={color} style={[styles.colorSelect, { backgroundColor: color }]} onPress={() => setColor(color)} />;

@@ -7,7 +7,7 @@ import { EmailAuthCredential, updatePassword, reauthenticateWithCredential, dele
 import { doc, deleteDoc, collection, setDoc, onSnapshot, getDocs, query, where } from "firebase/firestore";
 
 //context
-import { AuthContext } from "../contexts/AuthContext";
+//import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
 import { FBAuthContext } from "../contexts/FBAuthContext";
 
@@ -21,10 +21,10 @@ export function SettingScreen() {
 
 	const avatar = require("../assets/avatarProfile.png");
 
-	const [name, setName] = useState("");
-	const [lastName, setLastName] = useState("");
+	//const [name, setName] = useState("");
+	//const [lastName, setLastName] = useState("");
 	const [profilePicture, setProfilePicture] = useState("");
-	const [nickname, setNickname] = useState("");
+	//const [nickname, setNickname] = useState("");
 	const [password, setPassword] = useState("");
 	const [selectedImage, setSelectedImage] = useState(null);
 	const [currentPassword, setCurrentPassword] = useState("");

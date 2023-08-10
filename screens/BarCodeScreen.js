@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Button, Image, Linking, } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
 import { requestCameraPermissionsAsync } from 'expo-camera';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+
 
 
 
@@ -85,17 +85,8 @@ export function BarCodeScreen() {
           {productData ? (
             <View>
               <Text style={styles.dataText}> {productData.name}</Text>
-              <TouchableOpacity onPress={scanAgain} style={{ backgroundColor: "#26ACA7", padding: 10, borderRadius: 5 }}>
-                <Text style={{ color: "white", fontSize: 20 }}>Scan Again?</Text>
-              </TouchableOpacity>
-              {/* <Button title=" Scan Again? " onPress={scanAgain} color="#26ACA7" fontSize="40"/> */}
-
-              {/* <Button title=" Where to Buy?" onPress={handleGoogleSearch} color="red" /> */}
-
-              <TouchableOpacity onPress={handleGoogleSearch} style={{ backgroundColor: "red", padding: 10, borderRadius: 5,textAlign:"center" }}>
-                <Text style={{ color: "white", fontSize: 20 }}>Where to Buy?</Text>
-              </TouchableOpacity>
-
+              <Button title=" Scan Again? " onPress={scanAgain} color="#26ACA7"/>
+              <Button title=" Where to Buy?" onPress={handleGoogleSearch} color="red"/>
               <Text style={styles.dataDescriptionText}> {productData.description}</Text>
               {productData.imageUrl && (
                 <Image
@@ -163,4 +154,5 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     textAlign: 'center',
   },
+  
 });

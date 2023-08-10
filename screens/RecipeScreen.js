@@ -1,10 +1,9 @@
 import React, { useEffect, useContext, useState } from "react";
 import { View, Text, StyleSheet, Modal, ScrollView, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
 import { AddRecipeModal } from "../component/AddRecipeModal";
-import { RecipeDetailsModal } from "../component/RecipeDetailModal";
 import { AntDesign } from "@expo/vector-icons";
-import colors from "../component/Colors";
-import { doc, addDoc, collection, setDoc, getDocs, error, onSnapshot } from "firebase/firestore";
+
+import {  addDoc, collection, getDocs, onSnapshot } from "firebase/firestore";
 //context
 import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";

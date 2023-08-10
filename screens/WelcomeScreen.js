@@ -30,55 +30,7 @@ export function WelcomeScreen(props) {
 	};
 
 	return (
-		// <ScrollView>
-		// 	<View style={styles.page}>
-		// 		<View style={styles.header}>
-		// 			<Text style={styles.headerTitle}>Shop Eze</Text>
-		// 		</View>
-		// 		<Image style={styles.logostyle} source={require("../assets/logo.png")} />
-
-		// 		<Text style={styles.sloganText}>Shop Together, Faster, Cheaper </Text>
-		// 	</View>
-		// 	<View>
-		// 		<TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Signin")}>
-		// 			<Text style={styles.buttonText}>SIGN IN</Text>
-		// 		</TouchableOpacity>
-		// 		<TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Signup")}>
-		// 			<Text style={styles.buttonText}>SIGN UP</Text>
-		// 		</TouchableOpacity>
-		// 		<TouchableOpacity style={styles.aboutButton} onPress={() => setShowModal(true)}>
-		// 			<Text style={styles.buttonText}>ABOUT THE APP</Text>
-		// 		</TouchableOpacity>
-		// 	</View>
-		// 	<View style={styles.screen}>
-		// 		<Modal transparent={false} animationType="slide" visible={showModal} onRequestClose={() => setShowModal(false)}>
-		// 			<View style={styles.modal}>
-		// 				<View style={styles.modalHeader}>
-		// 					<Text style={styles.headerTitle}>About The App</Text>
-		// 				</View>
-		// 				{/* <Image style={styles.logostyle} source={require('../assets/logo.png')} alt="logo" /> */}
-		// 				<Text style={styles.modalText}>
-		// 					Lionel here ! {"\n"} The application allow you to create a shopping list shared between friends and family. {"\n"}
-		// 					(When organising events such as pick-nik, birthday, camping with friends, Instead of creating list via what's app, google sheet etc... {"\n"} This App will make your life easier.
-		// 					Everyone can be connected to the same shopping list and add, delete, add comments or update them in a real-time ) {"\n"}
-		// 					Have a try !! {"\n"} So far the application is FREE {"\n"} Thank You Click on my face if you want to know more about me !!
-		// 				</Text>
-		// 				<TouchableOpacity onPress={handlePicturePress}>
-		// 					<Image source={profilePicture} style={styles.myPictureStyle} />
-		// 				</TouchableOpacity>
-
-		// 				<TouchableOpacity onPress={handleLinkedInPress}>
-		// 					<Image source={linkedinLogo} style={styles.linkedinLogo} />
-		// 				</TouchableOpacity>
-		// 				<View style={styles.buttonsRow}>
-		// 					<TouchableOpacity style={styles.modalBackButton} onPress={() => setShowModal(false)}>
-		// 						<Text style={styles.buttonText}>BACK</Text>
-		// 					</TouchableOpacity>
-		// 				</View>
-		// 			</View>
-		// 		</Modal>
-		// 	</View>
-		// </ScrollView>
+		
 		<View style={styles.container}>
 			{/* Full-screen background image */}
 			<ImageBackground
