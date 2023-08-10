@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TextInput } from "react-native";
+import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TextInput,Alert } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "./Colors";
 import { AuthContext } from "../contexts/AuthContext";
@@ -54,21 +54,36 @@ export function AddCollabModal({ closeModal, data }) {
 	};
 	const addContributorToList = async () => {
 		try {
-			// Get a reference to the list document
-			const listRef = doc(FSdb, "lists", data.id);
-
-			// Update the "contributors" array by adding the new contributorId
-			await updateDoc(listRef, {
-				collaborators: arrayUnion(user.id),
-			});
-
-			console.log("Contributor added to the list.");
-			closeModal();
+		  // Get a reference to the list document
+		  const listRef = doc(FSdb, "lists", data.id);
+	  
+		  // Update the "contributors" array by adding the new contributorId
+		  await updateDoc(listRef, {
+			collaborators: arrayUnion(user.id),
+		  });
+	  
+		  console.log("Contributor added to the list.");
+		  closeModal();
+	  
+		  // Display a confirmation alert
+		  Alert.alert(
+			"Collaborator Added",
+			`${user.email} has been successfully added as a collaborator.`,
+			[
+			  {
+				text: "OK",
+				onPress: () => {
+				  // You can add any further actions here if needed
+				},
+			  },
+			]
+		  );
 		} catch (error) {
-			console.error("Error adding contributor to the list:", error);
-			throw error;
+		  console.error("Error adding contributor to the list:", error);
+		  throw error;
 		}
-	};
+	  };
+	  
 	return (
 		<KeyboardAvoidingView style={styles.container} behavior="padding">
 			<TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={closeModal}>

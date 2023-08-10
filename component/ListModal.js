@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard, Modal } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard, Modal ,Alert} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "./Colors";
 import { doc, addDoc, deleteDoc, arrayRemove, arrayUnion, updateDoc, onSnapshot } from "firebase/firestore";
@@ -86,18 +86,36 @@ export const ListModal = ({ list, closeModal }) => {
 		await updateDoc(listRef, update);
 	};
 
-	const deleteDocById = async () => {
-		try {
-			// Assuming you have the correct reference to your Firestore database
-			const docRef = doc(FSdb, "lists", list.id);
-
-			// Delete the document
-			await deleteDoc(docRef);
-			console.log("Document deleted successfully.");
-		} catch (error) {
-			console.error("Error deleting document:", error);
-		}
-	};
+	const deleteDocById = () => {
+		Alert.alert(
+		  "Delete List",
+		  "Are you sure you want to delete this list? This action cannot be undone.",
+		  [
+			{
+			  text: "Cancel",
+			  style: "cancel",
+			},
+			{
+			  text: "Delete",
+			  style: "destructive",
+			  onPress: async () => {
+				try {
+				  // Assuming you have the correct reference to your Firestore database
+				  const docRef = doc(FSdb, "lists", list.id);
+	  
+				  // Delete the document
+				  await deleteDoc(docRef);
+				  console.log("Document deleted successfully.");
+				  closeModal(); // Close the modal after deleting the list
+				} catch (error) {
+				  console.error("Error deleting document:", error);
+				}
+			  },
+			},
+		  ]
+		);
+	  };
+	  
 	const renderItem = ({ item, index }) => (
 		<View style={styles.itemContainer}>
 			<View style={{ flexDirection: "row", alignContent: "center", justifyContent: "center" }}>

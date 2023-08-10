@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard, Modal } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard, Modal, Alert } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "./Colors";
 import { doc, addDoc, deleteDoc, arrayRemove, arrayUnion, updateDoc, onSnapshot } from "firebase/firestore";
@@ -76,14 +76,33 @@ export const RecipeView = ({ list, closeModal }) => {
 
 	const deleteDocById = async () => {
 		try {
-			// Assuming you have the correct reference to your Firestore database
-			const docRef = doc(FSdb, "recipes", list.id);
-			await deleteDoc(docRef);
-			console.log("Document deleted successfully.");
+		  // Show a confirmation alert before deleting
+		  Alert.alert(
+			"Delete Recipe",
+			"Are you sure you want to delete this recipe?",
+			[
+			  {
+				text: "Cancel",
+				style: "cancel",
+			  },
+			  {
+				text: "Delete",
+				style: "destructive",
+				onPress: async () => {
+				  // Assuming you have the correct reference to your Firestore database
+				  const docRef = doc(FSdb, "recipes", list.id);
+				  await deleteDoc(docRef);
+				  console.log("Document deleted successfully.");
+				  closeModal();
+				},
+			  },
+			]
+		  );
 		} catch (error) {
-			console.error("Error deleting document:", error);
+		  console.error("Error deleting document:", error);
 		}
-	};
+	  };
+	  
 	const renderItem = ({ item, index }) => (
 		<View style={styles.itemContainer}>
 			<View style={{ flexDirection: "row", alignContent: "center", justifyContent: "center", alignItems: "center" }}>

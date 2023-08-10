@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Button, Image, Linking, } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
 import { requestCameraPermissionsAsync } from 'expo-camera';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 
 
@@ -73,7 +73,7 @@ export function BarCodeScreen() {
   }
 
   return (
-   
+
     <View style={styles.container}>
       <BarCodeScanner
         onBarCodeScanned={handleBarCodeScanned}
@@ -85,8 +85,17 @@ export function BarCodeScreen() {
           {productData ? (
             <View>
               <Text style={styles.dataText}> {productData.name}</Text>
-              <Button title=" Scan Again? " onPress={scanAgain} color="#26ACA7" fontSize="40"/>
-              <Button title=" Where to Buy?" onPress={handleGoogleSearch} color="red"/>
+              <TouchableOpacity onPress={scanAgain} style={{ backgroundColor: "#26ACA7", padding: 10, borderRadius: 5 }}>
+                <Text style={{ color: "white", fontSize: 20 }}>Scan Again?</Text>
+              </TouchableOpacity>
+              {/* <Button title=" Scan Again? " onPress={scanAgain} color="#26ACA7" fontSize="40"/> */}
+
+              {/* <Button title=" Where to Buy?" onPress={handleGoogleSearch} color="red" /> */}
+
+              <TouchableOpacity onPress={handleGoogleSearch} style={{ backgroundColor: "red", padding: 10, borderRadius: 5,textAlign:"center" }}>
+                <Text style={{ color: "white", fontSize: 20 }}>Where to Buy?</Text>
+              </TouchableOpacity>
+
               <Text style={styles.dataDescriptionText}> {productData.description}</Text>
               {productData.imageUrl && (
                 <Image
@@ -98,12 +107,12 @@ export function BarCodeScreen() {
           ) : (
             <Text>No product data available</Text>
           )}
-  
-          
+
+
         </View>
       )}
     </View>
-   
+
   );
 }
 
@@ -114,11 +123,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   overlay: {
-    position: 'absolute',
+    position: "relative",
     top: '8%',
     left: '1%',
     right: '1%',
-    bottom:'5%',
+    bottom: '5%',
     padding: 10,
     backgroundColor: 'rgba(255,255,255, 1)',
     borderRadius: 10,
@@ -132,7 +141,7 @@ const styles = StyleSheet.create({
   dataText: {
     fontSize: 20,
     color: '#26ACA7',
-    fontWeight:'bold',
+    fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center', // Add this property to center-align the text
   },
@@ -148,7 +157,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center', // Center the image horizontally within its container
     marginVertical: 10, // Add some vertical spacing
   },
-   buttonText: {
+  buttonText: {
     fontSize: 20,
     fontWeight: 'bold',
     marginVertical: 10,
