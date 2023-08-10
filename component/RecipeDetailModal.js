@@ -91,15 +91,15 @@ export const RecipeDetailsModal = ({ item, onUpdate, closeModal }) => {
 
 				<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>{Colors}</View>
 				<TouchableOpacity style={[styles.updateBtn, { backgroundColor: color }]} onPress={handleUpdate}>
-					<Text style={{ color: "#f0aa86", fontWeight: "600", fontSize: 24 }}>Update Recipe</Text>
+					<Text style={{ color: "#f0aa86", fontSize: 24 }}>Update Recipe</Text>
 				</TouchableOpacity>
 
 				<TouchableOpacity style={styles.modalDeleteButton} onPress={handleDelete}>
-					<Text style={{ color: "#f0aa86", fontWeight: "600", fontSize: 24 }}>Delete Recipe</Text>
+					<Text style={{ color: "#f0aa86", fontSize: 24 }}>Delete Recipe</Text>
 				</TouchableOpacity>
 
 				<TouchableOpacity style={styles.modalButton} onPress={() => {}}>
-					<Text style={{ color: "#f0aa86", fontWeight: "600", fontSize: 24 }}>Cancel</Text>
+					<Text style={{ color: "#f0aa86", fontSize: 24 }}>Cancel</Text>
 				</TouchableOpacity>
 			</View>
 		</KeyboardAvoidingView>
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
 		alignSelf: "center",
 		marginRight: 100,
 		marginLeft: 100,
-		//shadowOpacity:10,
+		
 	},
 
 	container: {
@@ -161,15 +161,8 @@ const styles = StyleSheet.create({
 		minHeight: 30,
 		minWidth: 350,
 	},
-	// updateBtn: {
-	//     marginTop: 24,
-	//     height: 50,
-	//     borderRadius: 6,
-	//     alignItems: "center",
-	//     justifyContent: "center",
-	//     shadowOpacity:10,
-	// },
-	updatyeBtn: {
+	
+	updateBtn: {
 		marginTop: 24,
 		height: 50,
 		borderRadius: 6,

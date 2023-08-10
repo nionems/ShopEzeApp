@@ -68,7 +68,7 @@ export function SignInScreen(props) {
                 <View>
                     <TextInput
                         style={styles.input}
-                        placeholder="enter your email here "
+                        placeholder="Please enter your email here ! "
                         value={email}
                         onChangeText={(emailText) => setEmail(emailText)}
                     />
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     sloganText: {
         fontSize: 15,
         textAlign: 'center',
-        marginTop: 20,
+        marginTop: 5,
         color: "#FD8749",
         fontStyle: "italic",
         fontWeight: "bold",
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     SignIntext: {
         textAlign: 'center',
         color: "#26ACA7",
-        marginTop: 20,
+        marginTop: 2,
         marginBottom: 10,
         fontSize: 20,
         fontWeight: "bold",

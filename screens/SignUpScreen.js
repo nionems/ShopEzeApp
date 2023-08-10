@@ -112,48 +112,48 @@ export function SignUpScreen(props) {
 
 	return (
 		<KeyboardAvoidingView>
-		<ScrollView>
-			<View style={styles.page}>
-				<View style={styles.header}>
-					<Text style={styles.headerTitle}>Shop Eze</Text>
+			<ScrollView>
+				<View style={styles.page}>
+					<View style={styles.header}>
+						<Text style={styles.headerTitle}>Shop Eze</Text>
+					</View>
+					<Image style={styles.logostyle} source={require("../assets/logo.png")} alt="logo" />
+
+					<Text style={styles.sloganText}> Shop Together, Faster, Cheaper </Text>
+					{error !== "" && <Text style={styles.errorText}>{error}</Text>}
+					<Text style={styles.sloganText}> Try Us For FREE !! </Text>
+
+					<Text style={styles.SignUptext}>Sign Up</Text>
+					<View>
+						<TextInput style={validEmail ? styles.validInput : styles.input} placeholder="Please enter your email here !" value={email} onChangeText={(emailText) => setEmail(emailText)} />
+					</View>
+					<View>
+						<TextInput
+							style={validPassword ? styles.validInput : styles.input}
+							placeholder="Password 8 character minimum"
+							value={password}
+							onChangeText={(pwText) => setPassword(pwText)}
+							secureTextEntry={!showPassword}
+						/>
+						<TouchableOpacity style={styles.iconContainer} onPress={() => setShowPassword(!showPassword)}>
+							<FontAwesome name={showPassword ? "eye-slash" : "eye"} size={20} color="#26ACA7" />
+						</TouchableOpacity>
+
+					</View>
+					<TouchableOpacity
+						style={validForm ? styles.button : styles.buttonDisabled}
+						disabled={!validForm}
+						//onPress={() => props.handler(email, password)}
+						onPress={() => signupHandler(email, password)}
+					>
+						<Text style={styles.buttonText}>Sign up</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity style={styles.signInLink} onPress={() => navigation.navigate("Signin")}>
+						<Text style={styles.signInLinkText}>Already have an account? Sign in</Text>
+					</TouchableOpacity>
 				</View>
-				<Image style={styles.logostyle} source={require("../assets/logo.png")} alt="logo" />
-
-				<Text style={styles.sloganText}> Shop Together, Faster, Cheaper </Text>
-				{error !== "" && <Text style={styles.errorText}>{error}</Text>}
-				<Text style={styles.sloganText}> Try Us For FREE !! </Text>
-
-				<Text style={styles.SignUptext}>Sign Up</Text>
-				<View>
-					<TextInput style={validEmail ? styles.validInput : styles.input} placeholder="enter your email here" value={email} onChangeText={(emailText) => setEmail(emailText)} />
-				</View>
-				<View>
-				<TextInput
-          style={validPassword ? styles.validInput : styles.input}
-          placeholder="password 8 character minimum"
-          value={password}
-          onChangeText={(pwText) => setPassword(pwText)}
-          secureTextEntry={!showPassword}
-        />
-		<TouchableOpacity style={styles.iconContainer} onPress={() => setShowPassword(!showPassword)}>
-          <FontAwesome name={showPassword ? "eye-slash" : "eye"} size={20} color="#26ACA7" />
-        </TouchableOpacity>
-
-				</View>
-				<TouchableOpacity
-					style={validForm ? styles.button : styles.buttonDisabled}
-					disabled={!validForm}
-					//onPress={() => props.handler(email, password)}
-					onPress={() => signupHandler(email, password)}
-				>
-					<Text style={styles.buttonText}>Sign up</Text>
-				</TouchableOpacity>
-
-				<TouchableOpacity style={styles.signInLink} onPress={() => navigation.navigate("Signin")}>
-					<Text style={styles.signInLinkText}>Already have an account? Sign in</Text>
-				</TouchableOpacity>
-			</View>
-		</ScrollView>
+			</ScrollView>
 		</KeyboardAvoidingView>
 	);
 }
@@ -166,22 +166,22 @@ const styles = StyleSheet.create({
 	header: {
 		backgroundColor: "#26ACA7",
 		height: 70,
-		minWidth: 400,
+		minWidth: 1500,
+		marginTop: 50,
 	},
 	headerTitle: {
 		fontSize: 40,
 		marginTop: 10,
 		marginBottom: 10,
-		textAlign: "center",
+		textAlign: 'center',
 		color: "#FD8749",
 		fontStyle: "italic",
-		fontWeight: "bold",
+		fontWeight: "bold"
 	},
-
 	sloganText: {
 		fontSize: 15,
-		textAlign: "center",
-		marginTop: 20,
+		textAlign: 'center',
+		marginTop: 5,
 		color: "#FD8749",
 		fontStyle: "italic",
 		fontWeight: "bold",
@@ -200,25 +200,27 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 	},
 	SignUptext: {
-		textAlign: "center",
+		textAlign: 'center',
 		color: "#26ACA7",
-		marginTop: 20,
+		marginTop: 2,
 		marginBottom: 10,
 		fontSize: 20,
 		fontWeight: "bold",
 	},
 	inputGroup: {
-		padding: 5,
-		textAlign: "center",
-	},
-	input: {
-		backgroundColor: "#ffffff",
-		padding: 4,
-		borderWidth: 1,
-		borderColor: "#cccccc",
-		borderRadius: 10,
-		marginBottom: 10,
-	},
+        padding: 1,
+        textAlign: "center",
+    },
+    input: {
+        paddingVertical:10,
+        backgroundColor: "#ffffff",
+        padding: 4,
+        borderWidth: 1,
+        borderColor: "#cccccc",
+        borderRadius: 10,
+        marginBottom: 10,
+    },
+  
 	validInput: {
 		borderColor: "#00693e",
 		borderWidth: 1,
@@ -266,15 +268,15 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		borderColor: "#26ACA7",
 		marginBottom: 10,
-	  },
-	  validInput: {
+	},
+	validInput: {
 		// Apply your styles for valid password input
-	  },
-	  iconContainer: {
+	},
+	iconContainer: {
 		marginLeft: 10,
-		alignItems:"center"
-	  },
-	
+		alignItems: "center"
+	},
+
 });
 
 // import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
