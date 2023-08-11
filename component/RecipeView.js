@@ -250,8 +250,8 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 3,
 	},
 	title: {
-		fontSize: 30,
-		fontWeight: "800",
+		fontSize: 20,
+		fontWeight: "600",
 		color: "black",
 		// backgroundColor: "yellow",
 	},

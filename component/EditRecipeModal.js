@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#78cfcb",
 	},
 	title: {
-		fontSize: 28,
+		fontSize: 20,
 		fontWeight: "800",
 		color: colors.black,
 		alignSelf: "center",

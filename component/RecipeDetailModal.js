@@ -117,8 +117,8 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 3,
 	},
 	title: {
-		fontSize: 40,
-		fontWeight: "800",
+		fontSize: 20,
+		//fontWeight: "800",
 		color: "#26ACA7",
 		alignItems: "center",
 		alignSelf: "center",
