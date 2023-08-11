@@ -136,7 +136,7 @@ export function SettingScreen() {
 			<View style={styles.container}>
 				<TouchableOpacity onPress={handleLogoPress}>{selectedImage ? <Image source={{ avatar }} style={styles.avatar} /> : renderProfilePicture()}</TouchableOpacity>
 
-				<View style={styles.container}>
+				<View style={styles.passwordContainer}>
 					<TextInput
 						style={styles.input}
 						placeholder="Current Password"
@@ -145,10 +145,11 @@ export function SettingScreen() {
 						onChangeText={setCurrentPassword}
 					/>
 					<TouchableOpacity onPress={() => setShowCurrentPassword(!showCurrentPassword)}>
-						{/* Use the FontAwesome component for the eye icon */}
 						<FontAwesome name={showCurrentPassword ? "eye-slash" : "eye"} size={20} color="#26ACA7" />
 					</TouchableOpacity>
+				</View>
 
+				<View style={styles.passwordContainer}>
 					<TextInput
 						style={styles.input}
 						placeholder="New Password"
@@ -157,15 +158,14 @@ export function SettingScreen() {
 						onChangeText={setNewPassword}
 					/>
 					<TouchableOpacity onPress={() => setShowNewPassword(!showNewPassword)}>
-						{/* Use the FontAwesome component for the eye icon */}
 						<FontAwesome name={showNewPassword ? "eye-slash" : "eye"} size={20} color="#26ACA7" />
 					</TouchableOpacity>
 
-					<TouchableOpacity style={styles.button} onPress={() => handleChangePassword()}>
-						<Text style={styles.buttonText}>Change password</Text>
-					</TouchableOpacity>
-				</View>
 
+				</View>
+				<TouchableOpacity style={styles.button} onPress={() => handleChangePassword()}>
+					<Text style={styles.buttonText}>Change password</Text>
+				</TouchableOpacity>
 
 				<TouchableOpacity style={styles.buttonDelete} onPress={() => handleDeleteProfile()}>
 					<Text style={styles.buttonText}>Delete Profile</Text>
@@ -263,5 +263,10 @@ const styles = StyleSheet.create({
 	container: {
 		alignContent: "center",
 		alignItems: "center",
-	}
+	},
+	passwordContainer: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+	},
 });

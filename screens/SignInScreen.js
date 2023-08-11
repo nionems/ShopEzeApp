@@ -12,7 +12,7 @@ export function SignInScreen(props) {
     const [validPassword, setValidPassword] = useState(false)
     const [validForm, setValidForm] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
- 
+
     const navigation = useNavigation()
 
     const authStatus = useContext(AuthContext)
@@ -55,51 +55,54 @@ export function SignInScreen(props) {
 
     return (
         <KeyboardAvoidingView>
-        <ScrollView>
-            <View style={styles.page}>
-                <View style={styles.header}>
-                    <Text style={styles.headerTitle}>Shop Eze</Text>
-                </View>
-                <Image style={styles.logostyle} source={require('../assets/logo.png')} alt="logo" />
-                <Text style={styles.sloganText}> Shop Together, Faster, Cheaper  </Text>
-                <Text style={styles.sloganText}>Hi ! How are you ? going Shopping ? </Text>
-                <Text style={styles.SignIntext}> Sign In </Text>
+            <ScrollView>
+                <View style={styles.page}>
+                    <View style={styles.header}>
+                        <Text style={styles.headerTitle}>Shop Eze</Text>
+                    </View>
+                    <Image style={styles.logostyle} source={require('../assets/logo.png')} alt="logo" />
+                    <Text style={styles.sloganText}> Shop Together, Faster, Cheaper  </Text>
+                    <Text style={styles.sloganText}>Hi ! How are you ? going Shopping ? </Text>
+                    <Text style={styles.SignIntext}> Sign In </Text>
 
-                <View>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Please enter your email here ! "
-                        value={email}
-                        onChangeText={(emailText) => setEmail(emailText)}
-                    />
+                    <View style={styles.inputContainer}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder=" Please enter your email here!  "
+                            value={email}
+                            onChangeText={(emailText) => setEmail(emailText)}
+                        />
+                        <FontAwesome name="envelope" size={20} color="#26ACA7" style={styles.icon} />
+                    </View>
+                    <View>
+                        <View style={styles.passwordContainer}>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Password 8 character minimum"
+                                value={password}
+                                onChangeText={(pwText) => setPassword(pwText)}
+                                secureTextEntry={!showPassword}
+                            />
+                            <TouchableOpacity style={styles.iconContainer} onPress={() => setShowPassword(!showPassword)}>
+                                <FontAwesome name={showPassword ? "eye-slash" : "eye"} size={20} color="#26ACA7" />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <TouchableOpacity
+                        style={(validForm) ? styles.button : styles.buttonDisabled}
+                        disabled={(validForm) ? false : true}
+                        onPress={() => props.handler(email, password)}
+                    >
+                        <Text style={styles.buttonText}>Sign in</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.signInLink}
+                        onPress={() => navigation.navigate("Signup")}
+                    >
+                        <Text style={styles.signInLinkText}>Don't have an account? Sign up</Text>
+                    </TouchableOpacity>
                 </View>
-                <View>
-                <TextInput
-          style={styles.input}
-          placeholder="password 8 character minimum"
-          value={password}
-          onChangeText={(pwText) => setPassword(pwText)}
-          secureTextEntry={!showPassword}
-        />
-        <TouchableOpacity style={styles.iconContainer} onPress={() => setShowPassword(!showPassword)}>
-          <FontAwesome name={showPassword ? "eye-slash" : "eye"} size={20} color="#26ACA7" />
-        </TouchableOpacity>
-                </View>
-                <TouchableOpacity
-                    style={(validForm) ? styles.button : styles.buttonDisabled}
-                    disabled={(validForm) ? false : true}
-                    onPress={() => props.handler(email, password)}
-                >
-                    <Text style={styles.buttonText}>Sign in</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.signInLink}
-                    onPress={() => navigation.navigate("Signup")}
-                >
-                    <Text style={styles.signInLinkText}>Don't have an account? Sign up</Text>
-                </TouchableOpacity>
-            </View>
-        </ScrollView>
+            </ScrollView>
         </KeyboardAvoidingView>
     )
 }
@@ -113,7 +116,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#26ACA7",
         height: 70,
         minWidth: 1500,
-        marginTop:50,
+        marginTop: 50,
     },
     headerTitle: {
         fontSize: 40,
@@ -158,7 +161,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     input: {
-        paddingVertical:10,
+        paddingVertical: 10,
         backgroundColor: "#ffffff",
         padding: 4,
         borderWidth: 1,
@@ -166,7 +169,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 10,
     },
-  
+
     validInput: {
         borderColor: "#00693e",
         borderWidth: 1,
@@ -202,16 +205,38 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "white",
     },
+    // inputContainer: {
+    //     flexDirection: "row",
+    //     alignItems: "center",
+    //     borderBottomWidth: 1,
+    //     borderColor: "#26ACA7",
+    //     marginBottom: 10,
+    //   },
+    //     inputContainer: {
+    //     flexDirection: "row",
+    //     alignItems: "center",
+    //     justifyContent: "center", // Center the content horizontally
+    //     borderBottomWidth: 1,
+    //     borderColor: "#26ACA7",
+    //     marginBottom: 10,
+    // },
     inputContainer: {
         flexDirection: "row",
         alignItems: "center",
-        borderBottomWidth: 1,
+        justifyContent: "center", // Center the content horizontally
         borderColor: "#26ACA7",
         marginBottom: 10,
-      },
-   
-      iconContainer: {
-        marginLeft: 10, // Add margin to separate the icon from the input
-        alignItems:"center",
-      },
+    },
+    icon: {
+        marginLeft: 10, // Adjust this value as needed for proper spacing
+    },
+    passwordContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+
+    },
+    iconContainer: {
+        marginLeft: 10, // Adjust this value as needed for proper spacing
+    },
 })
