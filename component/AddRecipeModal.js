@@ -32,10 +32,10 @@ export function AddRecipeModal(props) {
 			</TouchableOpacity>
 
 			<View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
-				<Text style={styles.title}>Create A Recipe</Text>
+				<Text style={styles.title}>! Add Your Recipe !</Text>
 
-				<TextInput style={styles.input} placeholder="Recipe Name?" onChangeText={(text) => setRecipeName(text)} />
-				<TextInput style={styles.input} placeholder="Recipe Ingredient?" onChangeText={(text) => setDescription(text)} />
+				<TextInput style={styles.input} placeholder="Recipe Name" onChangeText={(text) => setRecipeName(text)} />
+				<TextInput style={styles.input2} multiline placeholder="Recipe Description" onChangeText={(text) => setDescription(text)} />
 
 				<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>{Colors}</View>
 
@@ -74,13 +74,24 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		borderWidth: StyleSheet.hairlineWidth,
-		borderColor: colors.grey,
+		borderColor: colors.green,
 		borderRadius: 6,
 		height: 50,
 		marginTop: 8,
 		paddingHorizontal: 16,
 		fontSize: 18,
 	},
+	input2: {
+		borderWidth: StyleSheet.hairlineWidth,
+		borderColor: colors.green,
+		borderRadius: 6,
+		height: 300, // Adjust the height as needed
+		marginTop: 8,
+		paddingHorizontal: 16,
+		paddingVertical: 16, // Adjust the padding vertically
+		fontSize: 18,
+		
+	  },
 	inputDetails: {
 		borderWidth: StyleSheet.hairlineWidth,
 		borderColor: "#26ACA7",

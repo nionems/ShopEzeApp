@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity,Alert } from "react-native";
+import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity,Alert ,ImageBackground } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "./Colors";
 import { AuthContext } from "../contexts/AuthContext";

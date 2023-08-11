@@ -7,6 +7,7 @@ import { FSContext } from "../contexts/FSContext";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigation } from "@react-navigation/native";
 import { EditRecipeModal } from "./EditRecipeModal";
+import { FontAwesome } from "@expo/vector-icons";
 
 function lightenColor(colorHex, lightenAmount) {
 	const red = parseInt(colorHex.slice(1, 3), 16);
@@ -27,6 +28,9 @@ export const RecipeView = ({ list, closeModal }) => {
 	const [showModal, setShowModal] = useState(false);
 	const [newItem, setNewItem] = useState("");
 
+	const [showRecipeDescription, setShowRecipeDescription] = useState(false);
+	const [recipeDescription, setRecipeDescription] = useState("");
+
 	const FSdb = useContext(FSContext);
 
 	const addNewItem = () => {
@@ -37,7 +41,7 @@ export const RecipeView = ({ list, closeModal }) => {
 			Keyboard.dismiss();
 		}
 	};
-
+	
 	const addListItem = async (listId, newItem) => {
 		const listRef = doc(FSdb, "recipes", listId);
 		await updateDoc(listRef, {
@@ -64,6 +68,9 @@ export const RecipeView = ({ list, closeModal }) => {
 			}),
 		});
 	};
+	
+
+	
 
 	const editList = async (update) => {
 		console.log("toeud", list);
@@ -76,36 +83,37 @@ export const RecipeView = ({ list, closeModal }) => {
 
 	const deleteDocById = async () => {
 		try {
-		  // Show a confirmation alert before deleting
-		  Alert.alert(
-			"Delete Recipe",
-			"Are you sure you want to delete this recipe?",
-			[
-			  {
-				text: "Cancel",
-				style: "cancel",
-			  },
-			  {
-				text: "Delete",
-				style: "destructive",
-				onPress: async () => {
-				  // Assuming you have the correct reference to your Firestore database
-				  const docRef = doc(FSdb, "recipes", list.id);
-				  await deleteDoc(docRef);
-				  console.log("Document deleted successfully.");
-				  closeModal();
-				},
-			  },
-			]
-		  );
+			// Show a confirmation alert before deleting
+			Alert.alert(
+				"Delete Recipe",
+				"Are you sure you want to delete this recipe?",
+				[
+					{
+						text: "Cancel",
+						style: "cancel",
+					},
+					{
+						text: "Delete",
+						style: "destructive",
+						onPress: async () => {
+							// Assuming you have the correct reference to your Firestore database
+							const docRef = doc(FSdb, "recipes", list.id);
+							await deleteDoc(docRef);
+							console.log("Document deleted successfully.");
+							closeModal();
+						},
+					},
+				]
+			);
 		} catch (error) {
-		  console.error("Error deleting document:", error);
+			console.error("Error deleting document:", error);
 		}
-	  };
-	  
+	};
+
 	const renderItem = ({ item, index }) => (
 		<View style={styles.itemContainer}>
 			<View style={{ flexDirection: "row", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
+				
 				<View style={{ width: 15, height: 15, borderRadius: 10, backgroundColor: lightenColor(listData?.color, 0.1) }}></View>
 				<Text style={styles.itemText}>{item.title}</Text>
 			</View>
@@ -114,6 +122,7 @@ export const RecipeView = ({ list, closeModal }) => {
 			</TouchableOpacity>
 		</View>
 	);
+	
 
 	useEffect(() => {
 		const documentRef = doc(FSdb, "recipes", list.id);
@@ -129,8 +138,8 @@ export const RecipeView = ({ list, closeModal }) => {
 			unsubscribe();
 		};
 	}, [list.id]);
-	
-    return (
+
+	return (
 		<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
 			<SafeAreaView style={[styles.container, { backgroundColor: lightenColor(listData?.color, 0.9) }]}>
 				<View style={{ flexDirection: "row", justifyContent: "space-between", width: "90%" }}>
@@ -156,6 +165,19 @@ export const RecipeView = ({ list, closeModal }) => {
 							<AntDesign name="delete" size={24} color={lightenColor(listData?.color, 0.4)} />
 						</TouchableOpacity>
 					</View>
+
+					<View style={styles.viewRecipeButtonContainer}>
+						<TouchableOpacity
+							style={styles.viewRecipeButton}
+							onPress={() => {
+								setShowRecipeDescription(!showRecipeDescription);
+								setRecipeDescription(listData?.description || "");
+							}}
+						>
+							<FontAwesome name="book" size={20} color="#26ACA7" />
+							<Text style={styles.viewRecipeButtonText}>View Recipe</Text>
+						</TouchableOpacity>
+					</View>
 					<TouchableOpacity
 						style={{}}
 						onPress={() => {
@@ -174,24 +196,30 @@ export const RecipeView = ({ list, closeModal }) => {
 				</View>
 
 				<View style={[styles.section, { flex: 7, marginVertical: 16 }]}>
-					<FlatList
-						data={listData?.ingredients}
-						renderItem={renderItem}
-						keyExtractor={(item, index) => index.toString()}
-						contentContainerStyle={{ paddingHorizontal: 32 }}
-						showsVerticalScrollIndicator={false}
-					/>
+					{showRecipeDescription ? (
+						<View style={styles.recipeDescription}>
+							<Text style={styles.recipeDescriptionText}>{recipeDescription}</Text>
+						</View>
+					) : (
+						<FlatList
+							data={listData?.ingredients}
+							renderItem={renderItem}
+							keyExtractor={(item, index) => index.toString()}
+							contentContainerStyle={{ paddingHorizontal: 32 }}
+							showsVerticalScrollIndicator={false}
+						/>
+					)}
 				</View>
-             
-                
-                <KeyboardAvoidingView
-				 style={[styles.section, styles.footer]} behavior="padding">
+
+
+				<KeyboardAvoidingView
+					style={[styles.section, styles.footer]} behavior="padding">
 					<TextInput style={[styles.input, { borderColor: list.color }]} placeholder="Add new item..." onChangeText={setNewItem} value={newItem} />
 
 					<TouchableOpacity style={[styles.addButton, { backgroundColor: list.color }]} onPress={addNewItem}>
 						<AntDesign name="plus" size={16} color={colors.white} />
 					</TouchableOpacity>
-                
+
 					<Modal transparent={false} animationType="slide" visible={showModal} onRequestClose={() => setShowModal(false)}>
 						{/* Change addList to addShoppingList */}
 						<EditRecipeModal closeModal={() => setShowModal(false)} addList={editList} data={listData} />
@@ -199,9 +227,9 @@ export const RecipeView = ({ list, closeModal }) => {
 				</KeyboardAvoidingView>
 			</SafeAreaView>
 		</KeyboardAvoidingView>
-        
-        
-        
+
+
+
 	);
 };
 
@@ -257,6 +285,28 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		marginLeft: 16,
 	},
+	
+	viewRecipeButton: {
+		flexDirection: "row",
+		alignItems: "center",
+		backgroundColor: "#ffffff",
+		borderWidth: 1,
+		borderColor: "#26ACA7",
+		borderRadius: 10,
+		padding: 10,
+		marginTop: 10,
+	},
+
+	viewRecipeButtonContainer: {
+    alignItems: "center",
+    marginTop: 10, // Adjust the spacing as needed
+  },
+
+  recipeDescriptionText: {
+    color: colors.black,
+    fontSize: 16,
+    textAlign: "center", // Center the text
+  },
 });
 
 export default RecipeView;

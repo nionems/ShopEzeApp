@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TextInp
 import { AntDesign } from "@expo/vector-icons";
 import colors from "./Colors";
 import { AuthContext } from "../contexts/AuthContext";
+import { ScrollView } from "react-native-gesture-handler";
 
 export function EditRecipeModal({ addList, closeModal, data }) {
 	console.log("rp", data);
@@ -28,16 +29,17 @@ export function EditRecipeModal({ addList, closeModal, data }) {
 	});
 
 	return (
+
 		<KeyboardAvoidingView style={styles.container} behavior="padding">
 			<TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={closeModal}>
 				<AntDesign name="close" size={24} color={colors.black} />
 			</TouchableOpacity>
 
 			<View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
-				<Text style={styles.title}>Create A Recipe</Text>
+				<Text style={styles.title}>! Edit Your Recipe !</Text>
 
 				<TextInput style={styles.input} placeholder="Recipe Name?" value={recipeName} onChangeText={(text) => setRecipeName(text)} />
-				<TextInput style={styles.input} placeholder="Recipe Ingredient?" value={description} onChangeText={(text) => setDescription(text)} />
+				<TextInput style={styles.input2}  multiline placeholder="Recipe Ingredient?" value={description} onChangeText={(text) => setDescription(text)} />
 
 				<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>{Colors}</View>
 
@@ -48,6 +50,7 @@ export function EditRecipeModal({ addList, closeModal, data }) {
 				)}
 			</View>
 		</KeyboardAvoidingView>
+		
 	);
 }
 
@@ -74,6 +77,17 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 		fontSize: 18,
 	},
+	input2: {
+		borderWidth: StyleSheet.hairlineWidth,
+		borderColor: colors.green,
+		borderRadius: 6,
+		height: 300, // Adjust the height as needed
+		marginTop: 8,
+		paddingHorizontal: 16,
+		paddingVertical: 16, // Adjust the padding vertically
+		fontSize: 18,
+		
+	  },
 	create: {
 		marginTop: 24,
 		height: 50,

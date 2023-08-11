@@ -32,11 +32,11 @@ export function EditListModal({ addList, closeModal, data }) {
 			</TouchableOpacity>
 
 			<View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
-				<Text style={styles.title}>Create A List</Text>
+				<Text style={styles.title}>! Edit Your List !</Text>
 				<TextInput style={styles.input} placeholder="List Name?" value={name} onChangeText={(text) => setName(text)} />
 				<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>{Colors}</View>
 				<TouchableOpacity style={[styles.create, { backgroundColor: color }]} onPress={() => createList()}>
-					<Text style={{ color: "#78cfcb", fontWeight: "bold", fontSize: 24 }}>Upadate</Text>
+					<Text style={{ color: "#78cfcb", fontWeight: "bold", fontSize: 24 }}>Update</Text>
 				</TouchableOpacity>
 			</View>
 		</KeyboardAvoidingView>
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 		fontSize: 18,
 	},
+	
 	create: {
 		marginTop: 24,
 		height: 50,
