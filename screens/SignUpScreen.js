@@ -1,7 +1,7 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, KeyboardAvoidingView } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, KeyboardAvoidingView,Alert } from "react-native";
 import { useEffect, useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword,sendEmailVerification } from "firebase/auth";
 import { doc, addDoc, collection, setDoc, onSnapshot, getDocs } from "firebase/firestore";
 import { FontAwesome } from "@expo/vector-icons";
 
@@ -21,6 +21,7 @@ export function SignUpScreen(props) {
 	const FSdb = useContext(FSContext);
 	const navigation = useNavigation();
 	const [showPassword, setShowPassword] = useState(false);
+	const [showModal, setShowModal] = useState(false);
 
 	//declare context
 	const authStatus = useContext(AuthContext);
@@ -55,60 +56,45 @@ export function SignUpScreen(props) {
 
 	// if a user is authentificate the user will be redirected to home
 	useEffect(() => {
-		if (authStatus) {
-			// navigate adds a back arrow to the header
-			// navigation.navigate("Home")
-			// reset will make "Home" the root page of the navigation
-			navigation.reset({ index: 0, routes: [{ name: "Home" }] });
+		if (authStatus && authStatus.emailVerified) {
+		  navigation.reset({ index: 0, routes: [{ name: "Home" }] });
 		}
-	}, [authStatus]);
-
-	// MOVED SIGN UP HANDLER HERE
-	// const signupHandler = (useremail, userpassword) => {
-	// 	console.log(FBauth);
-	// 	// create user account
-	// 	createUserWithEmailAndPassword(FBauth, email, password)
-	// 		.then((res) => {
-	// 			console.log(res.user);
-	// 			const user = res.user;
-	// 			console.log("User created:", user.uid);
-
-	// 			// Add user details to the userAuth collection in Firestore
-	// 			const userDetails = {
-	// 				email: user.email,
-	// 				id: user.uid,
-	// 			};
-	// 			console.log(userDetails);
-	// 				const ref = await addDoc(collection(FSdb, "userAuth"), userDetails);
-	// 			// Replace 'userAuth' with your desired collection name in Firestore
-	// 			// await firestore.collection("userAuth").doc(user.uid).set(userDetails);
-	// 		})
-	// 		.catch((error) => setError(error.message));
-	// };
+	  }, [authStatus]);
 
 	const signupHandler = async (useremail, userpassword) => {
 		try {
-			// Create user account using Firebase Authentication
-			const res = await createUserWithEmailAndPassword(FBauth, email, password);
-			const user = res.user;
-			console.log("User created:", user.uid);
+		  // Create user account using Firebase Authentication
+		  const res = await createUserWithEmailAndPassword(FBauth, useremail, userpassword);
+		  const user = res.user;
+		  console.log("User created:", user.uid);
+	  
+		  // Send email verification to the user
+		  await sendEmailVerification(user);
+	  
+		  console.log("Email verification sent to the user.");
+	  
+		  // Add user details to the userAuth collection in Firestore
+		  const userDetails = {
+			email: user.email,
+			id: user.uid,
+		  };
+	  
+		  // Replace 'userAuth' with your desired collection name in Firestore
+		  const ref = await addDoc(collection(FSdb, "userAuth"), userDetails);
+	  
+		  console.log("User details added to Firestore.");
 
-			// Add user details to the userAuth collection in Firestore
-			const userDetails = {
-				email: user.email,
-				id: user.uid,
-			};
-
-			console.log(userDetails);
-
-			// Replace 'userAuth' with your desired collection name in Firestore
-			const ref = await addDoc(collection(FSdb, "userAuth"), userDetails);
-
-			console.log("User details added to Firestore.");
+		  // Show a message to the user
+		  Alert.alert(
+			"Email Verification",
+			"An email verification link has been sent to your email address. Please check your inbox and follow the instructions to verify your email.",
+			[{ text: "OK", onPress: () => setShowModal(false) }]
+		  );
 		} catch (error) {
-			console.error("Error creating user or adding user details:", error);
+		  console.error("Error creating user or adding user details:", error);
 		}
-	};
+	  };
+	  
 
 	return (
 		<KeyboardAvoidingView>

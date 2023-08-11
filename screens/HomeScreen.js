@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
 	},
 
 	addList: {
-		marginTop: 24,
+		marginTop: 20,
 		height: 50,
 		borderRadius: 6,
 		marginLeft: 30,

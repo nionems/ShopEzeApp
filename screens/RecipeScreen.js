@@ -149,14 +149,14 @@ const styles = StyleSheet.create({
 		fontSize: 30,
 	},
 	addRecipeList: {
-		marginTop: 24,
+		marginTop: 4,
 		height: 50,
 		borderRadius: 6,
 		marginLeft: 30,
 		marginRight: 30,
 		alignItems: "center",
 		justifyContent: "center",
-		backgroundColor: "#FD8749",
+		backgroundColor: "#26ACA7",
 		shadowOpacity: 10,
 	},
 	add: {
