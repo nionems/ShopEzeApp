@@ -20,39 +20,14 @@ export function SettingScreen() {
 
 	const FSdb = useContext(FSContext);
 
-	const avatar = require("../assets/avatarProfile.png");
+	const logo = require("../assets/logo.png");
 
-	//const [name, setName] = useState("");
-	//const [lastName, setLastName] = useState("");
-	const [profilePicture, setProfilePicture] = useState("");
-	//const [nickname, setNickname] = useState("");
-	const [password, setPassword] = useState("");
-	const [selectedImage, setSelectedImage] = useState(null);
 	const [currentPassword, setCurrentPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
 	const [showCurrentPassword, setShowCurrentPassword] = useState(false);
 	const [showNewPassword, setShowNewPassword] = useState(false);
 
-	const handleLogoPress = async () => {
-		try {
-			const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-			if (permissionResult.granted === false) {
-				throw new Error("Permission to access the camera roll is required.");
-			}
-
-			const pickerResult = await ImagePicker.launchImageLibraryAsync({
-				mediaTypes: ImagePicker.MediaTypeOptions.Images,
-				quality: 1.0,
-			});
-
-			if (!pickerResult.cancelled) {
-				setProfilePicture(pickerResult.uri);
-			}
-		} catch (error) {
-			Alert.alert("Error", error.message);
-		}
-	};
+	
 	const handleChangePassword = () => {
 		const user = FBauth.currentUser; // Obtain the authenticated user instance
 		if (user) {
@@ -69,14 +44,6 @@ export function SettingScreen() {
 		}
 	};
 
-
-	const renderProfilePicture = () => {
-		if (profilePicture) {
-			return <Image source={{ uri: profilePicture }} style={styles.profilePicture} />;
-		} else {
-			return <Image source={require("../assets/avatarProfile.png")} style={styles.avatar} />;
-		}
-	};
 
 
 	const handleDeleteProfile = async () => {
@@ -134,7 +101,7 @@ export function SettingScreen() {
 				<View style={styles.headerRight}></View>
 			</View>
 			<View style={styles.container}>
-				<TouchableOpacity onPress={handleLogoPress}>{selectedImage ? <Image source={{ avatar }} style={styles.avatar} /> : renderProfilePicture()}</TouchableOpacity>
+			<Image source={logo} style={styles.avatar} />
 
 				<View style={styles.passwordContainer}>
 					<TextInput
@@ -175,11 +142,7 @@ export function SettingScreen() {
 	);
 }
 const styles = StyleSheet.create({
-	//   page: {
-	//     justifyContent: "center",
-	//     alignItems: "center",
-	//     paddingVertical: 0,
-	//   },
+
 	header: {
 		flexDirection: "row",
 		justifyContent: "space-between",
@@ -188,8 +151,6 @@ const styles = StyleSheet.create({
 		marginTop: 50,
 		height: 70,
 		paddingHorizontal: 16,
-
-
 	},
 	headerLeft: {
 		flex: 1,
@@ -243,7 +204,6 @@ const styles = StyleSheet.create({
 		borderColor: "#26ACA7",
 		marginBottom: 2,
 		marginTop: 5,
-
 		paddingHorizontal: 10,
 		borderRadius: 10,
 	},
@@ -252,8 +212,8 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		alignContent: "center",
 		borderRadius: 10,
-		maxHeight: 300,
-		maxWidth: 300,
+		maxHeight: 200,
+		maxWidth: 200,
 		minHeight: 200,
 		minWidth: 200,
 		marginBottom: 10,
@@ -263,6 +223,7 @@ const styles = StyleSheet.create({
 	container: {
 		alignContent: "center",
 		alignItems: "center",
+		
 	},
 	passwordContainer: {
 		flexDirection: "row",
