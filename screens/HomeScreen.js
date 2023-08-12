@@ -27,6 +27,9 @@ export function HomeScreen(props) {
 	const [shoppingList, setShoppingList] = useState([]);
 	const [selectedItem, setSelectedItem] = useState(null);
 
+	const [showListCreatedMessage, setShowListCreatedMessage] = useState(false);
+
+
 
 	console.log("current user", ListOwner?.uid);
 	const handleItemPress = (item) => {
@@ -153,7 +156,8 @@ export function HomeScreen(props) {
 						showsHorizontalScrollIndicator={false}
 						renderItem={renderShoppingList} />
 				) : (
-					<Text></Text>
+					<Text style={styles.emptyMessageText}> You don't have any lists yet. {"\n"}
+					Tap the "Add List" button above to get started! </Text>
 					// Show empty list message
 				)}
 
@@ -265,4 +269,17 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		textAlign: "center",
 	},
+	emptyMessageContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 100, // Adjust the marginTop as needed
+	  },
+	  emptyMessageText: {
+		fontSize: 20,
+		textAlign: 'center',
+		color: 'black',
+		padding:"5%"
+	  },
+	  
 });

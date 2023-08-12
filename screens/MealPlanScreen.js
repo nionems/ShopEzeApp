@@ -92,6 +92,9 @@ export function MealPlanScreen(props) {
             <View style={styles.header}>
               <Text style={styles.headerTitle}>Meal Plan</Text>
             </View>
+            <Text style={styles.instruction}>
+  Select a date, then enter a meal and ingredient
+</Text>
           </View>
           <Text style={styles.selectedDate}>
             {selectedDate ? new Date(selectedDate).toDateString() : ''}
@@ -148,7 +151,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   selectedDate: {
-    marginTop: 1,
     fontSize: 18,
     color: "#26ACA7",
     fontWeight: "bold",
@@ -187,9 +189,9 @@ const styles = StyleSheet.create({
   calendar: {
     marginBottom: 10,
     backgroundColor: "white",
-    marginTop: 10,
     width: width * 0.9, // Adjust the width as needed
     aspectRatio: 1, // This will maintain a square aspect ratio for the calendar
+    height: 350, // Adjust the height as needed
   },
   page: {
     justifyContent: "center",
@@ -235,6 +237,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 0,
   },
+	  instruction: {
+		fontSize: 20,
+		textAlign: 'center',
+		color: 'black',
+		padding:"1%"
+	  },
 
 
 })

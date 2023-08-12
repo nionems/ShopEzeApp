@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Modal, ScrollView, TouchableOpacity, FlatList, 
 import { AddRecipeModal } from "../component/AddRecipeModal";
 import { AntDesign } from "@expo/vector-icons";
 
-import {  addDoc, collection, getDocs, onSnapshot } from "firebase/firestore";
+import { addDoc, collection, getDocs, onSnapshot } from "firebase/firestore";
 //context
 import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
@@ -29,14 +29,14 @@ export function RecipeScreen(props) {
 		setSelectedItem(item);
 	};
 
-  const renderRecipeList = ({ item }) => (
-    <TouchableOpacity onPress={() => handleItemPress(item)}>
-      <View style={[styles.recipeItem, { backgroundColor: item.color }]}>
-        <Text style={styles.recipeNameStyle}>{item?.recipeName}</Text>
-        <Text style={styles.ingredientsStyle}>{item?.description}</Text>
-      </View>
-    </TouchableOpacity>
-  );
+	const renderRecipeList = ({ item }) => (
+		<TouchableOpacity onPress={() => handleItemPress(item)}>
+			<View style={[styles.recipeItem, { backgroundColor: item.color }]}>
+				<Text style={styles.recipeNameStyle}>{item?.recipeName}</Text>
+				<Text style={styles.ingredientsStyle}>{item?.description}</Text>
+			</View>
+		</TouchableOpacity>
+	);
 
 	const fetchRecipeList = async () => {
 		try {
@@ -93,18 +93,23 @@ export function RecipeScreen(props) {
 				<Text style={styles.title}></Text>
 				<TouchableOpacity style={styles.addRecipeList} onPress={() => setShowModal(true)}>
 					<AntDesign name="plus" color={"white"} size={24} />
-					<Text style={styles.add}>add recipe</Text>
+					<Text style={styles.add}>add Recipe</Text>
 				</TouchableOpacity>
 			</View>
 			<View style={styles.divider} />
 			{loading ? (
 				<ActivityIndicator size="large" color="black" />
 			) : recipeList.length > 0 ? (
-				<FlatList data={recipeList} keyExtractor={(item) => item.id.toString()} horizontal={true} showsHorizontalScrollIndicator={false} renderItem={renderRecipeList} />
+				<FlatList data={recipeList} 
+				keyExtractor={(item) => item.id.toString()} 
+				horizontal={true} 
+				showsHorizontalScrollIndicator={false} 
+				renderItem={renderRecipeList} />
 			) : (
-				<Text></Text>
-				// Show empty list message
-			)}
+				<Text style={styles.emptyMessageText}> You don't have any recipes yet. {"\n"}
+					Tap the "Add Recipe" button above to get started! </Text>
+					// Show empty list message
+				)}
 
 			{/* Render RecipeDetailsModal when a recipe item is selected */}
 			{selectedItem && (
@@ -123,7 +128,7 @@ const styles = StyleSheet.create({
 	},
 	header: {
 		backgroundColor: "#26ACA7",
-    marginTop: 60,
+		marginTop: 60,
 		height: 70,
 		minWidth: 400,
 	},
@@ -156,7 +161,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		backgroundColor: "#26ACA7",
 		shadowOpacity: 10,
-		marginTop: "1%",
+		marginTop: "2%",
 		marginBottom: "5%",
 	},
 	add: {
@@ -191,4 +196,17 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		textAlign: "center",
 	},
+	emptyMessageContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 100, // Adjust the marginTop as needed
+	},
+	emptyMessageText: {
+		fontSize: 20,
+		textAlign: 'center',
+		color: 'black',
+		padding: "5%"
+	},
+
 });

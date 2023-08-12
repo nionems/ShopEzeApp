@@ -86,6 +86,7 @@ export function SignInScreen(props) {
                             <TouchableOpacity style={styles.iconContainer} onPress={() => setShowPassword(!showPassword)}>
                                 <FontAwesome name={showPassword ? "eye-slash" : "eye"} size={20} color="#26ACA7" />
                             </TouchableOpacity>
+
                         </View>
                     </View>
                     <TouchableOpacity
@@ -94,6 +95,12 @@ export function SignInScreen(props) {
                         onPress={() => props.handler(email, password)}
                     >
                         <Text style={styles.buttonText}>SIGN IN</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.forgotPasswordText}>
+                        Forgot your password? No worries! You can reset it by clicking on the link below:
+                    </Text>
+                    <TouchableOpacity style={styles.forgotPasswordLink}>
+                        <Text style={styles.forgotPasswordLinkText}>Reset Password</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.signInLink}
@@ -168,7 +175,7 @@ const styles = StyleSheet.create({
         borderColor: "#cccccc",
         borderRadius: 10,
         marginBottom: 10,
-        fontSize:20
+        fontSize: 20
     },
 
     validInput: {
@@ -176,20 +183,20 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         backgroundColor: "#ffffff",
     },
-    
+
     button: {
-		backgroundColor: "#26ACA7",
-		width: "90%",
-		marginTop: "5%",
-		marginBottom: "5%",
-		borderRadius: 10,
-		padding: 15,
-	},
+        backgroundColor: "#26ACA7",
+        width: "90%",
+        marginTop: "5%",
+        marginBottom: "5%",
+        borderRadius: 10,
+        padding: 15,
+    },
     buttonText: {
         color: "#ffffff",
         textAlign: "center",
-		fontSize: 20,
-		fontWeight: 700,
+        fontSize: 20,
+        fontWeight: 700,
     },
     buttonDisabled: {
         backgroundColor: "#666666",
@@ -199,33 +206,18 @@ const styles = StyleSheet.create({
     },
     signInLink: {
         backgroundColor: "#26ACA7",
-		width: "90%",
-		marginTop: "5%",
-		marginBottom: "5%",
-		borderRadius: 10,
-		padding: 15,
-       
+        width: "90%",
+        marginTop: "5%",
+        marginBottom: "5%",
+        borderRadius: 10,
+        padding: 15,
+
     },
     signInLinkText: {
         textAlign: "center",
         color: "white",
         fontSize: 17,
     },
-    // inputContainer: {
-    //     flexDirection: "row",
-    //     alignItems: "center",
-    //     borderBottomWidth: 1,
-    //     borderColor: "#26ACA7",
-    //     marginBottom: 10,
-    //   },
-    //     inputContainer: {
-    //     flexDirection: "row",
-    //     alignItems: "center",
-    //     justifyContent: "center", // Center the content horizontally
-    //     borderBottomWidth: 1,
-    //     borderColor: "#26ACA7",
-    //     marginBottom: 10,
-    // },
     inputContainer: {
         flexDirection: "row",
         alignItems: "center",
@@ -244,5 +236,19 @@ const styles = StyleSheet.create({
     },
     iconContainer: {
         marginLeft: 10, // Adjust this value as needed for proper spacing
+    },
+    forgotPasswordText: {
+        color: 'black',
+        fontSize: 10,
+        textAlign: 'center',
+    },
+    forgotPasswordLink: {
+        marginTop: 5,
+    },
+    forgotPasswordLinkText: {
+        color: '#26ACA7',
+        fontSize: 16,
+        textAlign: 'center',
+        textDecorationLine: 'underline',
     },
 })

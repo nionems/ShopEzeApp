@@ -103,6 +103,11 @@ export function SettingScreen() {
 			<View style={styles.container}>
 			<Image source={logo} style={styles.avatar} />
 
+
+{/* Security message for changing password */}
+<Text style={styles.securityMessage}>
+          Changing your password regularly helps maintain the security of your account.
+        </Text>
 				<View style={styles.passwordContainer}>
 					<TextInput
 						style={styles.input}
@@ -137,6 +142,10 @@ export function SettingScreen() {
 				<TouchableOpacity style={styles.buttonDelete} onPress={() => handleDeleteProfile()}>
 					<Text style={styles.buttonText}>DELETE ACCOUNT</Text>
 				</TouchableOpacity>
+				 {/* Deletion message */}
+				 <Text style={styles.deleteMessage}>
+          Deleting your account is a permanent action and cannot be undone.
+        </Text>
 			</View>
 		</ScrollView>
 	);
@@ -227,4 +236,17 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-between",
 	},
+	securityMessage: {
+		color: '#333',
+		textAlign: 'center',
+		marginTop: 10,
+		fontSize: 10,
+	  },
+	deleteMessage: {
+		color: 'red',
+		textAlign: 'center',
+		marginTop: 10,
+		fontStyle: 'italic',
+		fontSize: 10,
+	  },
 });
