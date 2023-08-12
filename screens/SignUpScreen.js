@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
 		marginTop: 2,
 		marginBottom: 10,
 		fontSize: 20,
-		fontWeight: "bold",
+	
 	},
 	inputGroup: {
 		padding: 1,
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
         color: "#ffffff",
         textAlign: "center",
 		fontSize: 20,
-		fontWeight: 700,
+		fontWeight: 300,
     },
 	signInLink: {
 		backgroundColor: "#26ACA7",
@@ -260,11 +260,9 @@ const styles = StyleSheet.create({
 	errorText: {
 		color: "red",
 		textAlign: "center",
-		//marginBottom: 100,
+		
 	},
 	
-	
-
 	inputContainer: {
 		flexDirection: "row",
 		alignItems: "center",

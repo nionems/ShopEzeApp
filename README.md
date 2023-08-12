@@ -39,3 +39,5 @@ npm install react-native-paper@latest
 npm install expo-checkbox
 npm audit fix
 npx expo install expo-checkbox@~2.3.1 react-native@0.71.8
+npx expo install expo-firebase-recaptcha
+npx expo install expo-build-properties

@@ -1,10 +1,15 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, KeyboardAvoidingView } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, KeyboardAvoidingView,Alert } from "react-native";
 import { useEffect, useState, useContext } from 'react'
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../contexts/AuthContext";
 import { FontAwesome } from "@expo/vector-icons";
+import {sendPasswordResetEmail} from 'firebase/auth'; // Import the necessary function
+import { FBAuthContext } from "../contexts/FBAuthContext";
+import { FSContext } from "../contexts/FSContext";
 
 export function SignInScreen(props) {
+
+    const navigation = useNavigation()
 
     const [email, setEmail] = useState("")
     const [validEmail, setValidEmail] = useState(false)
@@ -13,9 +18,9 @@ export function SignInScreen(props) {
     const [validForm, setValidForm] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
 
-    const navigation = useNavigation()
-
+    const FBauth = useContext(FBAuthContext);
     const authStatus = useContext(AuthContext)
+    const FSdb = useContext(FSContext);
 
     useEffect(() => {
         if (email.indexOf('@') > 0) {
@@ -52,6 +57,33 @@ export function SignInScreen(props) {
             navigation.reset({ index: 0, routes: [{ name: "Home" }] })
         }
     }, [authStatus])
+
+    const handleResetPassword = async () => {
+        console.log("Handle reset password clicked");
+        console.log("validEmail:", validEmail);
+    
+        if (validEmail) {
+            try {
+                console.log("Sending password reset email...");
+                await sendPasswordResetEmail(FBauth, email);
+                console.log("Password reset email sent successfully");
+                Alert.alert(
+                    "Password Reset Email Sent",
+                    "An email has been sent to your account with instructions to reset your password.",
+                    [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+                );
+            } catch (error) {
+                console.error("Password reset error:", error);
+                Alert.alert(
+                    "Password Reset Failed",
+                    "Failed to send password reset email. Please check your email address.",
+                    [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+                );
+            }
+        } else {
+            Alert.alert("Invalid Email", "Please enter a valid email address.");
+        }
+    };
 
     return (
         <KeyboardAvoidingView>
@@ -99,8 +131,8 @@ export function SignInScreen(props) {
                     <Text style={styles.forgotPasswordText}>
                         Forgot your password? No worries! You can reset it by clicking on the link below:
                     </Text>
-                    <TouchableOpacity style={styles.forgotPasswordLink}>
-                        <Text style={styles.forgotPasswordLinkText}>Reset Password</Text>
+                    <TouchableOpacity style={styles.forgotPasswordLink} onPress={handleResetPassword}>
+                        <Text style={styles.forgotPasswordLinkText}>Reset Password </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.signInLink}
@@ -161,7 +193,6 @@ const styles = StyleSheet.create({
         marginTop: 2,
         marginBottom: 10,
         fontSize: 20,
-        fontWeight: "bold",
     },
     inputGroup: {
         padding: 1,
@@ -196,7 +227,7 @@ const styles = StyleSheet.create({
         color: "#ffffff",
         textAlign: "center",
         fontSize: 20,
-        fontWeight: 700,
+        fontWeight: 300,
     },
     buttonDisabled: {
         backgroundColor: "#666666",
