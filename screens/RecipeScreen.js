@@ -180,10 +180,10 @@ const styles = StyleSheet.create({
 	},
 	recipeNameStyle: {
 		color: "white",
-		shadowOpacity: 10,
-		fontSize: 40,
+		fontSize: 30,
 		fontWeight: "bold",
 		textAlign: "center",
+		shadowOpacity: 10,
 	},
 	ingredientsStyle: {
 		color: "lightgray",

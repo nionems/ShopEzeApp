@@ -33,11 +33,11 @@ export function AddListModal(props) {
 			</TouchableOpacity>
 
 			<View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
-				<Text style={styles.title}>Create A List</Text>
-				<TextInput style={styles.input} placeholder="List Name?" onChangeText={(text) => setName(text)} />
+				<Text style={styles.title}>! Create A List !</Text>
+				<TextInput style={styles.input} placeholder="List Name ?" onChangeText={(text) => setName(text)} />
 				<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>{Colors}</View>
 				<TouchableOpacity style={[styles.create, { backgroundColor: color }]} onPress={() => createList()}>
-					<Text style={{ color: "#78cfcb", fontWeight: "1600", fontSize: 24 }}>Create</Text>
+					<Text style={{ color: "#78cfcb", fontWeight: "1600", fontSize: 24 }}>CREATE</Text>
 				</TouchableOpacity>
 			</View>
 		</KeyboardAvoidingView>

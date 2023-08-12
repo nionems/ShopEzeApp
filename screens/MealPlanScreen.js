@@ -64,12 +64,18 @@ export function MealPlanScreen(props) {
         <Text style={styles.ingredientText}>Ingredient: {item.ingredient}</Text>
     
           <View style={styles.buttonContainer}>
-           
+            {/* <TouchableOpacity
+              style={styles.button}
+              onPress={handleUpdateEvent}
+            >
+              <Text style={styles.buttonText}>Update</Text>
+            </TouchableOpacity> */}
+
             <TouchableOpacity
               style={styles.buttonDelete}
               onPress={handleDeleteEvent}
             >
-              <Text style={styles.buttonText}>DELETE</Text>
+              <Text style={styles.buttonText}>Delete</Text>
             </TouchableOpacity>
           </View>
 
@@ -155,6 +161,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     color: "#FD8749",
     fontWeight: "bold",
+
     textAlign:'center'
   },
   mealText: {
@@ -162,7 +169,6 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     color: "#26ACA7",
     fontWeight: "bold",
-    textAlign:'center'
   },
   header: {
     backgroundColor: "#26ACA7",
@@ -226,11 +232,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',  // Center horizontally
-    alignItems: 'center',      // Center vertically
-    marginTop: '5%',
-    marginBottom: '5%',
+    justifyContent: 'space-between',
+    marginTop: 0,
   },
+
+
 })
 
 

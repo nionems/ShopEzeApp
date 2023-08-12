@@ -45,7 +45,7 @@ export function EditRecipeModal({ addList, closeModal, data }) {
 
 				{recipeName !== "" && description !== "" && color !== "" && (
 					<TouchableOpacity style={[styles.create, { backgroundColor: color }]} onPress={() => createList()}>
-						<Text style={{ color: "#f0aa86", fontWeight: "1600", fontSize: 24 }}>Update!</Text>
+						<Text style={{ color: "#f0aa86", fontWeight: "1600", fontSize: 24 }}>UPDATE</Text>
 					</TouchableOpacity>
 				)}
 			</View>

@@ -41,7 +41,7 @@ export function AddRecipeModal(props) {
 
 				{recipeName !== "" && description !== "" && color !== "" && (
 					<TouchableOpacity style={[styles.create, { backgroundColor: color }]} onPress={() => createRecipe()}>
-						<Text style={{ color: "#f0aa86", fontWeight: "1600", fontSize: 24 }}>Create!</Text>
+						<Text style={{ color: "#f0aa86", fontWeight: "1600", fontSize: 24 }}>CREATE</Text>
 					</TouchableOpacity>
 				)}
 			</View>

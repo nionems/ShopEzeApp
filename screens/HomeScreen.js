@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect, useContext, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
-import {  addDoc, collection, onSnapshot, getDocs } from "firebase/firestore";
+import { addDoc, collection, onSnapshot, getDocs } from "firebase/firestore";
 
 //component
 import { SignOutButton } from "../component/SignOutButton";
@@ -188,26 +188,25 @@ const styles = StyleSheet.create({
 		marginTop: 60,
 		height: 70,
 		paddingHorizontal: 16,
-	  },
-	  headerLeft: {
+	},
+	headerLeft: {
 		flex: 1,
-	  },
-	  headerTitleContainer: {
+	},
+	headerTitleContainer: {
 		flex: 2,
 		alignItems: "center",
-	  },
-	  headerTitle: {
+	},
+	headerTitle: {
 		fontSize: 40,
 		color: "#FD8749",
 		fontStyle: "italic",
 		fontWeight: "bold",
 		marginTop: 10,
 		shadowOpacity: 10,
-	  },
-	  headerRight: {
+	},
+	headerRight: {
 		flex: 1,
-	  },
-
+	},
 	divider: {
 		backgroundColor: "black",
 		height: 1,
@@ -222,7 +221,6 @@ const styles = StyleSheet.create({
 	},
 
 	addList: {
-		
 		borderRadius: 10,
 		marginLeft: 30,
 		marginRight: 30,
@@ -248,20 +246,22 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		justifyContent: "center",
 		alignItems: "center",
-		width: 100, // Adjust the width as needed
+		width: 200, // Adjust the width as needed
 		minWidth: 200,
-		minHeight: 200,
+		minHeight: 300,
 	},
 	nameStyle: {
 		color: "white",
-		fontSize: 40,
+		fontSize: 30,
 		fontWeight: "bold",
 		textAlign: "center",
 		shadowOpacity: 10,
+		
 	},
 	stats: {
+		marginTop:'5%',
 		color: "white",
-		fontSize: 20,
+		fontSize: 15,
 		fontWeight: "bold",
 		textAlign: "center",
 	},

@@ -36,7 +36,7 @@ export function EditListModal({ addList, closeModal, data }) {
 				<TextInput style={styles.input} placeholder="List Name?" value={name} onChangeText={(text) => setName(text)} />
 				<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>{Colors}</View>
 				<TouchableOpacity style={[styles.create, { backgroundColor: color }]} onPress={() => createList()}>
-					<Text style={{ color: "#78cfcb", fontWeight: "bold", fontSize: 24 }}>Update</Text>
+					<Text style={{ color: "#78cfcb", fontWeight: "bold", fontSize: 24 }}>UPDATE</Text>
 				</TouchableOpacity>
 			</View>
 		</KeyboardAvoidingView>
