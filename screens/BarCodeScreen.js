@@ -77,16 +77,22 @@ export function BarCodeScreen() {
     <View style={styles.container}>
       <BarCodeScanner
         onBarCodeScanned={handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      />
+        style={styles.cameraContainer}
+      >
+          <Text style={styles.messageText}>Scan the barcode</Text>
+        <View style={styles.cameraFrame}>
+      
+          {/* Add any content or styling you want inside the frame */}
+        </View>
+      </BarCodeScanner>
       {scanned && (
         <View style={styles.overlay}>
           <Text style={styles.scanDataText}>{barcodeData}</Text>
           {productData ? (
             <View>
               <Text style={styles.dataText}> {productData.name}</Text>
-              <Button title=" Scan Again? " onPress={scanAgain} color="#26ACA7"/>
-              <Button title=" Where to Buy?" onPress={handleGoogleSearch} color="red"/>
+              <Button title=" Scan Again? " onPress={scanAgain} color="#26ACA7" />
+              <Button title=" Where to Buy?" onPress={handleGoogleSearch} color="red" />
               <Text style={styles.dataDescriptionText}> {productData.description}</Text>
               {productData.imageUrl && (
                 <Image
@@ -154,5 +160,23 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     textAlign: 'center',
   },
-  
+  cameraContainer: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cameraFrame: {
+    position: 'relative',
+    borderWidth: 2,
+    borderColor: '#26ACA7',
+    width: '80%', // Adjust the width as needed
+    height: '40%', // Adjust the height as needed
+  },
+  messageText: {
+    fontSize: 18,
+    color: '#26ACA7',
+    textAlign: 'center',
+    marginTop: 10,
+  },
+
 });
