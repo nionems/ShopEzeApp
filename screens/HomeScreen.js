@@ -222,15 +222,17 @@ const styles = StyleSheet.create({
 	},
 
 	addList: {
-		marginTop: 20,
-		height: 50,
-		borderRadius: 6,
+		
+		borderRadius: 10,
 		marginLeft: 30,
 		marginRight: 30,
 		alignItems: "center",
 		justifyContent: "center",
 		backgroundColor: "#26ACA7",
 		shadowOpacity: 10,
+		marginTop: "5%",
+		marginBottom: "5%",
+
 	},
 	add: {
 		color: "white",

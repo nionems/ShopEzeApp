@@ -64,18 +64,12 @@ export function MealPlanScreen(props) {
         <Text style={styles.ingredientText}>Ingredient: {item.ingredient}</Text>
     
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={handleUpdateEvent}
-            >
-              <Text style={styles.buttonText}>Update</Text>
-            </TouchableOpacity>
-
+           
             <TouchableOpacity
               style={styles.buttonDelete}
               onPress={handleDeleteEvent}
             >
-              <Text style={styles.buttonText}>Delete</Text>
+              <Text style={styles.buttonText}>DELETE</Text>
             </TouchableOpacity>
           </View>
 
@@ -116,8 +110,9 @@ export function MealPlanScreen(props) {
           <TouchableOpacity
             style={styles.button}
             onPress={handleAddIngredient}>
-            <Text style={styles.buttonText}>Add Event</Text>
+            <Text style={styles.buttonText}>ADD EVENT</Text>
           </TouchableOpacity>
+
           <View style={styles.ingredientContainer}>{renderIngredientsForDate()}</View>
         </View>
       </ScrollView>
@@ -156,16 +151,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   ingredientText: {
-    fontSize: 16,
+    fontSize: 20,
     marginBottom: 0,
     color: "#FD8749",
     fontWeight: "bold",
+    textAlign:'center'
   },
   mealText: {
-    fontSize: 16,
+    fontSize: 20,
     marginBottom: 0,
     color: "#26ACA7",
     fontWeight: "bold",
+    textAlign:'center'
   },
   header: {
     backgroundColor: "#26ACA7",
@@ -201,6 +198,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     paddingHorizontal: 10,
     borderRadius: 10,
+    fontSize:20
   },
   buttonText: {
     color: "#ffffff",
@@ -208,30 +206,31 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   button: {
-    backgroundColor: "#26ACA7",
-    marginTop: 5,
-    marginVertical: 15,
-    marginRight: 5,
-    marginLeft: 5,
-    borderRadius: 10,
-    padding: 10,
-  },
+		backgroundColor: "#26ACA7",
+		width: "90%",
+		marginTop: "5%",
+		marginBottom: "5%",
+		borderRadius: 10,
+		padding: 15,
+	},
   buttonDelete: {
     backgroundColor: "#FD8749",
-    marginTop: 5,
-    marginVertical: 15,
-    marginRight: 5,
-    marginLeft: 5,
-    borderRadius: 10,
-    padding: 10,
+		width: "90%",
+		marginTop: "5%",
+		marginBottom: "5%",
+		borderRadius: 10,
+		padding: 15,
+    alignContent:'center',
+    alignItems:'center',
+    marginLeft:30
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 0,
+    justifyContent: 'center',  // Center horizontally
+    alignItems: 'center',      // Center vertically
+    marginTop: '5%',
+    marginBottom: '5%',
   },
-
-
 })
 
 

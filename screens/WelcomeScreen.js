@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
 		alignItems: "center", // If you want to align the gardeniet text horizontally, use 'center'
 	},
 	logo: {
-		marginTop: "70%",
+		marginTop: "20%",
 		width: "90%",
 	},
 	btn: {
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
 	},
 	btnAbout: {
 		width: "90%",
-		marginTop: "10%",
+		marginTop: "5%",
 		borderRadius: 10,
 		padding: 15,
 		borderWidth: 1,
@@ -233,10 +233,9 @@ const styles = StyleSheet.create({
 
 	modalBackButton: {
 		backgroundColor: "#FD8749",
-		marginTop: 10,
-		marginVertical: 15,
-		marginRight: 10,
-		marginLeft: 10,
+		width: "100%",
+		marginTop: "5%",
+		marginBottom: "5%",
 		borderRadius: 10,
 		padding: 10,
 	},

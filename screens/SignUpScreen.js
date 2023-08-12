@@ -109,7 +109,7 @@ export function SignUpScreen(props) {
 					{error !== "" && <Text style={styles.errorText}>{error}</Text>}
 					<Text style={styles.sloganText}> Try Us For FREE !! </Text>
 
-					<Text style={styles.SignUptext}>Sign Up</Text>
+					<Text style={styles.SignUptext}>SIGN UP</Text>
 					<View style={styles.inputContainer}>
 						<TextInput
 							style={validEmail ? styles.validInput : styles.input}
@@ -139,11 +139,11 @@ export function SignUpScreen(props) {
 						//onPress={() => props.handler(email, password)}
 						onPress={() => signupHandler(email, password)}
 					>
-						<Text style={styles.buttonText}>Sign up</Text>
+						<Text style={styles.buttonText}>SIGN UP</Text>
 					</TouchableOpacity>
 
 					<TouchableOpacity style={styles.signInLink} onPress={() => navigation.navigate("Signin")}>
-						<Text style={styles.signInLinkText}>Already have an account? Sign in</Text>
+						<Text style={styles.signInLinkText}>ALREADY HAVE AN ACCOUNT SIGN IN</Text>
 					</TouchableOpacity>
 				</View>
 			</ScrollView>
@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
 		borderColor: "#cccccc",
 		borderRadius: 10,
 		marginBottom: 10,
+		fontSize:20
 	},
 
 	validInput: {
@@ -223,52 +224,44 @@ const styles = StyleSheet.create({
 	buttonDisabled: {
 		backgroundColor: "#666666",
 		marginVertical: 5,
-		borderRadius: 50,
+		borderRadius: 10,
 		padding: 10,
 	},
 	button: {
 		backgroundColor: "#26ACA7",
-		marginVertical: 10,
-		marginLeft: 1,
-		borderRadius: 50,
-		padding: 10,
+		width: "90%",
+		marginTop: "5%",
+		marginBottom: "5%",
+		borderRadius: 10,
+		padding: 15,
 	},
-	buttonText: {
-		color: "#ffffff",
-		textAlign: "center",
-	},
+    buttonText: {
+        color: "#ffffff",
+        textAlign: "center",
+		fontSize: 20,
+		fontWeight: 700,
+    },
 	signInLink: {
 		backgroundColor: "#26ACA7",
-		marginTop: 10,
-		marginVertical: 15,
-		marginRight: 10,
-		marginLeft: 10,
-		borderRadius: 50,
-		padding: 10,
+		width: "90%",
+		marginTop: "5%",
+		marginBottom: "5%",
+		borderRadius: 10,
+		padding: 15,
 	},
 	signInLinkText: {
 		textAlign: "center",
 		color: "white",
+		fontSize: 17,
 	},
 	errorText: {
 		color: "red",
 		textAlign: "center",
 		//marginBottom: 100,
 	},
-	// inputContainer: {
-	// 	flexDirection: "row",
-	// 	alignItems: "center",
-	// 	borderBottomWidth: 1,
-	// 	borderColor: "#26ACA7",
-	// 	marginBottom: 10,
-	// },
-	validInput: {
-		// Apply your styles for valid password input
-	},
-	// iconContainer: {
-	// 	marginLeft: 10,
-	// 	alignItems: "center"
-	// },
+	
+	
+
 	inputContainer: {
 		flexDirection: "row",
 		alignItems: "center",

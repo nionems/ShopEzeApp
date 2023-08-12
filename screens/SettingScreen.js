@@ -131,11 +131,11 @@ export function SettingScreen() {
 
 				</View>
 				<TouchableOpacity style={styles.button} onPress={() => handleChangePassword()}>
-					<Text style={styles.buttonText}>Change password</Text>
+					<Text style={styles.buttonText}>CHANGE PASSWORD</Text>
 				</TouchableOpacity>
 
 				<TouchableOpacity style={styles.buttonDelete} onPress={() => handleDeleteProfile()}>
-					<Text style={styles.buttonText}>Delete Profile</Text>
+					<Text style={styles.buttonText}>DELETE ACCOUNT</Text>
 				</TouchableOpacity>
 			</View>
 		</ScrollView>
@@ -176,24 +176,21 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 	},
 	button: {
+		
 		backgroundColor: "#26ACA7",
-		marginTop: 10,
-		marginVertical: 15,
-		marginRight: 10,
-		marginLeft: 10,
+		width: "90%",
+		marginTop: "10%",
+		marginBottom: "5%",
 		borderRadius: 10,
-		padding: 10,
-		alignContent: "center",
+		padding: 15,
 	},
 	buttonDelete: {
 		backgroundColor: "red",
-		marginTop: 10,
-		marginVertical: 15,
-		marginRight: 10,
-		marginLeft: 10,
+		width: "90%",
+		marginTop: "5%",
+		marginBottom: "5%",
 		borderRadius: 10,
-		padding: 10,
-		alignContent: "center",
+		padding: 15,
 	},
 	input: {
 		alignContent: "center",
@@ -206,18 +203,17 @@ const styles = StyleSheet.create({
 		marginTop: 5,
 		paddingHorizontal: 10,
 		borderRadius: 10,
+		fontSize:20
 	},
 
 	avatar: {
 		alignItems: "center",
 		alignContent: "center",
-		borderRadius: 10,
+		borderRadius: 50,
 		maxHeight: 200,
 		maxWidth: 200,
-		minHeight: 200,
-		minWidth: 200,
 		marginBottom: 10,
-		marginTop: 40,
+		marginTop: 5,
 		borderColor: "#26ACA7",
 	},
 	container: {
@@ -226,6 +222,7 @@ const styles = StyleSheet.create({
 		
 	},
 	passwordContainer: {
+		padding:10,
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
