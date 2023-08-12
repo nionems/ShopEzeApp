@@ -93,6 +93,7 @@ export function AddCollabModal({ closeModal, data }) {
 
 			<View style={{ flex: 0.8, width: "90%" }}>
 				<Text style={styles.title}>Add Collabrator</Text>
+				<Text style={styles.instruction}>Enter the email address of the person you want to add as a collaborator:</Text>
 				<Searchbar placeholder="Search" onChangeText={onChangeSearch} value={searchQuery} />
 				{user && !loading && (
 					<View
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 28,
 		fontWeight: "800",
-		color: colors.black,
+		color: colors.green,
 		alignSelf: "center",
 		marginBottom: 16,
 	},
@@ -163,4 +164,10 @@ const styles = StyleSheet.create({
 		height: 30,
 		borderRadius: 4,
 	},
+	instruction: {
+		fontSize: 16,
+		color: colors.gray,
+		marginBottom: 10,
+		textAlign: "center",
+	  },
 });
