@@ -172,7 +172,8 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		color: "#FD8749",
 		fontStyle: "italic",
-		fontWeight: "bold"
+		fontWeight: "bold",
+		shadowOpacity: 10,
 	},
 	sloganText: {
 		fontSize: 15,
@@ -201,7 +202,7 @@ const styles = StyleSheet.create({
 		marginTop: 2,
 		marginBottom: 10,
 		fontSize: 20,
-	
+  	
 	},
 	inputGroup: {
 		padding: 1,

@@ -6,6 +6,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import {sendPasswordResetEmail} from 'firebase/auth'; // Import the necessary function
 import { FBAuthContext } from "../contexts/FBAuthContext";
 import { FSContext } from "../contexts/FSContext";
+import colors from "../component/Colors";
 
 export function SignInScreen(props) {
 
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     header: {
-        backgroundColor: "#26ACA7",
+        backgroundColor: colors.green,
         height: 70,
         minWidth: 1500,
         marginTop: 50,
@@ -162,15 +163,16 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
         textAlign: 'center',
-        color: "#FD8749",
+        color: colors.orange,
         fontStyle: "italic",
-        fontWeight: "bold"
+        fontWeight: "bold",
+		shadowOpacity: 10,
     },
     sloganText: {
         fontSize: 15,
         textAlign: 'center',
         marginTop: 5,
-        color: "#FD8749",
+        color: colors.orange,
         fontStyle: "italic",
         fontWeight: "bold",
         fontSize: 20,
@@ -184,12 +186,11 @@ const styles = StyleSheet.create({
         maxWidth: 200,
         minHeight: 200,
         minWidth: 200,
-        borderColor: "#26ACA7",
         marginBottom: 10,
     },
     SignIntext: {
         textAlign: 'center',
-        color: "#26ACA7",
+        color: colors.green,
         marginTop: 2,
         marginBottom: 10,
         fontSize: 20,
@@ -200,23 +201,23 @@ const styles = StyleSheet.create({
     },
     input: {
         paddingVertical: 10,
-        backgroundColor: "#ffffff",
+        backgroundColor: colors.white,
         padding: 4,
         borderWidth: 1,
-        borderColor: "#cccccc",
+        borderColor: colors.green,
         borderRadius: 10,
         marginBottom: 10,
         fontSize: 20
     },
 
     validInput: {
-        borderColor: "#00693e",
+        borderColor: colors.grey,
         borderWidth: 1,
-        backgroundColor: "#ffffff",
+        backgroundColor: colors.white,
     },
 
     button: {
-        backgroundColor: "#26ACA7",
+        backgroundColor: colors.green,
         width: "90%",
         marginTop: "5%",
         marginBottom: "5%",
@@ -224,13 +225,13 @@ const styles = StyleSheet.create({
         padding: 15,
     },
     buttonText: {
-        color: "#ffffff",
+        color: colors.white,
         textAlign: "center",
         fontSize: 20,
         fontWeight: 300,
     },
     buttonDisabled: {
-        backgroundColor: "#666666",
+        backgroundColor: colors.grey,
         marginVertical: 5,
         borderRadius: 10,
         padding: 10,

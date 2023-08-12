@@ -242,7 +242,6 @@ const styles = StyleSheet.create({
 	section: {
 		flex: 1,
 		alignSelf: "stretch",
-		// backgroundColor: "pink",
 	},
 	header: {
 		justifyContent: "flex-end",
@@ -252,7 +251,7 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 20,
 		fontWeight: "600",
-		color: "black",
+		color: colors.black,
 		// backgroundColor: "yellow",
 	},
 	footer: {
@@ -289,11 +288,11 @@ const styles = StyleSheet.create({
 	viewRecipeButton: {
 		flexDirection: "row",
 		alignItems: "center",
-		backgroundColor: "#ffffff",
+		backgroundColor:colors.white,
 		borderWidth: 1,
 		borderColor: "#26ACA7",
 		borderRadius: 10,
-		padding: 10,
+		padding: 15,
 		marginTop: 10,
 	},
 
