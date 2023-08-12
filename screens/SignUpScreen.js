@@ -9,6 +9,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { AuthContext } from "../contexts/AuthContext";
 import { FBAuthContext } from "../contexts/FBAuthContext";
 import { FSContext } from "../contexts/FSContext";
+import colors from "../component/Colors";
 
 export function SignUpScreen(props) {
 	// create constant to create user
@@ -121,6 +122,7 @@ export function SignUpScreen(props) {
 							onChangeText={(emailText) => setEmail(emailText)}
 						/>
 						<FontAwesome name="envelope" size={20} color="#26ACA7" style={styles.icon} />
+						
 					</View>
 					<View style={styles.passwordContainer}>
 						<TextInput
@@ -160,79 +162,81 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	header: {
-		backgroundColor: "#26ACA7",
+		backgroundColor: colors.green,
 		height: 70,
 		minWidth: 1500,
 		marginTop: 50,
 	},
 	headerTitle: {
 		fontSize: 40,
-		marginTop: 10,
-		marginBottom: 10,
-		textAlign: 'center',
-		color: "#FD8749",
-		fontStyle: "italic",
-		fontWeight: "bold",
+        marginTop: 10,
+        marginBottom: 10,
+        textAlign: 'center',
+        color: colors.orange,
+        fontStyle: "italic",
+        fontWeight: "bold",
 		shadowOpacity: 10,
 	},
 	sloganText: {
 		fontSize: 15,
-		textAlign: 'center',
-		marginTop: 5,
-		color: "#FD8749",
-		fontStyle: "italic",
-		fontWeight: "bold",
-		fontSize: 20,
+        textAlign: 'center',
+        marginTop: 5,
+        color: colors.orange,
+        fontStyle: "italic",
+        fontWeight: "bold",
+        fontSize: 20,
 	},
 	logostyle: {
 		marginTop: 10,
-		alignItems: "center",
-		alignContent: "center",
-		borderRadius: 70,
-		maxHeight: 200,
-		maxWidth: 200,
-		minHeight: 200,
-		minWidth: 200,
-		borderColor: "#26ACA7",
-		marginBottom: 10,
+        alignItems: "center",
+        alignContent: "center",
+        borderRadius: 70,
+        maxHeight: 200,
+        maxWidth: 200,
+        minHeight: 200,
+        minWidth: 200,
+        marginBottom: 10,
 	},
 	SignUptext: {
 		textAlign: 'center',
-		color: "#26ACA7",
-		marginTop: 2,
-		marginBottom: 10,
-		fontSize: 20,
+        color: colors.green,
+        marginTop: 2,
+        marginBottom: 10,
+        fontSize: 20,
   	
 	},
 	inputGroup: {
-		padding: 1,
-		textAlign: "center",
-	},
+        padding: 1,
+        textAlign: "center",
+    },
 	input: {
-		paddingVertical: 10,
-		backgroundColor: "#ffffff",
-		padding: 4,
-		borderWidth: 1,
-		borderColor: "#cccccc",
-		borderRadius: 10,
-		marginBottom: 10,
-		fontSize:20
-	},
+        paddingVertical: 10,
+        backgroundColor: colors.white,
+        padding: 4,
+        borderWidth: 1,
+        borderColor: colors.green,
+        borderRadius: 10,
+        marginBottom: 10,
+        fontSize: 20
+    },
 
 	validInput: {
-		borderColor: "#00693e",
+		borderColor: colors.green,
 		borderWidth: 1,
-		backgroundColor: "#ffffff",
+		backgroundColor: colors.white,
 		padding: 5,
+		borderRadius:10,
+		fontSize:20
+	
 	},
 	buttonDisabled: {
-		backgroundColor: "#666666",
+		backgroundColor: colors.grey,
 		marginVertical: 5,
 		borderRadius: 10,
 		padding: 10,
 	},
 	button: {
-		backgroundColor: "#26ACA7",
+		backgroundColor: colors.green,
 		width: "90%",
 		marginTop: "5%",
 		marginBottom: "5%",
@@ -240,37 +244,35 @@ const styles = StyleSheet.create({
 		padding: 15,
 	},
     buttonText: {
-        color: "#ffffff",
+        color: colors.white,
         textAlign: "center",
 		fontSize: 20,
 		fontWeight: 300,
     },
 	signInLink: {
-		backgroundColor: "#26ACA7",
+		backgroundColor: colors.green,
 		width: "90%",
 		marginTop: "5%",
 		marginBottom: "5%",
 		borderRadius: 10,
 		padding: 15,
+		
 	},
 	signInLinkText: {
 		textAlign: "center",
-		color: "white",
+		color: colors.white,
 		fontSize: 17,
 	},
-	errorText: {
-		color: "red",
-		textAlign: "center",
-		
-	},
+	
 	
 	inputContainer: {
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "center", // Center the content horizontally
-		borderColor: "#26ACA7",
-		marginBottom: 10,
-	},
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center", // Center the content horizontally
+        borderColor: colors.green,
+        marginBottom: 10,
+		fontSize: 20,
+    },
 	icon: {
 		marginLeft: 10, // Adjust this value as needed for proper spacing
 	},

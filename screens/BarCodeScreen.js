@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, Button, Image, Linking, } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
-import { requestCameraPermissionsAsync } from 'expo-camera';
-
-
-
-
+//import { requestCameraPermissionsAsync } from 'expo-camera';
+import colors from "../component/Colors";
 
 const api_key = 'c34dc6d615da39a9b6bfb6ccafcfa1ee188699e0ec3ff2b12830db028a7f8c4b'; // Replace with your actual API key
 const api_base_url = 'https://go-upc.com/api/v1/code/';
 
 export function BarCodeScreen() {
+
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [barcodeData, setBarcodeData] = useState(null);
@@ -51,7 +49,6 @@ export function BarCodeScreen() {
     setProductData(null);
   };
 
-
   const handleGoogleSearch = async ({ data }) => {
     setScanned(true);
     setBarcodeData(data);
@@ -79,9 +76,9 @@ export function BarCodeScreen() {
         onBarCodeScanned={handleBarCodeScanned}
         style={styles.cameraContainer}
       >
-          <Text style={styles.messageText}>Scan the barcode</Text>
+        <Text style={styles.messageText}>Scan the barcode</Text>
         <View style={styles.cameraFrame}>
-      
+
           {/* Add any content or styling you want inside the frame */}
         </View>
       </BarCodeScanner>
@@ -112,7 +109,6 @@ export function BarCodeScreen() {
 
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -125,27 +121,28 @@ const styles = StyleSheet.create({
     left: '1%',
     right: '1%',
     bottom: '5%',
-    padding: 10,
-    backgroundColor: 'rgba(255,255,255, 1)',
+    padding: 15,
+    backgroundColor: colors.white,
     borderRadius: 10,
   },
   scanDataText: {
     fontSize: 15,
-    color: '#26ACA7',
+    color: colors.green,
     marginBottom: 10,
     textAlign: 'center', // Add this property to center-align the text
   },
   dataText: {
     fontSize: 20,
-    color: '#26ACA7',
+    color: colors.white,
+    backgroundColor:colors.green,
+    padding:10,
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center', // Add this property to center-align the text
   },
   dataDescriptionText: {
-    fontSize: 20,
-    color: 'black',
-    marginBottom: 10,
+    fontSize: 17,
+    color: colors.black,
     textAlign: 'center', // Add this property to center-align the text
   },
   image: {
@@ -153,12 +150,6 @@ const styles = StyleSheet.create({
     width: 180,
     alignSelf: 'center', // Center the image horizontally within its container
     marginVertical: 10, // Add some vertical spacing
-  },
-  buttonText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginVertical: 10,
-    textAlign: 'center',
   },
   cameraContainer: {
     ...StyleSheet.absoluteFillObject,
@@ -168,15 +159,14 @@ const styles = StyleSheet.create({
   cameraFrame: {
     position: 'relative',
     borderWidth: 2,
-    borderColor: '#26ACA7',
+    borderColor: colors.green,
     width: '80%', // Adjust the width as needed
     height: '40%', // Adjust the height as needed
   },
   messageText: {
     fontSize: 18,
-    color: '#26ACA7',
+    color:colors.green,
     textAlign: 'center',
     marginTop: 10,
   },
-
 });

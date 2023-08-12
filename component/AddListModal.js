@@ -37,7 +37,7 @@ export function AddListModal(props) {
 				<TextInput style={styles.input} placeholder="List Name ?" onChangeText={(text) => setName(text)} />
 				<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>{Colors}</View>
 				<TouchableOpacity style={[styles.create, { backgroundColor: color }]} onPress={() => createList()}>
-					<Text style={{ color: "#78cfcb", fontWeight: "1600", fontSize: 24 }}>CREATE</Text>
+					<Text style={{ color: "#78cfc", fontWeight: "1600", fontSize: 24 }}>CREATE</Text>
 				</TouchableOpacity>
 			</View>
 		</KeyboardAvoidingView>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#78cfcb",
+		backgroundColor: colors.turquoise,
 	},
 	title: {
 		fontSize: 28,

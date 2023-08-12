@@ -207,13 +207,17 @@ const styles = StyleSheet.create({
         borderColor: colors.green,
         borderRadius: 10,
         marginBottom: 10,
-        fontSize: 20
+        fontSize: 20,
+    
     },
 
     validInput: {
-        borderColor: colors.grey,
-        borderWidth: 1,
-        backgroundColor: colors.white,
+        borderColor: colors.green,
+		borderWidth: 1,
+		backgroundColor: colors.white,
+		padding: 5,
+		borderRadius:10,
+		fontSize:20
     },
 
     button: {
@@ -237,7 +241,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     signInLink: {
-        backgroundColor: "#26ACA7",
+        backgroundColor: colors.green,
         width: "90%",
         marginTop: "5%",
         marginBottom: "5%",
@@ -247,14 +251,14 @@ const styles = StyleSheet.create({
     },
     signInLinkText: {
         textAlign: "center",
-        color: "white",
+        color: colors.white,
         fontSize: 17,
     },
     inputContainer: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center", // Center the content horizontally
-        borderColor: "#26ACA7",
+        borderColor: colors.green,
         marginBottom: 10,
     },
     icon: {
@@ -270,7 +274,7 @@ const styles = StyleSheet.create({
         marginLeft: 10, // Adjust this value as needed for proper spacing
     },
     forgotPasswordText: {
-        color: 'black',
+        color: colors.black,
         fontSize: 10,
         textAlign: 'center',
     },
@@ -278,7 +282,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     forgotPasswordLinkText: {
-        color: '#26ACA7',
+        color: colors.green,
         fontSize: 16,
         textAlign: 'center',
         textDecorationLine: 'underline',

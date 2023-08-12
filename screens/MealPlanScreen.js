@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, StyleSheet, ScrollView, KeyboardAvoidingView, TouchableOpacity, Dimensions } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-
-
+import colors from "../component/Colors";
 
 const { width } = Dimensions.get('window');
 
@@ -17,7 +16,6 @@ export function MealPlanScreen(props) {
     setMeal('');
     setIngredient('');
   }, [selectedDate]);
-
 
   const handleAddIngredient = () => {
     const updatedIngredients = { ...ingredientsByDate };
@@ -38,12 +36,12 @@ export function MealPlanScreen(props) {
     setSelectedDate(day.dateString);
   };
 
-  const handleUpdateEvent = (index) => {
-    const selectedEvent = ingredientsByDate[selectedDate][index];
-    setMeal(selectedEvent.meal);
-    setIngredient(selectedEvent.ingredient);
+  // const handleUpdateEvent = (index) => {
+  //   const selectedEvent = ingredientsByDate[selectedDate][index];
+  //   setMeal(selectedEvent.meal);
+  //   setIngredient(selectedEvent.ingredient);
 
-  };
+  // };
 
   const handleDeleteEvent = (index) => {
     // Implement logic to handle event deletion
@@ -62,24 +60,15 @@ export function MealPlanScreen(props) {
       <View key={index} style={styles.ingredientContainer}>
         <Text style={styles.mealText}>Meal: {item.meal}</Text>
         <Text style={styles.ingredientText}>Ingredient: {item.ingredient}</Text>
-    
-          <View style={styles.buttonContainer}>
-            {/* <TouchableOpacity
-              style={styles.button}
-              onPress={handleUpdateEvent}
-            >
-              <Text style={styles.buttonText}>Update</Text>
-            </TouchableOpacity> */}
 
-            <TouchableOpacity
-              style={styles.buttonDelete}
-              onPress={handleDeleteEvent}
-            >
-              <Text style={styles.buttonText}>Delete</Text>
-            </TouchableOpacity>
-          </View>
-
-   
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.buttonDelete}
+            onPress={handleDeleteEvent}
+          >
+            <Text style={styles.buttonText}>DELETE</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     ));
   };
@@ -93,17 +82,17 @@ export function MealPlanScreen(props) {
               <Text style={styles.headerTitle}>Meal Plan</Text>
             </View>
             <Text style={styles.instruction}>
-  Select a date, then enter a meal and ingredient
-</Text>
+              Select a date, then enter a meal and ingredient
+            </Text>
           </View>
           <Text style={styles.selectedDate}>
             {selectedDate ? new Date(selectedDate).toDateString() : ''}
           </Text>
           <Calendar
-  style={styles.calendar}
-  onDayPress={handleDateSelect}
-  markedDates={{ [selectedDate]: { selected: true } }}
-/>
+            style={styles.calendar}
+            onDayPress={handleDateSelect}
+            markedDates={{ [selectedDate]: { selected: true } }}
+          />
           <TextInput
             style={styles.input}
             placeholder="Enter a meal"
@@ -121,13 +110,10 @@ export function MealPlanScreen(props) {
             onPress={handleAddIngredient}>
             <Text style={styles.buttonText}>ADD EVENT</Text>
           </TouchableOpacity>
-
           <View style={styles.ingredientContainer}>{renderIngredientsForDate()}</View>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
-
-
   );
 }
 
@@ -144,6 +130,7 @@ const styles = StyleSheet.create({
     width: width * 0.9, // Adjust the width to your preference
     alignItems: 'center',
     justifyContent: 'center',
+    
   },
   title: {
     fontSize: 24,
@@ -152,28 +139,27 @@ const styles = StyleSheet.create({
   },
   selectedDate: {
     fontSize: 18,
-    color: "#26ACA7",
-    fontWeight: "bold",
+    color: colors.green,
   },
   ingredientContainer: {
     marginBottom: 10,
+   
   },
   ingredientText: {
     fontSize: 20,
     marginBottom: 0,
-    color: "#FD8749",
-    fontWeight: "bold",
-
-    textAlign:'center'
+    color: colors.orange,
+    textAlign: 'center'
+    
   },
   mealText: {
     fontSize: 20,
     marginBottom: 0,
-    color: "#26ACA7",
-    fontWeight: "bold",
+    color: colors.green,
+    textAlign: 'center'
   },
   header: {
-    backgroundColor: "#26ACA7",
+    backgroundColor: colors.green,
     height: 70,
     minWidth: 1400,
   },
@@ -181,14 +167,14 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginTop: 10,
     textAlign: 'center',
-    color: "#FD8749",
-    shadowOpacity:10,
+    color: colors.orange,
+    shadowOpacity: 10,
     fontStyle: "italic",
     fontWeight: "bold"
   },
   calendar: {
     marginBottom: 10,
-    backgroundColor: "white",
+    backgroundColor: colors.white,
     width: width * 0.9, // Adjust the width as needed
     aspectRatio: 1, // This will maintain a square aspect ratio for the calendar
     height: 350, // Adjust the height as needed
@@ -202,47 +188,49 @@ const styles = StyleSheet.create({
     width: '80%',
     height: 40,
     borderWidth: 1,
-    borderColor: '#26ACA7',
+    borderColor: colors.green,
     marginTop: 3,
+    marginBottom:3,
     paddingHorizontal: 10,
     borderRadius: 10,
-    fontSize:20
+    fontSize: 20,
+    textAlign:"center"
   },
   buttonText: {
-    color: "#ffffff",
+    color: colors.white,
     textAlign: "center",
     fontSize: 20,
   },
   button: {
-		backgroundColor: "#26ACA7",
-		width: "90%",
-		marginTop: "5%",
-		marginBottom: "5%",
-		borderRadius: 10,
-		padding: 15,
-	},
+    backgroundColor: colors.green,
+    width: "80%",
+    marginTop: "5%",
+    marginBottom: "5%",
+    borderRadius: 10,
+    padding: 15,
+  },
   buttonDelete: {
-    backgroundColor: "#FD8749",
-		width: "90%",
-		marginTop: "5%",
-		marginBottom: "5%",
-		borderRadius: 10,
-		padding: 15,
-    alignContent:'center',
-    alignItems:'center',
-    marginLeft:30
+    backgroundColor: colors.orange,
+    width: "80%",
+    marginTop: "5%",
+    marginBottom: "5%",
+    borderRadius: 10,
+    padding: 15,
+    alignContent: 'center',
+    alignItems: 'center',
+    marginLeft: 30
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 0,
   },
-	  instruction: {
-		fontSize: 20,
-		textAlign: 'center',
-		color: 'black',
-		padding:"1%"
-	  },
+  instruction: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: colors.black,
+    padding: "1%"
+  },
 
 
 })

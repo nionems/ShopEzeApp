@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
-import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity,Alert ,ImageBackground } from "react-native";
+import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity,Alert } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "./Colors";
 import { AuthContext } from "../contexts/AuthContext";
-import { collection, query, where, getDocs, doc, updateDoc, FieldValue, arrayUnion } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { FSContext } from "../contexts/FSContext";
-import { List, Avatar, Searchbar, Text as TextP, ActivityIndicator } from "react-native-paper";
+import {  Avatar, Searchbar, Text as TextP, ActivityIndicator } from "react-native-paper";
 
 export function AddCollabModal({ closeModal, data }) {
 	// Component function for adding collaborators
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "white",
+		backgroundColor: colors.white,
 	},
 	title: {
 		fontSize: 28,
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
 	},
 	instruction: {
 		fontSize: 16,
-		color: colors.gray,
+		color: colors.grey,
 		marginBottom: 10,
 		textAlign: "center",
 	  },

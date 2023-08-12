@@ -13,6 +13,7 @@ import { AddListModal } from "../component/AddListModal";
 //context
 import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
+import colors from "../component/Colors";
 
 export function HomeScreen(props) {
 	const navigation = useNavigation();
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		backgroundColor: "#26ACA7",
+		backgroundColor: colors.green,
 		marginTop: 60,
 		height: 70,
 		paddingHorizontal: 16,
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
 	},
 	headerTitle: {
 		fontSize: 40,
-		color: "#FD8749",
+		color: colors.orange,
 		fontStyle: "italic",
 		fontWeight: "bold",
 		marginTop: 10,
@@ -212,7 +213,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	divider: {
-		backgroundColor: "black",
+		backgroundColor: colors.black,
 		height: 1,
 		flex: 1,
 		alignSelf: "center",
@@ -230,14 +231,14 @@ const styles = StyleSheet.create({
 		marginRight: 30,
 		alignItems: "center",
 		justifyContent: "center",
-		backgroundColor: "#26ACA7",
+		backgroundColor: colors.green,
 		shadowOpacity: 10,
 		marginTop: "5%",
 		marginBottom: "5%",
 
 	},
 	add: {
-		color: "white",
+		color: colors.white,
 		textAlign: "center",
 		fontSize: 20,
 		shadowOpacity: 10,
@@ -255,7 +256,7 @@ const styles = StyleSheet.create({
 		minHeight: 300,
 	},
 	nameStyle: {
-		color: "white",
+		color: colors.white,
 		fontSize: 30,
 		fontWeight: "bold",
 		textAlign: "center",
@@ -264,7 +265,7 @@ const styles = StyleSheet.create({
 	},
 	stats: {
 		marginTop:'5%',
-		color: "white",
+		color: colors.white,
 		fontSize: 15,
 		fontWeight: "bold",
 		textAlign: "center",
@@ -278,7 +279,7 @@ const styles = StyleSheet.create({
 	  emptyMessageText: {
 		fontSize: 20,
 		textAlign: 'center',
-		color: 'black',
+		color: colors.black,
 		padding:"5%"
 	  },
 	  

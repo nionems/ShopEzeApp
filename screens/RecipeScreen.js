@@ -8,6 +8,7 @@ import { addDoc, collection, getDocs, onSnapshot } from "firebase/firestore";
 import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
 import RecipeView from "../component/RecipeView";
+import colors from "../component/Colors";
 
 export function RecipeScreen(props) {
 	const [recipe, setRecipe] = useState([]);
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	header: {
-		backgroundColor: "#26ACA7",
+		backgroundColor: colors.green,
 		marginTop: 60,
 		height: 70,
 		minWidth: 400,
@@ -136,13 +137,13 @@ const styles = StyleSheet.create({
 		fontSize: 40,
 		marginTop: 10,
 		textAlign: "center",
-		color: "#FD8749",
+		color: colors.orange,
 		fontStyle: "italic",
 		fontWeight: "bold",
 		shadowOpacity: 10,
 	},
 	divider: {
-		backgroundColor: "black",
+		backgroundColor: colors.black,
 		height: 1,
 		flex: 1,
 		alignSelf: "center",
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
 		marginRight: 30,
 		alignItems: "center",
 		justifyContent: "center",
-		backgroundColor: "#26ACA7",
+		backgroundColor: colors.green,
 		shadowOpacity: 10,
 		marginTop: "2%",
 		marginBottom: "5%",
@@ -171,7 +172,6 @@ const styles = StyleSheet.create({
 		shadowOpacity: 10,
 	},
 	recipeItem: {
-		backgroundColor: "#26ACA7",
 		padding: 20,
 		marginHorizontal: 10,
 		marginTop: 100,
@@ -184,17 +184,15 @@ const styles = StyleSheet.create({
 		minHeight: 200,
 	},
 	recipeNameStyle: {
-		color: "white",
+		color: colors.white,
 		fontSize: 30,
 		fontWeight: "bold",
 		textAlign: "center",
 		shadowOpacity: 10,
 	},
 	ingredientsStyle: {
-		color: "lightgray",
+		color: colors.white,
 		fontSize: 15,
-		fontWeight: "bold",
-		textAlign: "center",
 	},
 	emptyMessageContainer: {
 		flex: 1,
@@ -205,7 +203,7 @@ const styles = StyleSheet.create({
 	emptyMessageText: {
 		fontSize: 20,
 		textAlign: 'center',
-		color: 'black',
+		color: colors.black,
 		padding: "5%"
 	},
 

@@ -1,19 +1,17 @@
-import React, { useState, useEffect, useContext } from "react";
-import { View, TextInput, Button, Image, StyleSheet, Text, TouchableOpacity, Alert, ScrollView, Dimensions } from "react-native";
+import React, { useState,  useContext } from "react";
+import { View, TextInput,  Image, StyleSheet, Text, TouchableOpacity, Alert, ScrollView, Dimensions } from "react-native";
 import { SignOutButton } from "../component/SignOutButton";
-import ImagePicker from "react-native-image-picker";
 import { FontAwesome } from "@expo/vector-icons"; // Import the icon component
+import colors from "../component/Colors";
 
-import { EmailAuthCredential, updatePassword, reauthenticateWithCredential, deleteUser, signOut } from "firebase/auth";
-import { doc, deleteDoc, collection, setDoc, onSnapshot, getDocs, query, where } from "firebase/firestore";
+import {  updatePassword, deleteUser, signOut } from "firebase/auth";
+import { doc, deleteDoc, collection, getDocs, query, where } from "firebase/firestore";
 
 //context
-//import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
 import { FBAuthContext } from "../contexts/FBAuthContext";
 
 const { width } = Dimensions.get('window');
-
 
 export function SettingScreen() {
 	const FBauth = useContext(FBAuthContext);
@@ -43,9 +41,6 @@ export function SettingScreen() {
 				});
 		}
 	};
-
-
-
 	const handleDeleteProfile = async () => {
 		Alert.alert(
 			"Delete Profile",
@@ -90,7 +85,6 @@ export function SettingScreen() {
 
 	return (
 		<ScrollView contentContainerStyle={styles.page}>
-
 			<View style={styles.header}>
 				<View style={styles.headerLeft}>
 					<SignOutButton />
@@ -102,7 +96,6 @@ export function SettingScreen() {
 			</View>
 			<View style={styles.container}>
 			<Image source={logo} style={styles.avatar} />
-
 
 {/* Security message for changing password */}
 <Text style={styles.securityMessage}>
@@ -156,7 +149,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		backgroundColor: "#26ACA7",
+		backgroundColor: colors.green,
 		marginTop: 50,
 		height: 70,
 		paddingHorizontal: 16,
@@ -170,7 +163,7 @@ const styles = StyleSheet.create({
 	},
 	headerTitle: {
 		fontSize: 40,
-		color: "#FD8749",
+		color: colors.orange,
 		fontStyle: "italic",
 		fontWeight: "bold",
 		marginTop: 10,
@@ -180,22 +173,21 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	buttonText: {
-		color: "#ffffff",
+		color: colors.white,
 		textAlign: "center",
 		fontSize: 20,
 	},
 	button: {
-		
-		backgroundColor: "#26ACA7",
-		width: "90%",
+		backgroundColor: colors.green,
+		width: "80%",
 		marginTop: "10%",
 		marginBottom: "5%",
 		borderRadius: 10,
 		padding: 15,
 	},
 	buttonDelete: {
-		backgroundColor: "red",
-		width: "90%",
+		backgroundColor: colors.red,
+		width: "80%",
 		marginTop: "5%",
 		marginBottom: "5%",
 		borderRadius: 10,
@@ -207,12 +199,11 @@ const styles = StyleSheet.create({
 		width: "80%",
 		height: 40,
 		borderWidth: 1,
-		borderColor: "#26ACA7",
-		marginBottom: 2,
-		marginTop: 5,
+		borderColor: colors.green,
 		paddingHorizontal: 10,
 		borderRadius: 10,
-		fontSize:20
+		fontSize:20,
+		textAlign:"center"
 	},
 
 	avatar: {
@@ -221,14 +212,12 @@ const styles = StyleSheet.create({
 		borderRadius: 50,
 		maxHeight: 200,
 		maxWidth: 200,
-		marginBottom: 10,
+		marginBottom: 5,
 		marginTop: 5,
-		borderColor: "#26ACA7",
 	},
 	container: {
 		alignContent: "center",
 		alignItems: "center",
-		
 	},
 	passwordContainer: {
 		padding:10,
@@ -237,13 +226,14 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 	},
 	securityMessage: {
-		color: '#333',
+		color: colors.grey,
 		textAlign: 'center',
 		marginTop: 10,
 		fontSize: 10,
+		fontStyle: 'italic',
 	  },
 	deleteMessage: {
-		color: 'red',
+		color: colors.red,
 		textAlign: 'center',
 		marginTop: 10,
 		fontStyle: 'italic',
