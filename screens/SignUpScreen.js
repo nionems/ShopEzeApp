@@ -56,10 +56,13 @@ export function SignUpScreen(props) {
 
 	// if a user is authentificate the user will be redirected to home
 	useEffect(() => {
-		if (authStatus && authStatus.emailVerified) {
+		if (FBauth && FBauth.emailVerified) {
 		  navigation.reset({ index: 0, routes: [{ name: "Home" }] });
 		}
-	  }, [authStatus]);
+	  }, [FBauth]);
+
+
+	  
 
 	const signupHandler = async (useremail, userpassword) => {
 		try {
