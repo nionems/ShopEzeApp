@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useState } from "react";
-import { DarkTheme } from "react-native-paper";
+//import { DarkTheme } from "react-native-paper";
 
 // contexts
 import { AuthContext } from "./contexts/AuthContext";
@@ -38,7 +38,6 @@ export default function App() {
 		}
 	});
 
-	
 	const addList = (list) => {
 		setLists((prevLists) => [...prevLists, { ...list, id: prevLists.length + 1, tobuy: [] }]);
 	};
@@ -120,7 +119,7 @@ export default function App() {
 				setErrorMsg("error checking email");
 			});
 	};
-
+	
 	const handleSignIn = (email, password) => {
 		signInWithEmailAndPassword(FBauth, email, password)
 			.then((userCredential) => {
@@ -177,7 +176,6 @@ export default function App() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center",
 	},

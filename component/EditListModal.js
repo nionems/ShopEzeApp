@@ -30,13 +30,12 @@ export function EditListModal({ addList, closeModal, data }) {
 			<TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={closeModal}>
 				<AntDesign name="close" size={24} color={colors.black} />
 			</TouchableOpacity>
-
 			<View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
 				<Text style={styles.title}>! Edit Your List !</Text>
 				<TextInput style={styles.input} placeholder="List Name?" value={name} onChangeText={(text) => setName(text)} />
 				<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>{Colors}</View>
 				<TouchableOpacity style={[styles.create, { backgroundColor: color }]} onPress={() => createList()}>
-					<Text style={{ color: "#78cfcb", fontWeight: "bold", fontSize: 24 }}>UPDATE</Text>
+					<Text style={{ color: "#78cfcb", fontSize: 24 }}>UPDATE</Text>
 				</TouchableOpacity>
 			</View>
 		</KeyboardAvoidingView>
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#78cfcb",
+		backgroundColor: colors.turquoise,
 	},
 	title: {
 		fontSize: 28,
@@ -66,7 +65,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 		fontSize: 18,
 	},
-	
+
 	create: {
 		marginTop: 24,
 		height: 50,

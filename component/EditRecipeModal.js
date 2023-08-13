@@ -31,26 +31,33 @@ export function EditRecipeModal({ addList, closeModal, data }) {
 	return (
 
 		<KeyboardAvoidingView style={styles.container} behavior="padding">
-			<TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={closeModal}>
-				<AntDesign name="close" size={24} color={colors.black} />
+			<TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} 
+			onPress={closeModal}>
+			<AntDesign name="close" size={24} color={colors.black} />
 			</TouchableOpacity>
 
 			<View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
 				<Text style={styles.title}>! Edit Your Recipe !</Text>
-
-				<TextInput style={styles.input} placeholder="Recipe Name?" value={recipeName} onChangeText={(text) => setRecipeName(text)} />
-				<TextInput style={styles.input2}  multiline placeholder="Recipe Ingredient?" value={description} onChangeText={(text) => setDescription(text)} />
-
+				<TextInput style={styles.input} 
+				placeholder="Recipe Name?" 
+				value={recipeName} 
+				onChangeText={(text) => setRecipeName(text)} 
+				/>
+				<TextInput style={styles.input2} 
+				multiline placeholder="Recipe Ingredient?" 
+				value={description} 
+				onChangeText={(text) => setDescription(text)} 
+				/>
 				<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>{Colors}</View>
 
 				{recipeName !== "" && description !== "" && color !== "" && (
 					<TouchableOpacity style={[styles.create, { backgroundColor: color }]} onPress={() => createList()}>
-						<Text style={{ color: "#f0aa86", fontWeight: "1600", fontSize: 24 }}>UPDATE</Text>
+						<Text style={{ color: "#f0aa86", fontSize: 24 }}>UPDATE</Text>
 					</TouchableOpacity>
 				)}
 			</View>
 		</KeyboardAvoidingView>
-		
+
 	);
 }
 
@@ -59,10 +66,10 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#78cfcb",
+		backgroundColor: colors.turquoise,
 	},
 	title: {
-		fontSize: 20,
+		fontSize: 28,
 		fontWeight: "800",
 		color: colors.black,
 		alignSelf: "center",
@@ -76,6 +83,7 @@ const styles = StyleSheet.create({
 		marginTop: 8,
 		paddingHorizontal: 16,
 		fontSize: 18,
+		textAlign: "center"
 	},
 	input2: {
 		borderWidth: StyleSheet.hairlineWidth,
@@ -85,9 +93,8 @@ const styles = StyleSheet.create({
 		marginTop: 8,
 		paddingHorizontal: 16,
 		paddingVertical: 16, // Adjust the padding vertically
-		fontSize: 18,
-		
-	  },
+		fontSize: 15,
+	},
 	create: {
 		marginTop: 24,
 		height: 50,

@@ -41,7 +41,7 @@ export function AddRecipeModal(props) {
 
 				{recipeName !== "" && description !== "" && color !== "" && (
 					<TouchableOpacity style={[styles.create, { backgroundColor: color }]} onPress={() => createRecipe()}>
-						<Text style={{ color: "#f0aa86", fontWeight: "1600", fontSize: 24 }}>CREATE</Text>
+						<Text style={{ color: "#78cfcb", fontSize: 24 }}>CREATE</Text>
 					</TouchableOpacity>
 				)}
 			</View>
@@ -70,40 +70,30 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "white",
+		backgroundColor: colors.turquoise,
 	},
 	input: {
 		borderWidth: StyleSheet.hairlineWidth,
-		borderColor: colors.green,
+		borderColor: colors.black,
 		borderRadius: 6,
 		height: 50,
 		marginTop: 8,
 		paddingHorizontal: 16,
 		fontSize: 18,
+		textAlign:"center"
 	},
 	input2: {
 		borderWidth: StyleSheet.hairlineWidth,
-		borderColor: colors.green,
+		borderColor: colors.black,
 		borderRadius: 6,
 		height: 300, // Adjust the height as needed
 		marginTop: 8,
 		paddingHorizontal: 16,
 		paddingVertical: 16, // Adjust the padding vertically
 		fontSize: 18,
+		textAlign:"center"
 		
 	  },
-	inputDetails: {
-		borderWidth: StyleSheet.hairlineWidth,
-		borderColor: "#26ACA7",
-		borderRadius: 6,
-		marginTop: 5,
-		minHeight: 350,
-		minWidth: 350,
-		fontSize: 20,
-		backgroundColor: "#f0aa86",
-		textAlign: "center",
-		alignItems: "center",
-	},
 	create: {
 		marginTop: 24,
 		height: 50,

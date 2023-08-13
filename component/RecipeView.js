@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard, Modal, Alert } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "./Colors";
-import { doc, addDoc, deleteDoc, arrayRemove, arrayUnion, updateDoc, onSnapshot } from "firebase/firestore";
+import { doc, deleteDoc, arrayRemove, arrayUnion, updateDoc, onSnapshot } from "firebase/firestore";
 import { FSContext } from "../contexts/FSContext";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigation } from "@react-navigation/native";
@@ -41,7 +41,7 @@ export const RecipeView = ({ list, closeModal }) => {
 			Keyboard.dismiss();
 		}
 	};
-	
+
 	const addListItem = async (listId, newItem) => {
 		const listRef = doc(FSdb, "recipes", listId);
 		await updateDoc(listRef, {
@@ -68,9 +68,6 @@ export const RecipeView = ({ list, closeModal }) => {
 			}),
 		});
 	};
-	
-
-	
 
 	const editList = async (update) => {
 		console.log("toeud", list);
@@ -113,7 +110,7 @@ export const RecipeView = ({ list, closeModal }) => {
 	const renderItem = ({ item, index }) => (
 		<View style={styles.itemContainer}>
 			<View style={{ flexDirection: "row", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
-				
+
 				<View style={{ width: 15, height: 15, borderRadius: 10, backgroundColor: lightenColor(listData?.color, 0.1) }}></View>
 				<Text style={styles.itemText}>{item.title}</Text>
 			</View>
@@ -122,7 +119,7 @@ export const RecipeView = ({ list, closeModal }) => {
 			</TouchableOpacity>
 		</View>
 	);
-	
+
 
 	useEffect(() => {
 		const documentRef = doc(FSdb, "recipes", list.id);
@@ -211,7 +208,6 @@ export const RecipeView = ({ list, closeModal }) => {
 					)}
 				</View>
 
-
 				<KeyboardAvoidingView
 					style={[styles.section, styles.footer]} behavior="padding">
 					<TextInput style={[styles.input, { borderColor: list.color }]} placeholder="Add new item..." onChangeText={setNewItem} value={newItem} />
@@ -227,9 +223,6 @@ export const RecipeView = ({ list, closeModal }) => {
 				</KeyboardAvoidingView>
 			</SafeAreaView>
 		</KeyboardAvoidingView>
-
-
-
 	);
 };
 
@@ -249,10 +242,9 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 3,
 	},
 	title: {
-		fontSize: 20,
+		fontSize: 22,
 		fontWeight: "600",
 		color: colors.black,
-		// backgroundColor: "yellow",
 	},
 	footer: {
 		paddingHorizontal: 32,
@@ -280,32 +272,29 @@ const styles = StyleSheet.create({
 	},
 	itemText: {
 		color: colors.black,
-		fontWeight: "700",
+		fontWeight: "600",
 		fontSize: 16,
 		marginLeft: 16,
 	},
-	
 	viewRecipeButton: {
 		flexDirection: "row",
 		alignItems: "center",
-		backgroundColor:colors.white,
+		backgroundColor: colors.white,
 		borderWidth: 1,
-		borderColor: "#26ACA7",
+		borderColor: colors.green,
 		borderRadius: 10,
 		padding: 15,
 		marginTop: 10,
 	},
-
 	viewRecipeButtonContainer: {
-    alignItems: "center",
-    marginTop: 10, // Adjust the spacing as needed
-  },
-
-  recipeDescriptionText: {
-    color: colors.black,
-    fontSize: 16,
-    textAlign: "center", // Center the text
-  },
+		alignItems: "center",
+		marginTop: 10, // Adjust the spacing as needed
+	},
+	recipeDescriptionText: {
+		color: colors.black,
+		fontSize: 16,
+		textAlign: "center", // Center the text
+	},
 });
 
 export default RecipeView;

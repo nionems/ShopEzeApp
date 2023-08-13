@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard, Modal ,Alert} from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Keyboard, Modal, Alert } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "./Colors";
-import { doc, addDoc, deleteDoc, arrayRemove, arrayUnion, updateDoc, onSnapshot } from "firebase/firestore";
+import { doc, deleteDoc, arrayRemove, arrayUnion, updateDoc, onSnapshot } from "firebase/firestore";
 import { FSContext } from "../contexts/FSContext";
 import { v4 as uuidv4 } from "uuid";
 import Checkbox from "expo-checkbox";
@@ -13,20 +13,20 @@ import { AuthContext } from "../contexts/AuthContext";
 
 // This function takes a color in hexadecimal format and lightens it by a specified amount.
 function lightenColor(colorHex, lightenAmount) {
-	
+
 	// Convert the hexadecimal color code to its red, green, and blue components.
 	const red = parseInt(colorHex.slice(1, 3), 16);
 	const green = parseInt(colorHex.slice(3, 5), 16);
 	const blue = parseInt(colorHex.slice(5, 7), 16);
-	
+
 	// Create a new color hex code by combining the lightened red, green, and blue values.
 	const newRed = Math.min(Math.round(red + lightenAmount * (255 - red)), 255);
 	const newGreen = Math.min(Math.round(green + lightenAmount * (255 - green)), 255);
 	const newBlue = Math.min(Math.round(blue + lightenAmount * (255 - blue)), 255);
-	
+
 	// Create a new color hex code by combining the lightened red, green, and blue values.
 	const newColorHex = "#" + [newRed, newGreen, newBlue].map((color) => color.toString(16).padStart(2, "0")).join("");
-	
+
 	return newColorHex;
 }
 
@@ -39,7 +39,7 @@ export const ListModal = ({ list, closeModal }) => {
 	console.log(list);
 	const FSdb = useContext(FSContext);
 	const ListOwner = useContext(AuthContext);
-	
+
 	const addNewItem = () => {
 		// Check if the trimmed value of 'newItem' is not empty
 		if (newItem.trim() !== "") {
@@ -68,7 +68,7 @@ export const ListModal = ({ list, closeModal }) => {
 		console.log("delte", listId, item);
 		// Get a reference to the document of the list in Firestore
 		const listRef = doc(FSdb, "lists", listId);
-		
+
 		// Use the 'updateDoc' function to remove the specified item from the 'listItems' array
 		await updateDoc(listRef, {
 			listItems: arrayRemove(item),
@@ -76,11 +76,11 @@ export const ListModal = ({ list, closeModal }) => {
 	};
 
 	const updateItemStatus = async (listId, itemId, newStatus) => {
-		 
+
 		// Get a reference to the document of the list in Firestore
 		const listRef = doc(FSdb, "lists", listId);
-		
-		  // Use the 'updateDoc' function to update the 'listItems' array
+
+		// Use the 'updateDoc' function to update the 'listItems' array
 		await updateDoc(listRef, {
 			listItems: listData.listItems.map((item) => {
 				if (item.id === itemId) {
@@ -109,38 +109,38 @@ export const ListModal = ({ list, closeModal }) => {
 
 	const deleteDocById = () => {
 		Alert.alert(
-		  "Delete List",
-		  "Are you sure you want to delete this list? This action cannot be undone.",
-		  [
-			{
-			  text: "Cancel",
-			  style: "cancel",
-			},
-			{
-			  text: "Delete",
-			  style: "destructive",
-			  onPress: async () => {
-				try {
-				  // Assuming you have the correct reference to your Firestore database
-				  const docRef = doc(FSdb, "lists", list.id);
-	  
-				  // Delete the document
-				  await deleteDoc(docRef);
-				  console.log("Document deleted successfully.");
-				  closeModal(); // Close the modal after deleting the list
-				} catch (error) {
-				  console.error("Error deleting document:", error);
-				}
-			  },
-			},
-		  ]
+			"Delete List",
+			"Are you sure you want to delete this list? This action cannot be undone.",
+			[
+				{
+					text: "Cancel",
+					style: "cancel",
+				},
+				{
+					text: "Delete",
+					style: "destructive",
+					onPress: async () => {
+						try {
+							// Assuming you have the correct reference to your Firestore database
+							const docRef = doc(FSdb, "lists", list.id);
+
+							// Delete the document
+							await deleteDoc(docRef);
+							console.log("Document deleted successfully.");
+							closeModal(); // Close the modal after deleting the list
+						} catch (error) {
+							console.error("Error deleting document:", error);
+						}
+					},
+				},
+			]
 		);
-	  };
-	  
+	};
+
 	const renderItem = ({ item }) => (
 		<View style={styles.itemContainer}>
 			<View style={{ flexDirection: "row", alignContent: "center", justifyContent: "center" }}>
-				<Checkbox style={{ borderRadius: 10 }} pa color={listData.color} value={item.status} onValueChange={(newValue) => handleItemToggle(item.id, newValue)} />
+				<Checkbox style={{ borderRadius: 10    }} pa color={listData.color}  value={item.status} onValueChange={(newValue) => handleItemToggle(item.id, newValue)} />
 				<Text style={styles.itemText}>{item.title}</Text>
 			</View>
 			<TouchableOpacity onPress={() => removeListItem(list.id, item)}>
@@ -255,7 +255,6 @@ const styles = StyleSheet.create({
 	section: {
 		flex: 1,
 		alignSelf: "stretch",
-		// backgroundColor: "pink",
 	},
 	header: {
 		justifyContent: "flex-end",
@@ -264,9 +263,8 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontSize: 30,
-		fontWeight: "800",
-		color: "black",
-		// backgroundColor: "yellow",
+		fontWeight: "600",
+		color: colors.black,
 	},
 	footer: {
 		paddingHorizontal: 32,
@@ -294,7 +292,7 @@ const styles = StyleSheet.create({
 	},
 	itemText: {
 		color: colors.black,
-		fontWeight: "700",
+		fontWeight: "600",
 		fontSize: 16,
 		marginLeft: 16,
 	},
