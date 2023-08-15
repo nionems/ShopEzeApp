@@ -9,7 +9,7 @@ import { AuthContext } from "../contexts/AuthContext";
 export function AddListModal(props) {
 	const [name, setName] = useState();
 	const [color, setColor] = useState();
-	const backgroundColors = ["#26ACA7", "#24A6D9", "#757572", "#8022D9", "#D159D8", "#D85963", "#c5d16d"];
+	const backgroundColors = ["#1e5a66", "#174573", "#757572", "#000000", "#2e2869", "#D85963", "#c5d16d"];
 	const ListOwner = useContext(AuthContext);
 	const [showListModal, setShowListModal] = useState(false);
 

@@ -34,7 +34,7 @@ export function RecipeScreen(props) {
 		<TouchableOpacity onPress={() => handleItemPress(item)}>
 			<View style={[styles.recipeItem, { backgroundColor: item.color }]}>
 				<Text style={styles.recipeNameStyle}>{item?.recipeName}</Text>
-				<Text style={styles.ingredientsStyle}>{item?.description}</Text>
+				{/* <Text style={styles.ingredientsStyle}>{item?.description}</Text> */}
 			</View>
 		</TouchableOpacity>
 	);
@@ -103,7 +103,7 @@ export function RecipeScreen(props) {
 			) : recipeList.length > 0 ? (
 				<FlatList data={recipeList}
 					keyExtractor={(item) => item.id.toString()}
-					horizontal={true}
+					horizontal={false}
 					showsHorizontalScrollIndicator={false}
 					renderItem={renderRecipeList} />
 			) : (
@@ -170,20 +170,20 @@ const styles = StyleSheet.create({
 		shadowOpacity: 10,
 	},
 	recipeItem: {
-		padding: 20,
-		marginHorizontal: 10,
-		marginTop: 100,
+		padding: 10,
+		marginHorizontal: 5,
+		marginTop: 10,
 		borderRadius: 10,
 		justifyContent: "center",
 		alignItems: "center",
 		shadowOpacity: 10,
 		width: 100, // Adjust the width as needed
-		minWidth: 200,
-		minHeight: 200,
+		minWidth: 380,
+		minHeight: 50,
 	},
 	recipeNameStyle: {
 		color: colors.white,
-		fontSize: 30,
+		fontSize: 20,
 		fontWeight: "bold",
 		textAlign: "center",
 		shadowOpacity: 10,

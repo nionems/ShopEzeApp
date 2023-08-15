@@ -10,7 +10,7 @@ export function EditRecipeModal({ addList, closeModal, data }) {
 	const [recipeName, setRecipeName] = useState(data?.recipeName);
 	const [description, setDescription] = useState(data?.description);
 	const [color, setColor] = useState(data?.color);
-	const backgroundColors = ["#26ACA7", "#24A6D9", "#757572", "#8022D9", "#D159D8", "#D85963", "#c5d16d"];
+	const backgroundColors = ["#1e5a66", "#174573", "#000000", "#2e2869", "#D159D8", "#D85963", "#c5d16d"];
 	const ListOwner = useContext(AuthContext);
 	const [showListModal, setShowListModal] = useState(false);
 

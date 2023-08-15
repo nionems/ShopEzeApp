@@ -150,7 +150,7 @@ export function HomeScreen(props) {
 					<FlatList
 						data={shoppingList}
 						keyExtractor={(item) => item.id.toString()}
-						horizontal={true}
+						horizontal={false}
 						showsHorizontalScrollIndicator={false}
 						renderItem={renderShoppingList} />
 				) : (
@@ -238,30 +238,32 @@ const styles = StyleSheet.create({
 		shadowOpacity: 10,
 	},
 	listItem: {
-		padding: 20,
-		marginHorizontal: 10,
-		marginTop: 100,
-		shadowOpacity: 10,
+		padding: 10,
+		marginHorizontal: 5,
+		marginTop: 10,
 		borderRadius: 10,
 		justifyContent: "center",
 		alignItems: "center",
-		width: 200, // Adjust the width as needed
-		minWidth: 200,
-		minHeight: 300,
+		shadowOpacity: 10,
+		width: 100, // Adjust the width as needed
+		minWidth: 380,
+		minHeight: 70,
+	
 	},
 	nameStyle: {
 		color: colors.white,
-		fontSize: 30,
+		fontSize: 20,
 		fontWeight: "bold",
 		textAlign: "center",
 		shadowOpacity: 10,
 	},
 	stats: {
-		marginTop: '5%',
+		marginTop: '1%',
 		color: colors.white,
 		fontSize: 15,
 		fontWeight: "bold",
 		textAlign: "center",
+		shadowOpacity: 10,
 	},
 	emptyMessageContainer: {
 		flex: 1,
