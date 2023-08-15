@@ -31,22 +31,22 @@ export function EditRecipeModal({ addList, closeModal, data }) {
 	return (
 
 		<KeyboardAvoidingView style={styles.container} behavior="padding">
-			<TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} 
-			onPress={closeModal}>
-			<AntDesign name="close" size={24} color={colors.black} />
+			<TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }}
+				onPress={closeModal}>
+				<AntDesign name="close" size={24} color={colors.black} />
 			</TouchableOpacity>
 
 			<View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
 				<Text style={styles.title}>! Edit Your Recipe !</Text>
-				<TextInput style={styles.input} 
-				placeholder="Recipe Name?" 
-				value={recipeName} 
-				onChangeText={(text) => setRecipeName(text)} 
+				<TextInput style={styles.input}
+					placeholder="Recipe Name?"
+					value={recipeName}
+					onChangeText={(text) => setRecipeName(text)}
 				/>
-				<TextInput style={styles.input2} 
-				multiline placeholder="Recipe Ingredient?" 
-				value={description} 
-				onChangeText={(text) => setDescription(text)} 
+				<TextInput style={styles.input2}
+					multiline placeholder="Recipe Ingredient?"
+					value={description}
+					onChangeText={(text) => setDescription(text)}
 				/>
 				<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>{Colors}</View>
 
@@ -60,7 +60,6 @@ export function EditRecipeModal({ addList, closeModal, data }) {
 
 	);
 }
-
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,

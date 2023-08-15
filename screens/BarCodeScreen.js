@@ -5,6 +5,7 @@ import { Camera } from 'expo-camera';
 //import { requestCameraPermissionsAsync } from 'expo-camera';
 import colors from "../component/Colors";
 
+//Api for barcode ;;  make it private
 const api_key = 'c34dc6d615da39a9b6bfb6ccafcfa1ee188699e0ec3ff2b12830db028a7f8c4b'; // Replace with your actual API key
 const api_base_url = 'https://go-upc.com/api/v1/code/';
 
@@ -134,8 +135,8 @@ const styles = StyleSheet.create({
   dataText: {
     fontSize: 20,
     color: colors.white,
-    backgroundColor:colors.green,
-    padding:10,
+    backgroundColor: colors.green,
+    padding: 10,
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center', // Add this property to center-align the text
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
   },
   messageText: {
     fontSize: 18,
-    color:colors.green,
+    color: colors.green,
     textAlign: 'center',
     marginTop: 10,
   },

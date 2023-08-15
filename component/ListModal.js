@@ -3,13 +3,15 @@ import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, Keybo
 import { AntDesign } from "@expo/vector-icons";
 import colors from "./Colors";
 import { doc, deleteDoc, arrayRemove, arrayUnion, updateDoc, onSnapshot } from "firebase/firestore";
-import { FSContext } from "../contexts/FSContext";
 import { v4 as uuidv4 } from "uuid";
 import Checkbox from "expo-checkbox";
 
 import { EditListModal } from "./EditListModal";
 import { AddCollabModal } from "./AddCollaborator";
+
+//context
 import { AuthContext } from "../contexts/AuthContext";
+import { FSContext } from "../contexts/FSContext";
 
 // This function takes a color in hexadecimal format and lightens it by a specified amount.
 function lightenColor(colorHex, lightenAmount) {
@@ -140,7 +142,7 @@ export const ListModal = ({ list, closeModal }) => {
 	const renderItem = ({ item }) => (
 		<View style={styles.itemContainer}>
 			<View style={{ flexDirection: "row", alignContent: "center", justifyContent: "center" }}>
-				<Checkbox style={{ borderRadius: 10    }} pa color={listData.color}  value={item.status} onValueChange={(newValue) => handleItemToggle(item.id, newValue)} />
+				<Checkbox style={{ borderRadius: 10 }} pa color={listData.color} value={item.status} onValueChange={(newValue) => handleItemToggle(item.id, newValue)} />
 				<Text style={styles.itemText}>{item.title}</Text>
 			</View>
 			<TouchableOpacity onPress={() => removeListItem(list.id, item)}>
@@ -215,7 +217,6 @@ export const ListModal = ({ list, closeModal }) => {
 						<Text style={styles.title}>{listData?.name}</Text>
 					</View>
 				</View>
-
 				<View style={[styles.section, { flex: 7, marginVertical: 16 }]}>
 					<FlatList
 						data={listData?.listItems}

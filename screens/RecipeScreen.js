@@ -2,13 +2,13 @@ import React, { useEffect, useContext, useState } from "react";
 import { View, Text, StyleSheet, Modal, ScrollView, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
 import { AddRecipeModal } from "../component/AddRecipeModal";
 import { AntDesign } from "@expo/vector-icons";
-
 import { addDoc, collection, getDocs, onSnapshot } from "firebase/firestore";
+import RecipeView from "../component/RecipeView";
+import colors from "../component/Colors";
+
 //context
 import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
-import RecipeView from "../component/RecipeView";
-import colors from "../component/Colors";
 
 export function RecipeScreen(props) {
 	const [recipe, setRecipe] = useState([]);
@@ -101,17 +101,16 @@ export function RecipeScreen(props) {
 			{loading ? (
 				<ActivityIndicator size="large" color="black" />
 			) : recipeList.length > 0 ? (
-				<FlatList data={recipeList} 
-				keyExtractor={(item) => item.id.toString()} 
-				horizontal={true} 
-				showsHorizontalScrollIndicator={false} 
-				renderItem={renderRecipeList} />
+				<FlatList data={recipeList}
+					keyExtractor={(item) => item.id.toString()}
+					horizontal={true}
+					showsHorizontalScrollIndicator={false}
+					renderItem={renderRecipeList} />
 			) : (
 				<Text style={styles.emptyMessageText}> You don't have any recipes yet. {"\n"}
 					Tap the "Add Recipe" button above to get started! </Text>
-					// Show empty list message
-				)}
-
+				// Show empty list message
+			)}
 			{/* Render RecipeDetailsModal when a recipe item is selected */}
 			{selectedItem && (
 				<Modal transparent={true} animationType="slide" visible={true} onRequestClose={() => setSelectedItem(null)}>
@@ -121,7 +120,6 @@ export function RecipeScreen(props) {
 		</ScrollView>
 	);
 }
-
 const styles = StyleSheet.create({
 	page: {
 		justifyContent: "center",
@@ -206,5 +204,4 @@ const styles = StyleSheet.create({
 		color: colors.black,
 		padding: "5%"
 	},
-
 });

@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TextInput } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../component/Colors";
+
+//context
 import { AuthContext } from "../contexts/AuthContext";
 
 export function AddListModal(props) {
@@ -37,7 +39,7 @@ export function AddListModal(props) {
 				<TextInput style={styles.input} placeholder="List Name ?" onChangeText={(text) => setName(text)} />
 				<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>{Colors}</View>
 				<TouchableOpacity style={[styles.create, { backgroundColor: color }]} onPress={() => createList()}>
-				<Text style={{ color: "#78cfcf",  fontSize: 24 }}>CREATE</Text>
+					<Text style={{ color: "#78cfcf", fontSize: 24 }}>CREATE</Text>
 
 				</TouchableOpacity>
 			</View>
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
 		marginTop: 8,
 		paddingHorizontal: 16,
 		fontSize: 20,
-		textAlign:"center",
+		textAlign: "center",
 	},
 	create: {
 		marginTop: 24,

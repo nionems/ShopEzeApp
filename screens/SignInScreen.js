@@ -1,9 +1,11 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, KeyboardAvoidingView,Alert } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, KeyboardAvoidingView, Alert } from "react-native";
 import { useEffect, useState, useContext } from 'react'
 import { useNavigation } from "@react-navigation/native";
-import { AuthContext } from "../contexts/AuthContext";
 import { FontAwesome } from "@expo/vector-icons";
-import {sendPasswordResetEmail} from 'firebase/auth'; // Import the necessary function
+import { sendPasswordResetEmail } from 'firebase/auth'; // Import the necessary function
+
+//context
+import { AuthContext } from "../contexts/AuthContext";
 import { FBAuthContext } from "../contexts/FBAuthContext";
 import { FSContext } from "../contexts/FSContext";
 import colors from "../component/Colors";
@@ -23,6 +25,7 @@ export function SignInScreen(props) {
     const authStatus = useContext(AuthContext)
     const FSdb = useContext(FSContext);
 
+    //check if email contain @ in index 1 min
     useEffect(() => {
         if (email.indexOf('@') > 0) {
             setValidEmail(true)
@@ -32,6 +35,7 @@ export function SignInScreen(props) {
         }
     }, [email])
 
+    //check if password is 8 chartacter min
     useEffect(() => {
         if (password.length >= 8) {
             setValidPassword(true)
@@ -41,6 +45,7 @@ export function SignInScreen(props) {
         }
     }, [password])
 
+    // if both are valid then button will turn green and activated
     useEffect(() => {
         if (validEmail && validPassword) {
             setValidForm(true)
@@ -52,17 +57,16 @@ export function SignInScreen(props) {
 
     useEffect(() => {
         if (authStatus) {
-            // navigate adds a back arrow to the header
-            // navigation.navigate("Home")
             // reset will make "Home" the root page of the navigation
             navigation.reset({ index: 0, routes: [{ name: "Home" }] })
         }
     }, [authStatus])
 
+    // reset password method
     const handleResetPassword = async () => {
         console.log("Handle reset password clicked");
         console.log("validEmail:", validEmail);
-    
+
         if (validEmail) {
             try {
                 console.log("Sending password reset email...");
@@ -95,9 +99,7 @@ export function SignInScreen(props) {
                     </View>
                     <Image style={styles.logostyle} source={require('../assets/logo.png')} alt="logo" />
                     <Text style={styles.sloganText}> Shop Together, Faster, Cheaper  </Text>
-                    <Text style={styles.sloganText}>Hi ! How are you ? going Shopping ? </Text>
                     <Text style={styles.SignIntext}> SIGN IN </Text>
-
                     <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.input}
@@ -166,7 +168,7 @@ const styles = StyleSheet.create({
         color: colors.orange,
         fontStyle: "italic",
         fontWeight: "bold",
-		shadowOpacity: 10,
+        shadowOpacity: 10,
     },
     sloganText: {
         fontSize: 15,
@@ -208,18 +210,15 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 10,
         fontSize: 20,
-    
     },
-
     validInput: {
         borderColor: colors.green,
-		borderWidth: 1,
-		backgroundColor: colors.white,
-		padding: 5,
-		borderRadius:10,
-		fontSize:20
+        borderWidth: 1,
+        backgroundColor: colors.white,
+        padding: 5,
+        borderRadius: 10,
+        fontSize: 20
     },
-
     button: {
         backgroundColor: colors.green,
         width: "90%",
@@ -247,7 +246,6 @@ const styles = StyleSheet.create({
         marginBottom: "5%",
         borderRadius: 10,
         padding: 15,
-
     },
     signInLinkText: {
         textAlign: "center",
@@ -268,7 +266,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-
     },
     iconContainer: {
         marginLeft: 10, // Adjust this value as needed for proper spacing

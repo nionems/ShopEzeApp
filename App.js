@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useState } from "react";
-//import { DarkTheme } from "react-native-paper";
 
 // contexts
 import { AuthContext } from "./contexts/AuthContext";
@@ -18,8 +17,8 @@ import { WelcomeScreen } from "./screens/WelcomeScreen";
 // firebase modules
 import { firebaseConfig } from "./config/Config";
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, doc, setDoc, addDoc, collection, query, where, onSnapshot } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const Stack = createNativeStackNavigator();
 const FBapp = initializeApp(firebaseConfig);
@@ -119,7 +118,7 @@ export default function App() {
 				setErrorMsg("error checking email");
 			});
 	};
-	
+
 	const handleSignIn = (email, password) => {
 		signInWithEmailAndPassword(FBauth, email, password)
 			.then((userCredential) => {
@@ -172,7 +171,6 @@ export default function App() {
 		</NavigationContainer>
 	);
 }
-
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,

@@ -3,12 +3,13 @@ import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, Keybo
 import { AntDesign } from "@expo/vector-icons";
 import colors from "./Colors";
 import { doc, deleteDoc, arrayRemove, arrayUnion, updateDoc, onSnapshot } from "firebase/firestore";
-import { FSContext } from "../contexts/FSContext";
 import { v4 as uuidv4 } from "uuid";
-import { useNavigation } from "@react-navigation/native";
 import { EditRecipeModal } from "./EditRecipeModal";
 import { FontAwesome } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
+
+//context
+import { FSContext } from "../contexts/FSContext";
 
 function lightenColor(colorHex, lightenAmount) {
 	const red = parseInt(colorHex.slice(1, 3), 16);
@@ -111,7 +112,6 @@ export const RecipeView = ({ list, closeModal }) => {
 		<View style={styles.itemContainer}>
 			<View style={{ flexDirection: "row", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
 				<Checkbox style={{ borderRadius: 10 }} pa color={listData.color} value={item.status} onValueChange={(newValue) => handleItemToggle(item.id, newValue)} />
-
 				<Text style={styles.itemText}>{item.title}</Text>
 			</View>
 			<TouchableOpacity onPress={() => removeListItem(list.id, item)}>

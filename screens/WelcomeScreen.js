@@ -4,17 +4,22 @@ import { useNavigation } from "@react-navigation/native";
 import colors from "../component/Colors";
 
 export function WelcomeScreen(props) {
+	
 	const navigation = useNavigation();
+
 	const [showModal, setShowModal] = useState(false);
 	// added ScrollView to enable access to lower buttons
 
+	//assets
 	const linkedinLogo = require("../assets/linkedin.png");
 	const profilePicture = require("../assets/lioProfileSmall.png");
 	const bg = require("../assets/bg3.jpg");
 
+	// link to my website/Linkedin
 	const linkedinProfileUrl = "https://www.linkedin.com/in/lionel-coevoet-961b64275/?originalSubdomain=au";
 	const myPortfolioUrl = "https://www.lionelportfolio.com/";
 
+	
 	const handleLinkedInPress = async () => {
 		const supported = await Linking.canOpenURL(linkedinProfileUrl);
 		if (supported) {
@@ -34,21 +39,21 @@ export function WelcomeScreen(props) {
 		<View style={styles.container}>
 			{/* Full-screen background image */}
 			<ImageBackground
-				source={bg} // Replace with your actual background image source
+				source={bg} // Replace with actual background image source
 				style={styles.backgroundImage}
 			>
 				{/* Gardeniet text on top */}
 				<View style={styles.overlay}>
 					<Image style={styles.logo} resizeMode="contain" source={require("../assets/log.png")} />
-					<TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("Signin")}>
-						<Text style={styles.btnText}>SIGN IN</Text>
+					<TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Signin")}>
+						<Text style={styles.buttonText}>SIGN IN</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("Signup")}>
-						<Text style={styles.btnText}>SIGN UP</Text>
+					<TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Signup")}>
+						<Text style={styles.buttonText}>SIGN UP</Text>
 					</TouchableOpacity>
 
-					<TouchableOpacity style={styles.btnAbout} onPress={() => setShowModal(true)}>
-						<Text style={[styles.btnText, { color: "white" }]}>ABOUT THE APP</Text>
+					<TouchableOpacity style={styles.buttonAbout} onPress={() => setShowModal(true)}>
+						<Text style={[styles.buttonText, { color: "white" }]}>ABOUT THE APP</Text>
 					</TouchableOpacity>
 				</View>
 			
@@ -74,7 +79,7 @@ export function WelcomeScreen(props) {
 						</TouchableOpacity>
 						<View style={styles.buttonsRow}>
 							<TouchableOpacity style={styles.modalBackButton} onPress={() => setShowModal(false)}>
-								<Text style={styles.buttonText}>BACK</Text>
+								<Text style={styles.modalButtonText}>BACK</Text>
 							</TouchableOpacity>
 						</View>
 					</View>
@@ -82,10 +87,10 @@ export function WelcomeScreen(props) {
 				</Modal>
 			</ImageBackground>
 		</View>
-		
 	);
 }
 const styles = StyleSheet.create({
+	
 	container: {
 		flex: 1,
 	},
@@ -107,39 +112,43 @@ const styles = StyleSheet.create({
 		marginTop: "20%",
 		width: "90%",
 	},
-	btn: {
-		backgroundColor: "white",
+	button: {
+		backgroundColor: colors.white,
 		width: "90%",
 		marginTop: "5%",
 		marginBottom: "5%",
 		borderRadius: 10,
 		padding: 15,
 	},
-	btnAbout: {
+	buttonAbout: {
 		width: "90%",
 		marginTop: "5%",
 		borderRadius: 10,
 		padding: 15,
 		borderWidth: 1,
-		borderColor: "white",
+		borderColor: colors.white,
 	},
 
-	btnText: {
-		color: "black",
+	buttonText: {
+		color: colors.black,
 		textAlign: "center",
 		fontSize: 15,
 		fontWeight: 700,
 	},
-	/////////// old
-	page: {
-		justifyContent: "top",
+//modal styling
+modalButtonText:{
+	color: colors.white,
+	textAlign: "center",
+	fontSize: 15,
+	fontWeight: 700,
+},
+	modal: {
+		justifyContent: "center",
 		alignItems: "center",
-	},
-	header: {
-		backgroundColor: "#26ACA7",
-		height: 70,
-		minWidth: 400,
-		marginTop: 50,
+		padding: 1,
+		paddingTop: 1,
+		flex: 1,
+		justifyContent: "start",
 	},
 	modalHeader: {
 		backgroundColor: colors.green,
@@ -152,77 +161,10 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		marginBottom: 10,
 		textAlign: "center",
-		color: "#FD8749",
+		color: colors.orange,
 		fontStyle: "italic",
 		fontWeight: "bold",
 		shadowOpacity: 10,
-	},
-	// sloganText: {
-	// 	fontSize: 15,
-	// 	textAlign: "center",
-	// 	marginTop: 30,
-	// 	color: "#FD8749",
-	// 	fontStyle: "italic",
-	// 	fontWeight: "bold",
-	// 	fontSize: 20,
-	// },
-
-	// logostyle: {
-	// 	alignItems: "center",
-	// 	alignContent: "center",
-	// 	borderRadius: 55,
-	// 	maxHeight: 200,
-	// 	maxWidth: 200,
-	// 	minHeight: 150,
-	// 	minWidth: 150,
-	// 	borderColor: "#26ACA7",
-	// 	marginTop: 5,
-	// },
-	myPictureStyle: {
-		alignItems: "center",
-		alignContent: "center",
-		borderRadius: 100,
-		maxHeight: 200,
-		maxWidth: 200,
-		minHeight: 150,
-		minWidth: 150,
-		borderColor: "#26ACA7",
-	},
-	aboutButton: {
-		backgroundColor: "#FD8749",
-		marginTop: 10,
-		marginVertical: 15,
-		marginRight: 10,
-		marginLeft: 10,
-		borderRadius: 10,
-		padding: 10,
-	},
-
-	button: {
-		backgroundColor: "#26ACA7",
-		marginTop: 10,
-		marginVertical: 15,
-		marginRight: 10,
-		marginLeft: 10,
-		borderRadius: 10,
-		padding: 10,
-	},
-	buttonText: {
-		color: "#ffffff",
-		textAlign: "center",
-		fontSize: 20,
-	},
-	screen: {
-		justifyContent: "center",
-	},
-
-	modal: {
-		justifyContent: "center",
-		alignItems: "center",
-		padding: 1,
-		paddingTop: 1,
-		flex: 1,
-		justifyContent: "start",
 	},
 	modalText: {
 		textAlign: "center",
@@ -231,14 +173,22 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 		color: colors.green,
 	},
-
+	myPictureStyle: {
+		alignItems: "center",
+		alignContent: "center",
+		borderRadius: 100,
+		maxHeight: 200,
+		maxWidth: 200,
+		minHeight: 150,
+		minWidth: 150,
+	},
 	modalBackButton: {
 		backgroundColor: colors.green,
-		width: "100%",
+		borderRadius: 10,
+		width: "90%",
 		marginTop: "5%",
 		marginBottom: "5%",
-		borderRadius: 10,
-		padding: 10,
+		padding: 15,	
 	},
 	linkedinLogo: {
 		marginTop: 10,

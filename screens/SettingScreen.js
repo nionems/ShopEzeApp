@@ -1,10 +1,9 @@
-import React, { useState,  useContext } from "react";
-import { View, TextInput,  Image, StyleSheet, Text, TouchableOpacity, Alert, ScrollView, Dimensions } from "react-native";
+import React, { useState, useContext } from "react";
+import { View, TextInput, Image, StyleSheet, Text, TouchableOpacity, Alert, ScrollView, Dimensions } from "react-native";
 import { SignOutButton } from "../component/SignOutButton";
 import { FontAwesome } from "@expo/vector-icons"; // Import the icon component
 import colors from "../component/Colors";
-
-import {  updatePassword, deleteUser, signOut } from "firebase/auth";
+import { updatePassword, deleteUser, signOut } from "firebase/auth";
 import { doc, deleteDoc, collection, getDocs, query, where } from "firebase/firestore";
 
 //context
@@ -14,18 +13,16 @@ import { FBAuthContext } from "../contexts/FBAuthContext";
 const { width } = Dimensions.get('window');
 
 export function SettingScreen() {
-	const FBauth = useContext(FBAuthContext);
 
+	const FBauth = useContext(FBAuthContext);
 	const FSdb = useContext(FSContext);
 
 	const logo = require("../assets/logo.png");
-
 	const [currentPassword, setCurrentPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
 	const [showCurrentPassword, setShowCurrentPassword] = useState(false);
 	const [showNewPassword, setShowNewPassword] = useState(false);
 
-	
 	const handleChangePassword = () => {
 		const user = FBauth.currentUser; // Obtain the authenticated user instance
 		if (user) {
@@ -41,6 +38,7 @@ export function SettingScreen() {
 				});
 		}
 	};
+
 	const handleDeleteProfile = async () => {
 		Alert.alert(
 			"Delete Profile",
@@ -95,12 +93,12 @@ export function SettingScreen() {
 				<View style={styles.headerRight}></View>
 			</View>
 			<View style={styles.container}>
-			<Image source={logo} style={styles.avatar} />
+				<Image source={logo} style={styles.logo} />
 
-{/* Security message for changing password */}
-<Text style={styles.securityMessage}>
-          Changing your password regularly helps maintain the security of your account.
-        </Text>
+				{/* Security message for changing password */}
+				<Text style={styles.securityMessage}>
+					Changing your password regularly helps maintain the security of your account.
+				</Text>
 				<View style={styles.passwordContainer}>
 					<TextInput
 						style={styles.input}
@@ -135,10 +133,10 @@ export function SettingScreen() {
 				<TouchableOpacity style={styles.buttonDelete} onPress={() => handleDeleteProfile()}>
 					<Text style={styles.buttonText}>DELETE ACCOUNT</Text>
 				</TouchableOpacity>
-				 {/* Deletion message */}
-				 <Text style={styles.deleteMessage}>
-          Deleting your account is a permanent action and cannot be undone.
-        </Text>
+				{/* Deletion message */}
+				<Text style={styles.deleteMessage}>
+					Deleting your account is a permanent action and cannot be undone.
+				</Text>
 			</View>
 		</ScrollView>
 	);
@@ -202,11 +200,10 @@ const styles = StyleSheet.create({
 		borderColor: colors.green,
 		paddingHorizontal: 10,
 		borderRadius: 10,
-		fontSize:20,
-		textAlign:"center"
+		fontSize: 20,
+		textAlign: "center"
 	},
-
-	avatar: {
+	logo: {
 		alignItems: "center",
 		alignContent: "center",
 		borderRadius: 50,
@@ -220,7 +217,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	passwordContainer: {
-		padding:10,
+		padding: 10,
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
@@ -231,12 +228,12 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		fontSize: 10,
 		fontStyle: 'italic',
-	  },
+	},
 	deleteMessage: {
 		color: colors.red,
 		textAlign: 'center',
 		marginTop: 10,
 		fontStyle: 'italic',
 		fontSize: 10,
-	  },
+	},
 });

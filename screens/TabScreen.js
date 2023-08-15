@@ -12,7 +12,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 export function TabScreen() {
 
-    
+
     const HomeScreenOptions = {
         tabBarLabel: "List",
         tabBarIcon: ({ color }) => <IonIcons name="list-outline" color={color} size={28} />

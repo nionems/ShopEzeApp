@@ -4,7 +4,7 @@ import { Calendar } from "react-native-calendars";
 import colors from "../component/Colors";
 import { SelectList } from "react-native-dropdown-select-list";
 import { FSContext } from "../contexts/FSContext";
-import { doc, updateDoc, arrayUnion, collection, getDocs, onSnapshot, query, where, arrayRemove } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, collection, onSnapshot, query, where, arrayRemove } from "firebase/firestore";
 import { AuthContext } from "../contexts/AuthContext";
 import { v4 as uuidv4 } from "uuid";
 
@@ -54,7 +54,6 @@ export function MealPlanScreen(props) {
 		setSelectedDate(day.dateString);
 	};
 
-
 	const handleDeleteEvent = (index) => {
 		// Implement logic to handle event deletion
 		const updatedIngredients = { ...ingredientsByDate };
@@ -74,10 +73,9 @@ export function MealPlanScreen(props) {
 				<View key={index} style={styles.ingredientContainer}>
 					<Text style={styles.mealType}>{item.mealType}</Text>
 					<Text style={styles.mealTitle}>{item.recipe.recipeName}</Text>
-				
 					<Text style={styles.mealIngredient}>ingredients</Text>
 					{item?.recipe?.ingredients?.map((ing, index) => (
-						<Text style={styles.ingredientText}>{ing.title}</Text>
+						<Text key={index} style={styles.ingredientText}>{ing.title}</Text>
 					))}
 					<View style={styles.buttonContainer}>
 						<TouchableOpacity style={styles.buttonDelete} onPress={() => removeMeal(item)}>
@@ -87,6 +85,7 @@ export function MealPlanScreen(props) {
 				</View>
 			));
 	};
+
 	const findUserByID = async () => {
 		try {
 			setLoading(true);
@@ -167,11 +166,11 @@ export function MealPlanScreen(props) {
 			mealPlans: arrayRemove(item),
 		});
 	};
-
 	useEffect(() => {
 		findUserByID();
 		fetchRecipeList();
 	}, []);
+
 	return (
 		<KeyboardAvoidingView style={styles.container} behavior="padding">
 			<ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -180,9 +179,7 @@ export function MealPlanScreen(props) {
 						<View style={styles.header}>
 							<Text style={styles.headerTitle}>Meal Plan</Text>
 						</View>
-						{/* <Text style={styles.instruction}>Select a date, then enter breakfast,lunch or dinner and then select a meal !</Text> */}
 					</View>
-
 					<Calendar style={styles.calendar} onDayPress={handleDateSelect} markedDates={{ [selectedDate]: { selected: true } }} />
 					<View style={{ backgroundColor: "white", width: "100%", padding: "5%" }}>
 						<View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
@@ -195,9 +192,8 @@ export function MealPlanScreen(props) {
 						</View>
 						<View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
 							<Text style={styles.lableText}>Recipes</Text>
-							<SelectList boxStyles={{ width: 200}} dropdownStyles={{ width: 200 }} setSelected={(val) => setSelectedRecipe(val)} data={recipeList} save="key" />
+							<SelectList boxStyles={{ width: 200 }} dropdownStyles={{ width: 200 }} setSelected={(val) => setSelectedRecipe(val)} data={recipeList} save="key" />
 						</View>
-
 						<TouchableOpacity style={styles.button} onPress={addMeal}>
 							<Text style={styles.buttonText}>Add Meal</Text>
 						</TouchableOpacity>
@@ -213,6 +209,20 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 	},
+	header: {
+		backgroundColor: colors.green,
+		height: 70,
+		minWidth: 1400,
+	},
+	headerTitle: {
+		fontSize: 40,
+		marginTop: 10,
+		textAlign: "center",
+		color: colors.orange,
+		shadowOpacity: 10,
+		fontStyle: "italic",
+		fontWeight: "bold",
+	},
 	scrollViewContent: {
 		flexGrow: 1,
 		alignItems: "center",
@@ -223,11 +233,6 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 	},
-	// title: {
-	// 	fontSize: 24,
-	// 	fontWeight: "bold",
-	// 	marginBottom: 20,
-	// },
 	selectedDate: {
 		fontSize: 14,
 		color: colors.green,
@@ -258,7 +263,7 @@ const styles = StyleSheet.create({
 		marginBottom: 0,
 		color: colors.green,
 		textAlign: "center",
-		fontWeight: "bold", 
+		fontWeight: "bold",
 
 	},
 	mealType: {
@@ -266,20 +271,6 @@ const styles = StyleSheet.create({
 		marginBottom: 0,
 		color: colors.red,
 		textAlign: "center",
-		fontWeight: "bold",
-	},
-	header: {
-		backgroundColor: colors.green,
-		height: 70,
-		minWidth: 1400,
-	},
-	headerTitle: {
-		fontSize: 40,
-		marginTop: 10,
-		textAlign: "center",
-		color: colors.orange,
-		shadowOpacity: 10,
-		fontStyle: "italic",
 		fontWeight: "bold",
 	},
 	calendar: {
@@ -294,18 +285,6 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		paddingVertical: 60,
 	},
-	// input: {
-	// 	width: "80%",
-	// 	height: 40,
-	// 	borderWidth: 1,
-	// 	borderColor: colors.green,
-	// 	marginTop: 1,
-	// 	marginBottom: 3,
-	// 	paddingHorizontal: 10,
-	// 	borderRadius: 10,
-	// 	fontSize: 20,
-	// 	textAlign: "center",
-	// },
 	buttonText: {
 		color: colors.white,
 		textAlign: "center",
@@ -335,10 +314,4 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		marginTop: 0,
 	},
-	// instruction: {
-	// 	fontSize: 20,
-	// 	textAlign: "center",
-	// 	color: colors.black,
-
-	// },
 });

@@ -4,6 +4,7 @@ import { useEffect, useContext, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { addDoc, collection, onSnapshot, getDocs } from "firebase/firestore";
+import colors from "../component/Colors";
 
 //component
 import { SignOutButton } from "../component/SignOutButton";
@@ -13,29 +14,26 @@ import { AddListModal } from "../component/AddListModal";
 //context
 import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
-import colors from "../component/Colors";
+
 
 export function HomeScreen(props) {
+
 	const navigation = useNavigation();
 	const ListOwner = useContext(AuthContext);
 	const authStatus = useContext(AuthContext);
 	const FSdb = useContext(FSContext);
-
 	const [showModal, setShowModal] = useState(false);
 	const [addTobuyVisible, setAddTobuyVisible] = useState(false);
-
 	const [loading, setLoading] = useState(true);
 	const [shoppingList, setShoppingList] = useState([]);
 	const [selectedItem, setSelectedItem] = useState(null);
-
 	const [showListCreatedMessage, setShowListCreatedMessage] = useState(false);
-
-
 
 	console.log("current user", ListOwner?.uid);
 	const handleItemPress = (item) => {
 		setSelectedItem(item);
 	};
+
 	const addList = async (list) => {
 		// https://firebase.google.com/docs/firestore/manage-data/add-data?hl=en&authuser=0
 		// write the list in Firestore
@@ -109,7 +107,6 @@ export function HomeScreen(props) {
 		);
 	};
 
-
 	useEffect(() => {
 		if (!authStatus) {
 			navigation.reset({ index: 0, routes: [{ name: "Welcome" }] });
@@ -158,7 +155,7 @@ export function HomeScreen(props) {
 						renderItem={renderShoppingList} />
 				) : (
 					<Text style={styles.emptyMessageText}> You don't have any lists yet. {"\n"}
-					Tap the "Add List" button above to get started! </Text>
+						Tap the "Add List" button above to get started! </Text>
 					// Show empty list message
 				)}
 
@@ -182,7 +179,6 @@ export function HomeScreen(props) {
 		</ScrollView>
 	);
 }
-
 const styles = StyleSheet.create({
 
 	header: {
@@ -224,7 +220,6 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		fontSize: 50,
 	},
-
 	addList: {
 		borderRadius: 10,
 		marginLeft: 30,
@@ -235,7 +230,6 @@ const styles = StyleSheet.create({
 		shadowOpacity: 10,
 		marginTop: "5%",
 		marginBottom: "5%",
-
 	},
 	add: {
 		color: colors.white,
@@ -261,10 +255,9 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		textAlign: "center",
 		shadowOpacity: 10,
-		
 	},
 	stats: {
-		marginTop:'5%',
+		marginTop: '5%',
 		color: colors.white,
 		fontSize: 15,
 		fontWeight: "bold",
@@ -275,12 +268,12 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		marginTop: 100, // Adjust the marginTop as needed
-	  },
-	  emptyMessageText: {
+	},
+	emptyMessageText: {
 		fontSize: 20,
 		textAlign: 'center',
 		color: colors.black,
-		padding:"5%"
-	  },
-	  
+		padding: "5%"
+	},
+
 });

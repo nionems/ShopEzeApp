@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TextInput } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "./Colors";
+
+//context
 import { AuthContext } from "../contexts/AuthContext";
 
 export function EditListModal({ addList, closeModal, data }) {

@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
-import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity,Alert } from "react-native";
+import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, Alert } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "./Colors";
-import { AuthContext } from "../contexts/AuthContext";
 import { collection, query, where, getDocs, doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { Avatar, Searchbar, Text as TextP, ActivityIndicator } from "react-native-paper";
+
+//context
+import { AuthContext } from "../contexts/AuthContext";
 import { FSContext } from "../contexts/FSContext";
-import {  Avatar, Searchbar, Text as TextP, ActivityIndicator } from "react-native-paper";
 
 export function AddCollabModal({ closeModal, data }) {
 	// Component function for adding collaborators
@@ -22,6 +24,7 @@ export function AddCollabModal({ closeModal, data }) {
 
 	const ListOwner = useContext(AuthContext);
 	const FSdb = useContext(FSContext);
+	
 	const findUserByEmail = async (email) => {
 		try {
 			console.log("em", email);
@@ -53,44 +56,44 @@ export function AddCollabModal({ closeModal, data }) {
 			throw error;
 		}
 	};
+
 	const addContributorToList = async () => {
 		try {
-		  // Get a reference to the list document
-		  const listRef = doc(FSdb, "lists", data.id);
-	  
-		  // Update the "contributors" array by adding the new contributorId
-		  await updateDoc(listRef, {
-			collaborators: arrayUnion(user.id),
-		  });
-	  
-		  console.log("Contributor added to the list.");
-		  closeModal();
-	  
-		  // Display a confirmation alert
-		  Alert.alert(
-			"Collaborator Added",
-			`${user.email} has been successfully added as a collaborator.`,
-			[
-			  {
-				text: "OK",
-				onPress: () => {
-				  // You can add any further actions here if needed
-				},
-			  },
-			]
-		  );
+			// Get a reference to the list document
+			const listRef = doc(FSdb, "lists", data.id);
+
+			// Update the "contributors" array by adding the new contributorId
+			await updateDoc(listRef, {
+				collaborators: arrayUnion(user.id),
+			});
+
+			console.log("Contributor added to the list.");
+			closeModal();
+
+			// Display a confirmation alert
+			Alert.alert(
+				"Collaborator Added",
+				`${user.email} has been successfully added as a collaborator.`,
+				[
+					{
+						text: "OK",
+						onPress: () => {
+							// You can add any further actions here if needed
+						},
+					},
+				]
+			);
 		} catch (error) {
-		  console.error("Error adding contributor to the list:", error);
-		  throw error;
+			console.error("Error adding contributor to the list:", error);
+			throw error;
 		}
-	  };
-	  
+	};
+
 	return (
 		<KeyboardAvoidingView style={styles.container} behavior="padding">
 			<TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={closeModal}>
 				<AntDesign name="close" size={24} color={colors.black} />
 			</TouchableOpacity>
-
 			<View style={{ flex: 0.8, width: "90%" }}>
 				<Text style={styles.title}>Add Collabrator</Text>
 				<Text style={styles.instruction}>Enter the email address of the person you want to add as a collaborator:</Text>
@@ -123,7 +126,6 @@ export function AddCollabModal({ closeModal, data }) {
 					</View>
 				)}
 				{loading && <ActivityIndicator animating={true} color="black" />}
-			
 			</View>
 		</KeyboardAvoidingView>
 	);
@@ -169,5 +171,5 @@ const styles = StyleSheet.create({
 		color: colors.grey,
 		marginBottom: 10,
 		textAlign: "center",
-	  },
+	},
 });

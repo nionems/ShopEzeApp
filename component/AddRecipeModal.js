@@ -2,8 +2,9 @@ import { useContext, useState } from "react";
 import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TextInput } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../component/Colors";
+
+//context
 import { AuthContext } from "../contexts/AuthContext";
-//import { color } from "react-native-reanimated";
 
 export function AddRecipeModal(props) {
 	const [recipeName, setRecipeName] = useState("");
@@ -35,7 +36,7 @@ export function AddRecipeModal(props) {
 			<View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
 				<Text style={styles.title}>! Add Your Recipe !</Text>
 
-				<TextInput style={styles.input}  placeholder="Recipe Name"  onChangeText={(text) => setRecipeName(text)} />
+				<TextInput style={styles.input} placeholder="Recipe Name" onChangeText={(text) => setRecipeName(text)} />
 				<TextInput style={styles.input2} multiline placeholder="Recipe Description" onChangeText={(text) => setDescription(text)} />
 
 				<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>{Colors}</View>
@@ -66,7 +67,6 @@ const styles = StyleSheet.create({
 		alignSelf: "center",
 		marginBottom: 16,
 	},
-
 	container: {
 		flex: 1,
 		justifyContent: "center",
@@ -81,9 +81,7 @@ const styles = StyleSheet.create({
 		marginTop: 8,
 		paddingHorizontal: 16,
 		fontSize: 18,
-		textAlign:"center",
-		
-		
+		textAlign: "center",
 	},
 	input2: {
 		borderWidth: StyleSheet.hairlineWidth,
@@ -94,10 +92,8 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 		paddingVertical: 16, // Adjust the padding vertically
 		fontSize: 22,
-		textAlign:"center",
-
-		
-	  },
+		textAlign: "center",
+	},
 	create: {
 		marginTop: 24,
 		height: 50,
