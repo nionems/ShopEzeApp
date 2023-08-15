@@ -54,12 +54,6 @@ export function MealPlanScreen(props) {
 		setSelectedDate(day.dateString);
 	};
 
-	// const handleUpdateEvent = (index) => {
-	//   const selectedEvent = ingredientsByDate[selectedDate][index];
-	//   setMeal(selectedEvent.meal);
-	//   setIngredient(selectedEvent.ingredient);
-
-	// };
 
 	const handleDeleteEvent = (index) => {
 		// Implement logic to handle event deletion
@@ -78,9 +72,10 @@ export function MealPlanScreen(props) {
 			.filter((item) => item.date === selectedDate)
 			.map((item, index) => (
 				<View key={index} style={styles.ingredientContainer}>
-					<Text style={styles.mealText}>Meal: {item.recipe.recipeName}</Text>
-					<Text style={styles.mealText}>Type: {item.mealType}</Text>
-					<Text style={styles.mealText}>ingredients</Text>
+					<Text style={styles.mealType}>{item.mealType}</Text>
+					<Text style={styles.mealTitle}>{item.recipe.recipeName}</Text>
+				
+					<Text style={styles.mealIngredient}>ingredients</Text>
 					{item?.recipe?.ingredients?.map((ing, index) => (
 						<Text style={styles.ingredientText}>{ing.title}</Text>
 					))}
@@ -185,7 +180,7 @@ export function MealPlanScreen(props) {
 						<View style={styles.header}>
 							<Text style={styles.headerTitle}>Meal Plan</Text>
 						</View>
-						<Text style={styles.instruction}>Select a date, then enter a meal and ingredient</Text>
+						<Text style={styles.instruction}>Select a date, then enter breakfast,lunch or dinner and then select a meal !</Text>
 					</View>
 
 					<Calendar style={styles.calendar} onDayPress={handleDateSelect} markedDates={{ [selectedDate]: { selected: true } }} />
@@ -247,16 +242,31 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 	},
 	ingredientText: {
-		fontSize: 20,
+		fontSize: 12,
 		marginBottom: 0,
 		color: colors.orange,
 		textAlign: "center",
 	},
-	mealText: {
+	mealIngredient: {
+		fontSize: 18,
+		marginBottom: 0,
+		color: colors.green,
+		textAlign: "center",
+	},
+	mealTitle: {
 		fontSize: 20,
 		marginBottom: 0,
 		color: colors.green,
 		textAlign: "center",
+		fontWeight: "bold", 
+
+	},
+	mealType: {
+		fontSize: 20,
+		marginBottom: 0,
+		color: colors.red,
+		textAlign: "center",
+		fontWeight: "bold",
 	},
 	header: {
 		backgroundColor: colors.green,
