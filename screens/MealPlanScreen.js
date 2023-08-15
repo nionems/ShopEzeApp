@@ -180,7 +180,7 @@ export function MealPlanScreen(props) {
 						<View style={styles.header}>
 							<Text style={styles.headerTitle}>Meal Plan</Text>
 						</View>
-						<Text style={styles.instruction}>Select a date, then enter breakfast,lunch or dinner and then select a meal !</Text>
+						{/* <Text style={styles.instruction}>Select a date, then enter breakfast,lunch or dinner and then select a meal !</Text> */}
 					</View>
 
 					<Calendar style={styles.calendar} onDayPress={handleDateSelect} markedDates={{ [selectedDate]: { selected: true } }} />
@@ -190,12 +190,12 @@ export function MealPlanScreen(props) {
 							<Text style={styles.selectedDate}>{selectedDate ? new Date(selectedDate).toDateString() : ""}</Text>
 						</View>
 						<View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: "5%", alignItems: "center" }}>
-							<Text style={styles.lableText}>Recipe</Text>
+							<Text style={styles.lableText}>Meal of the day</Text>
 							<SelectList boxStyles={{ width: 200 }} dropdownStyles={{ width: 200 }} setSelected={(val) => setSelectedType(val)} data={types} save="value" />
 						</View>
 						<View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-							<Text style={styles.lableText}>Meal Type</Text>
-							<SelectList boxStyles={{ width: 200, marginTop: 20 }} dropdownStyles={{ width: 200 }} setSelected={(val) => setSelectedRecipe(val)} data={recipeList} save="key" />
+							<Text style={styles.lableText}>Recipes</Text>
+							<SelectList boxStyles={{ width: 200}} dropdownStyles={{ width: 200 }} setSelected={(val) => setSelectedRecipe(val)} data={recipeList} save="key" />
 						</View>
 
 						<TouchableOpacity style={styles.button} onPress={addMeal}>
@@ -223,13 +223,13 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 	},
-	title: {
-		fontSize: 24,
-		fontWeight: "bold",
-		marginBottom: 20,
-	},
+	// title: {
+	// 	fontSize: 24,
+	// 	fontWeight: "bold",
+	// 	marginBottom: 20,
+	// },
 	selectedDate: {
-		fontSize: 18,
+		fontSize: 14,
 		color: colors.green,
 	},
 	lableText: {
@@ -283,8 +283,8 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 	},
 	calendar: {
-		marginBottom: 10,
-		backgroundColor: colors.white,
+		marginBottom: 5,
+		backgroundColor: colors.green,
 		width: width * 0.9, // Adjust the width as needed
 		aspectRatio: 1, // This will maintain a square aspect ratio for the calendar
 		height: 350, // Adjust the height as needed
@@ -294,18 +294,18 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		paddingVertical: 60,
 	},
-	input: {
-		width: "80%",
-		height: 40,
-		borderWidth: 1,
-		borderColor: colors.green,
-		marginTop: 3,
-		marginBottom: 3,
-		paddingHorizontal: 10,
-		borderRadius: 10,
-		fontSize: 20,
-		textAlign: "center",
-	},
+	// input: {
+	// 	width: "80%",
+	// 	height: 40,
+	// 	borderWidth: 1,
+	// 	borderColor: colors.green,
+	// 	marginTop: 1,
+	// 	marginBottom: 3,
+	// 	paddingHorizontal: 10,
+	// 	borderRadius: 10,
+	// 	fontSize: 20,
+	// 	textAlign: "center",
+	// },
 	buttonText: {
 		color: colors.white,
 		textAlign: "center",
@@ -314,16 +314,16 @@ const styles = StyleSheet.create({
 	button: {
 		backgroundColor: colors.green,
 		width: "100%",
-		marginTop: "5%",
-		marginBottom: "5%",
+		marginTop: "1%",
+		marginBottom: "3%",
 		borderRadius: 10,
 		padding: 15,
 	},
 	buttonDelete: {
 		backgroundColor: colors.orange,
 		width: "80%",
-		marginTop: "5%",
-		marginBottom: "5%",
+		marginTop: "3%",
+		marginBottom: "3%",
 		borderRadius: 10,
 		padding: 15,
 		alignContent: "center",
@@ -335,10 +335,10 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		marginTop: 0,
 	},
-	instruction: {
-		fontSize: 20,
-		textAlign: "center",
-		color: colors.black,
-		padding: "1%",
-	},
+	// instruction: {
+	// 	fontSize: 20,
+	// 	textAlign: "center",
+	// 	color: colors.black,
+
+	// },
 });
