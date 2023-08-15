@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useNavigation } from "@react-navigation/native";
 import { EditRecipeModal } from "./EditRecipeModal";
 import { FontAwesome } from "@expo/vector-icons";
+import Checkbox from "expo-checkbox";
 
 function lightenColor(colorHex, lightenAmount) {
 	const red = parseInt(colorHex.slice(1, 3), 16);
@@ -35,7 +36,7 @@ export const RecipeView = ({ list, closeModal }) => {
 
 	const addNewItem = () => {
 		if (newItem.trim() !== "") {
-			const toAdd = { title: newItem, id: uuidv4() };
+			const toAdd = { title: newItem, id: uuidv4(), status: false };
 			addListItem(list.id, toAdd);
 			setNewItem("");
 			Keyboard.dismiss();
@@ -58,9 +59,9 @@ export const RecipeView = ({ list, closeModal }) => {
 	};
 
 	const updateItemStatus = async (listId, itemId, newStatus) => {
-		const listRef = doc(FSdb, "lists", listId);
+		const listRef = doc(FSdb, "recipes", listId);
 		await updateDoc(listRef, {
-			listItems: listData.listItems.map((item) => {
+			ingredients: listData.ingredients.map((item) => {
 				if (item.id === itemId) {
 					return { ...item, status: newStatus };
 				}
@@ -77,31 +78,30 @@ export const RecipeView = ({ list, closeModal }) => {
 		const listRef = doc(FSdb, "recipes", listId);
 		await updateDoc(listRef, update);
 	};
-
+	const handleItemToggle = async (itemId, newStatus) => {
+		console.log("handleitemtoggled", itemId, newStatus);
+		await updateItemStatus(list.id, itemId, newStatus);
+	};
 	const deleteDocById = async () => {
 		try {
 			// Show a confirmation alert before deleting
-			Alert.alert(
-				"Delete Recipe",
-				"Are you sure you want to delete this recipe?",
-				[
-					{
-						text: "Cancel",
-						style: "cancel",
+			Alert.alert("Delete Recipe", "Are you sure you want to delete this recipe?", [
+				{
+					text: "Cancel",
+					style: "cancel",
+				},
+				{
+					text: "Delete",
+					style: "destructive",
+					onPress: async () => {
+						// Assuming you have the correct reference to your Firestore database
+						const docRef = doc(FSdb, "recipes", list.id);
+						await deleteDoc(docRef);
+						console.log("Document deleted successfully.");
+						closeModal();
 					},
-					{
-						text: "Delete",
-						style: "destructive",
-						onPress: async () => {
-							// Assuming you have the correct reference to your Firestore database
-							const docRef = doc(FSdb, "recipes", list.id);
-							await deleteDoc(docRef);
-							console.log("Document deleted successfully.");
-							closeModal();
-						},
-					},
-				]
-			);
+				},
+			]);
 		} catch (error) {
 			console.error("Error deleting document:", error);
 		}
@@ -110,8 +110,8 @@ export const RecipeView = ({ list, closeModal }) => {
 	const renderItem = ({ item, index }) => (
 		<View style={styles.itemContainer}>
 			<View style={{ flexDirection: "row", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
+				<Checkbox style={{ borderRadius: 10 }} pa color={listData.color} value={item.status} onValueChange={(newValue) => handleItemToggle(item.id, newValue)} />
 
-				<View style={{ width: 15, height: 15, borderRadius: 10, backgroundColor: lightenColor(listData?.color, 0.1) }}></View>
 				<Text style={styles.itemText}>{item.title}</Text>
 			</View>
 			<TouchableOpacity onPress={() => removeListItem(list.id, item)}>
@@ -119,7 +119,6 @@ export const RecipeView = ({ list, closeModal }) => {
 			</TouchableOpacity>
 		</View>
 	);
-
 
 	useEffect(() => {
 		const documentRef = doc(FSdb, "recipes", list.id);
@@ -208,8 +207,7 @@ export const RecipeView = ({ list, closeModal }) => {
 					)}
 				</View>
 
-				<KeyboardAvoidingView
-					style={[styles.section, styles.footer]} behavior="padding">
+				<KeyboardAvoidingView style={[styles.section, styles.footer]} behavior="padding">
 					<TextInput style={[styles.input, { borderColor: list.color }]} placeholder="Add new item..." onChangeText={setNewItem} value={newItem} />
 
 					<TouchableOpacity style={[styles.addButton, { backgroundColor: list.color }]} onPress={addNewItem}>
