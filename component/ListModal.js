@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 3,
 	},
 	title: {
-		fontSize: 30,
+		fontSize: 22,
 		fontWeight: "600",
 		color: colors.black,
 	},

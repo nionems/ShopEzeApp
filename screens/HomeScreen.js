@@ -214,12 +214,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignSelf: "center",
 	},
-	title: {
-		alignItems: "center",
-		alignContent: "center",
-		textAlign: "center",
-		fontSize: 50,
-	},
 	addList: {
 		borderRadius: 10,
 		marginLeft: 30,
@@ -241,7 +235,6 @@ const styles = StyleSheet.create({
 		padding: 10,
 		marginHorizontal: 5,
 		marginTop: 10,
-		borderRadius: 10,
 		justifyContent: "center",
 		alignItems: "center",
 		shadowOpacity: 10,
