@@ -79,6 +79,7 @@ export function SignUpScreen(props) {
 			const userDetails = {
 				email: user.email,
 				id: user.uid,
+				mealPlans:[]
 			};
 
 			// Replace 'userAuth' with your desired collection name in Firestore
