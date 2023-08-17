@@ -90,22 +90,26 @@ export function HomeScreen(props) {
 
 	const renderShoppingList = ({ item }) => {
 		const totalCount = item.listItems?.length;
-
+	  
 		// Count items where the status is true
 		const trueStatusCount = item.listItems?.reduce((count, item) => count + (item.status ? 1 : 0), 0);
+	  
 		return (
-			<TouchableOpacity onPress={() => handleItemPress(item)}>
-				<View style={[styles.listItem, { backgroundColor: item.color }]}>
-					<Text style={styles.nameStyle}>{item?.name}</Text>
-					{totalCount > 0 && (
-						<Text style={styles.stats}>
-							{trueStatusCount} / {totalCount}
-						</Text>
-					)}
-				</View>
-			</TouchableOpacity>
+		  <TouchableOpacity onPress={() => handleItemPress(item)}>
+			<View style={styles.centeredListItem}>
+			  <View style={[styles.listItem, { backgroundColor: item.color }]}>
+				<Text style={styles.nameStyle}>{item?.name}</Text>
+				{totalCount > 0 && (
+				  <Text style={styles.stats}>
+					{trueStatusCount} / {totalCount}
+				  </Text>
+				)}
+			  </View>
+			</View>
+		  </TouchableOpacity>
 		);
-	};
+	  };
+	  
 
 	useEffect(() => {
 		if (!authStatus) {
@@ -232,17 +236,25 @@ const styles = StyleSheet.create({
 		shadowOpacity: 10,
 	},
 	listItem: {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center",
 		padding: 10,
 		marginHorizontal: 5,
 		marginTop: 10,
-		justifyContent: "center",
-		alignItems: "center",
-		shadowOpacity: 10,
+		shadowOpacity: 0.5,
 		width: 100, // Adjust the width as needed
 		minWidth: 380,
 		minHeight: 70,
-	
-	},
+	  },
+	  centeredListItem: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+	  },
+	  
+
 	nameStyle: {
 		color: colors.white,
 		fontSize: 20,

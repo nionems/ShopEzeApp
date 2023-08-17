@@ -32,12 +32,15 @@ export function RecipeScreen(props) {
 
 	const renderRecipeList = ({ item }) => (
 		<TouchableOpacity onPress={() => handleItemPress(item)}>
+		  <View style={styles.centeredRecipeItem}>
+			{/* Wrap the comment in a Text component */}
+			<Text>{/* <Text style={styles.ingredientsStyle}>{item?.description}</Text> */}</Text>
 			<View style={[styles.recipeItem, { backgroundColor: item.color }]}>
-				<Text style={styles.recipeNameStyle}>{item?.recipeName}</Text>
-				{/* <Text style={styles.ingredientsStyle}>{item?.description}</Text> */}
+			  <Text style={styles.recipeNameStyle}>{item?.recipeName}</Text>
 			</View>
+		  </View>
 		</TouchableOpacity>
-	);
+	  );
 
 	const fetchRecipeList = async () => {
 		try {
@@ -90,14 +93,13 @@ export function RecipeScreen(props) {
 				<Modal transparent={false} animationType="slide" visible={showModal} onRequestClose={() => setShowModal(false)}>
 					<AddRecipeModal closeModal={() => setShowModal(false)} addRecipeList={addRecipeList} />
 				</Modal>
-				<View style={styles.divider} />
-				<Text style={styles.title}></Text>
+				<View/>
 				<TouchableOpacity style={styles.addRecipeList} onPress={() => setShowModal(true)}>
 					<AntDesign name="plus" color={"white"} size={24} />
 					<Text style={styles.add}>add Recipe</Text>
 				</TouchableOpacity>
 			</View>
-			<View style={styles.divider} />
+			<View style={styles.page} />
 			{loading ? (
 				<ActivityIndicator size="large" color="black" />
 			) : recipeList.length > 0 ? (
@@ -122,15 +124,23 @@ export function RecipeScreen(props) {
 }
 const styles = StyleSheet.create({
 	page: {
-		justifyContent: "center",
-		alignItems: "center",
-	},
+		flex: 1, // Make the page container flex to take up the available space
+		justifyContent: "center", // Center items vertically
+		alignItems: "center", // Center items horizontally
+	  },
+	
+
 	header: {
 		backgroundColor: colors.green,
 		marginTop: 60,
 		height: 70,
 		minWidth: 400,
 	},
+	centeredRecipeItem: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+	  },
 	headerTitle: {
 		fontSize: 40,
 		marginTop: 10,
@@ -139,18 +149,6 @@ const styles = StyleSheet.create({
 		fontStyle: "italic",
 		fontWeight: "bold",
 		shadowOpacity: 10,
-	},
-	divider: {
-		backgroundColor: colors.black,
-		height: 1,
-		flex: 1,
-		alignSelf: "center",
-	},
-	title: {
-		alignItems: "center",
-		alignContent: "center",
-		textAlign: "center",
-		fontSize: 30,
 	},
 	addRecipeList: {
 		borderRadius: 10,
@@ -170,15 +168,11 @@ const styles = StyleSheet.create({
 		shadowOpacity: 10,
 	},
 	recipeItem: {
-		padding: 10,
-		marginHorizontal: 5,
-		marginTop: 10,
 		justifyContent: "center",
-		alignItems: "center",
 		shadowOpacity: 10,
-		width: 100, // Adjust the width as needed
-		minWidth: 380,
+		minWidth: 370,
 		minHeight: 50,
+		alignItems:"center"
 	},
 	recipeNameStyle: {
 		color: colors.white,
