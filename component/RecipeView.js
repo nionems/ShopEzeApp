@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
 	recipeDescriptionText: {
 		color: colors.black,
 		fontSize: 16,
-		textAlign: "center", // Center the text
+		padding:3
 	},
 });
 

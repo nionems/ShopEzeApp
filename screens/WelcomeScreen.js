@@ -172,6 +172,7 @@ modalButtonText:{
 		marginTop: 10,
 		marginBottom: 10,
 		color: colors.green,
+		padding:3
 	},
 	myPictureStyle: {
 		alignItems: "center",
