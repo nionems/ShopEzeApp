@@ -122,7 +122,8 @@ export function HomeScreen(props) {
 	};
 
 	return (
-		<ScrollView>
+		// <ScrollView>
+		<View>
 			<View>
 				<View style={styles.header}>
 					<View style={styles.headerLeft}>
@@ -180,7 +181,8 @@ export function HomeScreen(props) {
 					/>
 				</Modal>
 			)}
-		</ScrollView>
+		{/* </ScrollView> */}
+		</View>
 	);
 }
 const styles = StyleSheet.create({

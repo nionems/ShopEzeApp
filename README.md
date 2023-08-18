@@ -1,33 +1,39 @@
 # ShopEzeApp
 shopping list in react native project
 
-react using expo starting today 10 may 2023 => Due on the 19 of Augut 2023
+Main features : - Application allowing users to create a shopping list, which users can share with them and update the list in real time.
+
+Use API for bardfode scaner 
+
+react using expo starting today 10 may 2023 => Due on the 18 of Augut 2023
 
 Shopping list application => ShopEze    developer => lionel coevoet 
 
 $$ features $$ 
 - sign in  / sign up, / sign out        100% completed
-- Create List                           60% completed
-- Share List                            00% completed
-- Update / Delete List                  60% completed
-- Create Recipes                        00% completed
-- Update / Delete Recipe                00% completed
-- Create a meal plan for the week       70% completed 
-- Scan item barcode                     50% completed
-- Get info about an item                10% completed
-- Create a profile                      50% completed
+- Create List                           100% completed
+- Share List                            100% completed
+- Update / Delete List                  100% completed
+- Create Recipes                        100% completed
+- Update / Delete Recipe                100% completed
+- Create a meal plan for the week       100% completed 
+- Scan item barcode                     100% completed
+- Get info about an item                100% completed
+- Create a profile                      0% completed   only email and password implemented 
 - Update / Delete Profile               50% completed
+- in App Ads                            0%
 
 
 
-To RUN 
+To RUN this project :
 
 1 Open new terminal 
 2 npm install expo
 3 npm install
 4 npm start
 
-Can be open from expo App QR code or selected device such as emulator or Web 
+Can be open from expo App QR code or selected device such as emulator or Web browser 
+
 
 
 some Dependencies installed 
@@ -39,5 +45,5 @@ npm install react-native-paper@latest
 npm install expo-checkbox
 npm audit fix
 npx expo install expo-checkbox@~2.3.1 react-native@0.71.8
-npx expo install expo-firebase-recaptcha
-npx expo install expo-build-properties
+
+

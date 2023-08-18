@@ -84,7 +84,8 @@ export function RecipeScreen(props) {
 	}, []);
 
 	return (
-		<ScrollView>
+		// <ScrollView>
+		<View>
 			<View>
 				<View style={styles.header}>
 					<View style={styles.headerLeft}></View>
@@ -119,7 +120,8 @@ export function RecipeScreen(props) {
 					<RecipeView list={selectedItem} closeModal={() => setSelectedItem(null)} />
 				</Modal>
 			)}
-		</ScrollView>
+		{/* </ScrollView> */}
+		</View>
 	);
 }
 const styles = StyleSheet.create({
