@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, Button, Image, Linking, } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
-//import { requestCameraPermissionsAsync } from 'expo-camera';
+import { requestCameraPermissionsAsync } from 'expo-camera';
 import colors from "../component/Colors";
+
 
 //Api for barcode ;;  make it private
 const api_key = 'c34dc6d615da39a9b6bfb6ccafcfa1ee188699e0ec3ff2b12830db028a7f8c4b'; // Replace with your actual API key

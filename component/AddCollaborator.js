@@ -24,7 +24,7 @@ export function AddCollabModal({ closeModal, data }) {
 
 	const ListOwner = useContext(AuthContext);
 	const FSdb = useContext(FSContext);
-	
+
 	const findUserByEmail = async (email) => {
 		try {
 			console.log("em", email);

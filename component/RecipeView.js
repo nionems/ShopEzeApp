@@ -24,16 +24,16 @@ function lightenColor(colorHex, lightenAmount) {
 }
 
 export const RecipeView = ({ list, closeModal }) => {
-	console.log("list", list);
+
+	//console.log("list", list);
 	const [listItems, setListItems] = useState([]);
 	const [listData, setListData] = useState(list);
 	const [showModal, setShowModal] = useState(false);
 	const [newItem, setNewItem] = useState("");
-
 	const [showRecipeDescription, setShowRecipeDescription] = useState(false);
 	const [recipeDescription, setRecipeDescription] = useState("");
-
 	const FSdb = useContext(FSContext);
+
 
 	const addNewItem = () => {
 		if (newItem.trim() !== "") {
@@ -59,6 +59,10 @@ export const RecipeView = ({ list, closeModal }) => {
 		});
 	};
 
+	/*Get a reference to the Firestore document
+	Update the document with the new status for the item
+	If the item's ID matches the provided itemId, update its status
+	If the item's ID doesn't match, return it as is*/
 	const updateItemStatus = async (listId, itemId, newStatus) => {
 		const listRef = doc(FSdb, "recipes", listId);
 		await updateDoc(listRef, {
@@ -71,10 +75,13 @@ export const RecipeView = ({ list, closeModal }) => {
 		});
 	};
 
+
+	//update title and color
 	const editList = async (update) => {
 		console.log("toeud", list);
-		updateTitleAndColor(list.id, update);
+		updateTitleAndColor(list.id, update);//call updatetitleandcolor function
 	};
+	//update title color in Firebase
 	const updateTitleAndColor = async (listId, update) => {
 		const listRef = doc(FSdb, "recipes", listId);
 		await updateDoc(listRef, update);
@@ -107,7 +114,7 @@ export const RecipeView = ({ list, closeModal }) => {
 			console.error("Error deleting document:", error);
 		}
 	};
-
+	// how the item will render on the flatlist
 	const renderItem = ({ item, index }) => (
 		<View style={styles.itemContainer}>
 			<View style={{ flexDirection: "row", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
@@ -121,19 +128,19 @@ export const RecipeView = ({ list, closeModal }) => {
 	);
 
 	useEffect(() => {
-		const documentRef = doc(FSdb, "recipes", list.id);
-		const unsubscribe = onSnapshot(documentRef, (snapshot) => {
-			if (snapshot.exists()) {
-				setListData(snapshot.data());
+		const documentRef = doc(FSdb, "recipes", list.id);// Get a reference to the specific Firestore document for the recipe list
+		const unsubscribe = onSnapshot(documentRef, (snapshot) => {  // Subscribe to changes in the document using onSnapshot
+			if (snapshot.exists()) {    // If the document exists...
+				setListData(snapshot.data());// Update the local state with the data from the document
 			} else {
-				setListItems([]);
+				setListItems([]);      // If the document doesn't exist, set an empty list
 			}
 		});
 
-		return () => {
+		return () => {// Unsubscribe from the snapshot listener when the component unmounts
 			unsubscribe();
 		};
-	}, [list.id]);
+	}, [list.id]);// This effect will re-run whenever the list.id changes
 
 	return (
 		<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
@@ -291,7 +298,7 @@ const styles = StyleSheet.create({
 	recipeDescriptionText: {
 		color: colors.black,
 		fontSize: 16,
-		padding:3
+		padding: 3
 	},
 });
 
